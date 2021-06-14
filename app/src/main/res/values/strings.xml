@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="description_button_create">create new button</string>
+    <string name="description_button_remove">create new button</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_hint">Title</string>
+    <string name="content_hint">Content</string>
+    <string name="transition_fab_key">transition_floating_action_button</string>
+
+
+</resources>
