@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -57,6 +58,8 @@ class EditFragment : Fragment() {
         return binding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,11 +68,12 @@ class EditFragment : Fragment() {
         val key = args.key
         binding.editCardView.transitionName = key
         flagEdit = args.edit
-        if (note != null){
+        if (note != null) {
             this.note = note
-            binding.editInputTitle.editText?.setText(note.title)
-            binding.editInputContent.editText?.setText(note.content)
-
+            if ((note.title!="") && (note.content!="")){
+                binding.editInputTitle.editText?.setText(note.title)
+                binding.editInputContent.editText?.setText(note.content)
+            }
         }
 
         initRecyclerImage()
@@ -96,7 +100,7 @@ class EditFragment : Fragment() {
         val datestamp = SimpleDateFormat("dd.MM.yyyy").format(System.currentTimeMillis())
         val timestamp = SimpleDateFormat("kk.mm").format(System.currentTimeMillis())
 
-        if (flagEdit){
+        if (flagEdit) {
             val note = Note(note.id, title, content, datestamp, timestamp)
             noteViewModel.update(note)
             Log.i("Snackbar reader::", "1")
@@ -104,7 +108,13 @@ class EditFragment : Fragment() {
         } else {
             if (title.isNotEmpty() || content.isNotEmpty()) {
                 val note =
-                    Note(note.id, title = title, content = content, datestamp = datestamp, timestamp = timestamp)
+                    Note(
+                        note.id,
+                        title = title,
+                        content = content,
+                        datestamp = datestamp,
+                        timestamp = timestamp
+                    )
                 noteViewModel.insert(note)
                 binding.editCardView.transitionName = "newTransition"
             }

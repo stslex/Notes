@@ -1,11 +1,8 @@
 package com.example.notes.ui.main
 
 import android.content.res.Resources
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.Icon
+import android.graphics.ColorFilter
 import android.os.Bundle
-import android.transition.Fade
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,18 +13,20 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.notes.*
+import com.example.notes.NoteApplication
+import com.example.notes.NoteViewModel
+import com.example.notes.NoteViewModelFactory
+import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
 import com.example.notes.model.base.Note
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.Hold
-import com.google.android.material.transition.MaterialContainerTransform
-import com.google.android.material.transition.MaterialElevationScale
 
 class MainFragment : Fragment(), View.OnClickListener {
 
@@ -44,11 +43,6 @@ class MainFragment : Fragment(), View.OnClickListener {
         NoteViewModelFactory((activity?.application as NoteApplication).repository)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,6 +57,33 @@ class MainFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fab.setOnClickListener(this)
         initRecyclerView()
+        recyclerViewManagerChanger()
+    }
+
+    private fun recyclerViewManagerChanger() {
+        val appBarChangeManager = appBar.menu.findItem(R.id.change_recycler_manager)
+
+        val linerManager = LinearLayoutManager(context)
+        val gridManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
+        val theme = this.activity?.theme
+        val iconLiner =
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_view_stream_24, theme)
+
+        val iconGrid =
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_view_module_24, theme)
+
+
+        appBarChangeManager.setOnMenuItemClickListener {
+            if (recycler.layoutManager == linerManager) {
+                recycler.layoutManager = gridManager
+                it.icon = iconLiner
+            } else {
+                recycler.layoutManager = linerManager
+                it.icon = iconGrid
+            }
+
+            true
+        }
     }
 
     private fun initRecyclerView() {
@@ -87,7 +108,6 @@ class MainFragment : Fragment(), View.OnClickListener {
             } else {
                 val direction: NavDirections =
                     MainFragmentDirections.actionNavHomeToEditFragment(note, true, key)
-                val fabKey = getString(R.string.transition_fab_key)
                 card.isTransitionGroup = true
                 val extras = FragmentNavigatorExtras(card to key)
                 findNavController().navigate(direction, extras)
@@ -144,7 +164,11 @@ class MainFragment : Fragment(), View.OnClickListener {
                 if (!CARD_CHECKING) {
                     val note = Note(title = "", content = "", datestamp = "", timestamp = "")
                     val direction: NavDirections =
-                        MainFragmentDirections.actionNavHomeToEditFragment(note, false, key = "trait")
+                        MainFragmentDirections.actionNavHomeToEditFragment(
+                            note,
+                            false,
+                            key = "trait"
+                        )
                     val fabKey = getString(R.string.transition_fab_key)
                     val extras = FragmentNavigatorExtras(fab to "transit")
                     findNavController().navigate(direction, extras)
