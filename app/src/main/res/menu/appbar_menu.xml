@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/change_recycler_manager"
+        android:id="@+id/appbar_change_recycler_manager"
         android:title="Change layout"
         android:icon="@drawable/ic_baseline_view_stream_24"
         app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/appbar_change_theme"
+        android:title="change theme"
+        android:icon="@drawable/ic_baseline_search_24"
+        app:showAsAction="ifRoom" />
 </menu>

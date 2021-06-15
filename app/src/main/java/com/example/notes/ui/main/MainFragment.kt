@@ -1,11 +1,11 @@
 package com.example.notes.ui.main
 
-import android.content.res.Resources
-import android.graphics.ColorFilter
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
@@ -27,6 +27,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 class MainFragment : Fragment(), View.OnClickListener {
 
@@ -49,6 +50,11 @@ class MainFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
+
+        val imm: InputMethodManager =
+            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(activity?.window?.decorView?.windowToken, 0)
+
         fab = binding.fragmentMainFloatingActionButton
         appBar = binding.fragmentMainBottomAppBar
         return binding.root
@@ -61,7 +67,7 @@ class MainFragment : Fragment(), View.OnClickListener {
     }
 
     private fun recyclerViewManagerChanger() {
-        val appBarChangeManager = appBar.menu.findItem(R.id.change_recycler_manager)
+        val appBarChangeManager = appBar.menu.findItem(R.id.appbar_change_recycler_manager)
 
         val linerManager = LinearLayoutManager(context)
         val gridManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
@@ -210,6 +216,40 @@ class MainFragment : Fragment(), View.OnClickListener {
         val iconDrawable =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_add_24, theme)
         fab.setImageDrawable(iconDrawable)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        val searchViewItem = menu?.findItem(R.id.toolbar_main_menu_search)
+        val searchView = searchViewItem?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchView.clearFocus()
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                noteViewModel.allNotes.observe(viewLifecycleOwner){
+                    val list = mutableListOf<Note>()
+                    val filter = newText?.lowercase(Locale.getDefault())
+                    it.forEach { note ->
+                        val title = note.title.lowercase(Locale.getDefault())
+                        val content = note.title.lowercase(Locale.getDefault())
+
+                        if (title.contains(filter.toString()) || content.contains(filter.toString())){
+                            if (!list.contains(note)) list.add(note)
+                        }
+                    }
+                    adapter.setNotes(list)
+                    adapter.notifyDataSetChanged()
+                }
+
+                return false
+            }
+
+        })
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
 

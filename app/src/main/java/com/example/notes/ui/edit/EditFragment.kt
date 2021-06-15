@@ -1,11 +1,14 @@
 package com.example.notes.ui.edit
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,6 +36,7 @@ class EditFragment : Fragment() {
         NoteViewModelFactory((activity?.application as NoteApplication).repository)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,6 +59,9 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditBinding.inflate(inflater, container, false)
+        val imm: InputMethodManager =
+            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(activity?.window?.decorView?.windowToken, 0)
         return binding.root
     }
 
@@ -62,7 +69,6 @@ class EditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val args: EditFragmentArgs by navArgs()
         val note = args.note
         val key = args.key

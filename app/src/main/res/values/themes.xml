@@ -15,39 +15,21 @@
     </style>
 
     <style name="PrimaryTheme.Custom">
-        <item name="android:windowActivityTransitions">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="colorControlActivated">@color/primary</item>
-        <item name="windowActionModeOverlay">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-
         <item name="android:statusBarColor">@color/blue_gray_300</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
         <item name="android:colorPrimary">@color/primary</item>
-
-        <item name="bottomAppBarStyle">@style/AppBar</item>
     </style>
 
     <style name="AppBar" parent="Widget.MaterialComponents.BottomAppBar">
-        <item name="android:backgroundTint">@color/blue_gray_300</item>
 
     </style>
 
-    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:background">@color/blue_gray_300</item>
+
+    <style name="FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton"></style>
+
+    <style name="Toolbar">
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
-
-    <style name="FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="android:backgroundTint">@color/blue_gray_300</item>
-    </style>
-
-    <style name="NavigationView" parent="PrimaryTheme.Custom">
-        <item name="android:background">@color/blue_gray_300</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-
 
 
 </resources>
