@@ -28,7 +28,8 @@
 
 ## Instalation
 
-You can use [app-release.apk](https://github.com/Slex93/Notes/blob/master/app/release/app-release.apk) 
+You can use [Prerelease](https://github.com/Slex93/Notes/releases) 
+
 - Or write me to get access to close test version in Play Market
 
 ## Screenshots
