@@ -26,7 +26,7 @@
 - Navigation component / Jetpack's navigation
 - Coroutines
 
-## Instalation
+## Installation
 
 You can use [Prerelease](https://github.com/Slex93/Notes/releases) 
 
