@@ -14,9 +14,9 @@
   
 - The simple Android Application - Notes. 
 - Created like education application to show (demonstrate) my own basic knowledge. 
-- This project is made in Material design guidelines 
+- This project is made in Material design guidelines.
 - Used to be my first application in Play Market. 
-- In the future it may something more.
+- In the future it may be something more.
 
 ## Tools
 
