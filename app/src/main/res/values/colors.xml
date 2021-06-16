@@ -9,11 +9,14 @@
     <color name="white">#FFFFFFFF</color>
 
     <!--Grey-->
-    <color name="grey_50">#FAFAFA</color>
+    <color name="indigo">#E8EAF6</color>
 
+    <color name="purple_50">#E0F7FA</color>
     <color name="blue_gray_300">#90A4AE</color>
     <color name="background">#f2e9ff</color>
     <color name="primary">#975BFF</color>
 
     <color name="deep_purple_300">#9575CD</color>
+
+    <color name="transparent">#00FFFFFF</color>
 </resources>

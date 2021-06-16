@@ -18,8 +18,10 @@
         <item name="android:statusBarColor">@color/black</item>
     </style>
 
-    <style name="AppBar" parent="Widget.MaterialComponents.BottomAppBar">
+    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/black</item>
     </style>
 
+    <style name="RecyclerView" />
 
 </resources>

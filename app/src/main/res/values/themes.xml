@@ -15,21 +15,21 @@
     </style>
 
     <style name="PrimaryTheme.Custom">
-        <item name="android:statusBarColor">@color/blue_gray_300</item>
+        <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
-        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimary">@color/deep_purple_300</item>
     </style>
 
-    <style name="AppBar" parent="Widget.MaterialComponents.BottomAppBar">
-
+    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/white</item>
     </style>
 
-
-    <style name="FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton"></style>
-
-    <style name="Toolbar">
-        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    <style name="RecyclerView">
+        <!--<item name="android:background">@color/indigo</item>-->
     </style>
 
+    <style name="MainFragment">
+        <item name="android:background">@color/indigo</item>
 
+    </style>
 </resources>

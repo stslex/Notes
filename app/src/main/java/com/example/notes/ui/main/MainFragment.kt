@@ -24,6 +24,7 @@ import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
 import com.example.notes.model.base.Note
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -39,6 +40,7 @@ class MainFragment : Fragment(), View.OnClickListener {
     private val checkCards = mutableListOf<MaterialCardView>()
     private lateinit var fab: FloatingActionButton
     private lateinit var appBar: BottomAppBar
+    private lateinit var navView: BottomNavigationView
 
     private val noteViewModel: NoteViewModel by viewModels {
         NoteViewModelFactory((activity?.application as NoteApplication).repository)
@@ -50,45 +52,59 @@ class MainFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-
-        val imm: InputMethodManager =
-            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(activity?.window?.decorView?.windowToken, 0)
-
-        fab = binding.fragmentMainFloatingActionButton
-        appBar = binding.fragmentMainBottomAppBar
+        initFunc()
         return binding.root
     }
 
+    private fun initFunc() {
+        hideKeyboard()
+        setHasOptionsMenu(true)
+        val toolbar = (activity as AppCompatActivity).supportActionBar
+        toolbar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    private fun hideKeyboard() {
+        val imm: InputMethodManager =
+            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(activity?.window?.decorView?.windowToken, 0)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val toolbar = (activity as AppCompatActivity).supportActionBar
+        toolbar?.setDisplayShowHomeEnabled(true)
+        toolbar?.setHomeButtonEnabled(true)
+        fab = binding.fab
+        appBar = binding.bottomBar
+        navView = binding.bottomNavigation
+
         fab.setOnClickListener(this)
         initRecyclerView()
         recyclerViewManagerChanger()
     }
 
     private fun recyclerViewManagerChanger() {
-        val appBarChangeManager = appBar.menu.findItem(R.id.appbar_change_recycler_manager)
+
+        val appBarChangeManager = navView.menu.findItem(R.id.action_change_layout)
 
         val linerManager = LinearLayoutManager(context)
         val gridManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
         val theme = this.activity?.theme
         val iconLiner =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_view_stream_24, theme)
-
         val iconGrid =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_view_module_24, theme)
-
 
         appBarChangeManager.setOnMenuItemClickListener {
             if (recycler.layoutManager == linerManager) {
                 recycler.layoutManager = gridManager
-                it.icon = iconLiner
+                it.icon = iconGrid
+                it.title = "Grid"
             } else {
                 recycler.layoutManager = linerManager
-                it.icon = iconGrid
+                it.icon = iconLiner
+                it.title = "Liner"
             }
-
-            true
+            false
         }
     }
 
@@ -175,9 +191,7 @@ class MainFragment : Fragment(), View.OnClickListener {
                             false,
                             key = "trait"
                         )
-                    val fabKey = getString(R.string.transition_fab_key)
-                    val extras = FragmentNavigatorExtras(fab to "transit")
-                    findNavController().navigate(direction, extras)
+                    findNavController().navigate(direction)
                 } else {
                     noteViewModel.deleteNotes(checkNotes)
                     checkCards.forEach { it.isChecked = false }
@@ -189,6 +203,7 @@ class MainFragment : Fragment(), View.OnClickListener {
                         noteViewModel.insertAll(checkNotes)
                         val snackBar = Snackbar.make(it, "It's Canceled", Snackbar.LENGTH_SHORT)
                         snackBar.anchorView = fab
+                        snackBar.setAction("OK") {}
                         snackBar.show()
                     }
                     snackBar.show()
@@ -203,6 +218,9 @@ class MainFragment : Fragment(), View.OnClickListener {
 
     private fun statusCheckingVisible() {
         appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+        navView.menu.clear()
+        navView.inflateMenu(R.menu.bottom_menu_remove)
+
         val theme = resources.newTheme()
         val iconDrawable =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_remove_24, theme)
@@ -212,43 +230,50 @@ class MainFragment : Fragment(), View.OnClickListener {
     private fun statusPrimaryVisible() {
         CARD_CHECKING = false
         appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+        navView.menu.clear()
+        navView.inflateMenu(R.menu.bottom_menu)
+        recyclerViewManagerChanger()
+
         val theme = resources.newTheme()
         val iconDrawable =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_add_24, theme)
         fab.setImageDrawable(iconDrawable)
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
-        val searchViewItem = menu?.findItem(R.id.toolbar_main_menu_search)
-        val searchView = searchViewItem?.actionView as SearchView
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        val searchItem = menu.findItem(R.id.toolbar_main_menu_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchView.clearFocus()
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                noteViewModel.allNotes.observe(viewLifecycleOwner){
+                noteViewModel.allNotes.observe(viewLifecycleOwner) {
                     val list = mutableListOf<Note>()
                     val filter = newText?.lowercase(Locale.getDefault())
                     it.forEach { note ->
                         val title = note.title.lowercase(Locale.getDefault())
-                        val content = note.title.lowercase(Locale.getDefault())
+                        val content = note.content.lowercase(Locale.getDefault())
 
-                        if (title.contains(filter.toString()) || content.contains(filter.toString())){
+                        if (title.contains(filter.toString()) || content.contains(filter.toString())) {
                             if (!list.contains(note)) list.add(note)
                         }
                     }
                     adapter.setNotes(list)
                     adapter.notifyDataSetChanged()
                 }
-
                 return false
             }
 
         })
+
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
