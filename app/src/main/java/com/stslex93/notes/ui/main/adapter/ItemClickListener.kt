@@ -1,7 +1,7 @@
-package com.example.notes.ui.main.adapter
+package com.stslex93.notes.ui.main.adapter
 
-import com.example.notes.model.base.Note
 import com.google.android.material.card.MaterialCardView
+import com.stslex93.notes.model.base.Note
 
 class ItemClickListener(
     val clickListener: (MaterialCardView, Note, String) -> Unit,

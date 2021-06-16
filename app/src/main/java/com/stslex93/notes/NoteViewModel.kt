@@ -1,12 +1,14 @@
-package com.example.notes
+package com.stslex93.notes
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.notes.model.base.Note
-import com.example.notes.model.NoteRepository
+import com.stslex93.notes.model.NoteRepository
+import com.stslex93.notes.model.base.Note
 import kotlinx.coroutines.launch
 
 class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
+
+    var theme: MutableLiveData<Boolean> = repository.theme
+
     val allNotes: LiveData<List<Note>> = repository.allNotes.asLiveData()
 
     fun insert(note: Note) = viewModelScope.launch {

@@ -1,4 +1,4 @@
-package com.example.notes.ui.edit
+package com.stslex93.notes.ui.edit
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.example.notes.NoteApplication
-import com.example.notes.NoteViewModel
-import com.example.notes.NoteViewModelFactory
-import com.example.notes.databinding.FragmentEditBinding
-import com.example.notes.model.base.Note
-import com.example.notes.utilites.hideKeyBoard
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialElevationScale
+import com.stslex93.notes.NoteApplication
+import com.stslex93.notes.NoteViewModel
+import com.stslex93.notes.NoteViewModelFactory
+import com.stslex93.notes.databinding.FragmentEditBinding
+import com.stslex93.notes.model.base.Note
+import com.stslex93.notes.utilites.hideKeyBoard
 import java.text.SimpleDateFormat
 
 class EditFragment : Fragment() {

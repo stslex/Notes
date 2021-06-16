@@ -1,8 +1,8 @@
-package com.example.notes
+package com.stslex93.notes
 
 import android.app.Application
-import com.example.notes.model.NoteRepository
-import com.example.notes.model.database.NoteRoomDatabase
+import com.stslex93.notes.model.NoteRepository
+import com.stslex93.notes.model.database.NoteRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 

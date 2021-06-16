@@ -1,4 +1,4 @@
-package com.example.notes.utilites
+package com.stslex93.notes.utilites
 
 import android.content.Context
 import android.view.inputmethod.InputMethodManager

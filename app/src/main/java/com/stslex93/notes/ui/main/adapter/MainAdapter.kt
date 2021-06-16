@@ -1,10 +1,10 @@
-package com.example.notes.ui.main.adapter
+package com.stslex93.notes.ui.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notes.databinding.ItemRecyclerMainBinding
-import com.example.notes.model.base.Note
+import com.stslex93.notes.databinding.ItemRecyclerMainBinding
+import com.stslex93.notes.model.base.Note
 
 class MainAdapter(private val clickListener: ItemClickListener) :
     RecyclerView.Adapter<MainViewHolder>() {

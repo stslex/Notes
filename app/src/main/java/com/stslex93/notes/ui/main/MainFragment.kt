@@ -1,4 +1,4 @@
-package com.example.notes.ui.main
+package com.stslex93.notes.ui.main
 
 import android.os.Bundle
 import android.view.*
@@ -15,20 +15,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.notes.NoteApplication
-import com.example.notes.NoteViewModel
-import com.example.notes.NoteViewModelFactory
-import com.example.notes.R
-import com.example.notes.databinding.FragmentMainBinding
-import com.example.notes.model.base.Note
-import com.example.notes.ui.main.adapter.ItemClickListener
-import com.example.notes.ui.main.adapter.MainAdapter
-import com.example.notes.utilites.hideKeyBoard
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.stslex93.notes.NoteApplication
+import com.stslex93.notes.NoteViewModel
+import com.stslex93.notes.NoteViewModelFactory
+import com.stslex93.notes.R
+import com.stslex93.notes.databinding.FragmentMainBinding
+import com.stslex93.notes.model.base.Note
+import com.stslex93.notes.ui.main.adapter.ItemClickListener
+import com.stslex93.notes.ui.main.adapter.MainAdapter
+import com.stslex93.notes.utilites.hideKeyBoard
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -111,8 +111,15 @@ class MainFragment : Fragment() {
     }
 
     private fun onMenuItemClick() {
-        val appBarChangeManager = navView.menu.findItem(R.id.action_change_layout)
-
+        val itemLayout = navView.menu.findItem(R.id.action_change_layout)
+        val itemTheme = navView.menu.findItem(R.id.action_change_theme)
+        itemTheme.setOnMenuItemClickListener {
+            val snackbar = Snackbar.make(binding.root, "Be available soon", Snackbar.LENGTH_SHORT)
+            snackbar.anchorView = binding.fab
+            snackbar.setAction("OK") {}
+            snackbar.show()
+            false
+        }
         val linerManager = LinearLayoutManager(context)
         val gridManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
         val theme = this.activity?.theme
@@ -121,7 +128,7 @@ class MainFragment : Fragment() {
         val iconGrid =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_view_module_24, theme)
 
-        appBarChangeManager.setOnMenuItemClickListener {
+        itemLayout.setOnMenuItemClickListener {
             when (recycler.layoutManager) {
                 linerManager -> {
                     recycler.layoutManager = gridManager

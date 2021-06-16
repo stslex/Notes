@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.notes.ui.main.MainFragment"
+        android:name="com.stslex93.notes.ui.main.MainFragment"
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_nav_home_to_editFragment"
@@ -15,17 +15,17 @@
     </fragment>
     <fragment
         android:id="@+id/editFragment"
-        android:name="com.example.notes.ui.edit.EditFragment">
+        android:name="com.stslex93.notes.ui.edit.EditFragment">
         <argument
             android:name="note"
-            app:argType="com.example.notes.model.base.Note"
-            app:nullable="true"/>
+            app:argType="com.stslex93.notes.model.base.Note"
+            app:nullable="true" />
         <argument
             android:name="edit"
-            app:argType="boolean"/>
+            app:argType="boolean" />
         <argument
             android:name="key"
-            app:argType="string"/>
+            app:argType="string" />
     </fragment>
 
 </navigation>

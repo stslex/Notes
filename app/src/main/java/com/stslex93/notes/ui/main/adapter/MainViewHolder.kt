@@ -1,9 +1,9 @@
-package com.example.notes.ui.main.adapter
+package com.stslex93.notes.ui.main.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notes.databinding.ItemRecyclerMainBinding
-import com.example.notes.model.base.Note
+import com.stslex93.notes.databinding.ItemRecyclerMainBinding
+import com.stslex93.notes.model.base.Note
 
 class MainViewHolder(private val binding: ItemRecyclerMainBinding):
     RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {

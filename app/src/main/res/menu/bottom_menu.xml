@@ -17,7 +17,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_view_dashboard"
+        android:id="@+id/action_change_theme"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_style_24"
         android:title="Style"
