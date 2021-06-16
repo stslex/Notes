@@ -6,7 +6,7 @@
 ## Table of Contents
 
 - [Description](#description)
-- [Tools](#requirements)
+- [Tools](#tools)
 - [Installation](#installation)
 - [Screenshots](#screenshots)
 
