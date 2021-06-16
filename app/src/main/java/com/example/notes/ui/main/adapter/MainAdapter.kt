@@ -1,4 +1,4 @@
-package com.example.notes.ui.main
+package com.example.notes.ui.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.databinding.ItemRecyclerMainBinding
 import com.example.notes.model.base.Note
 
-class MainAdapter(private val clickListener: ItemClickListener) : RecyclerView.Adapter<MainViewHolder>() {
+class MainAdapter(private val clickListener: ItemClickListener) :
+    RecyclerView.Adapter<MainViewHolder>() {
 
     private var notes = mutableListOf<Note>()
 
@@ -17,7 +18,8 @@ class MainAdapter(private val clickListener: ItemClickListener) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind(notes[position], clickListener, position)
+        holder.bind(notes[position], position)
+        holder.setClickListeners(clickListener)
     }
 
     override fun getItemCount(): Int = notes.size

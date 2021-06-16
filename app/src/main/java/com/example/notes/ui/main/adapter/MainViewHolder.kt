@@ -1,4 +1,4 @@
-package com.example.notes.ui.main
+package com.example.notes.ui.main.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -9,18 +9,20 @@ class MainViewHolder(private val binding: ItemRecyclerMainBinding):
     RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     private lateinit var clickListener: ItemClickListener
-    private lateinit var note:Note
-    private lateinit var key:String
+    private lateinit var note: Note
+    private lateinit var key: String
 
-    fun bind(note: Note, clickListener: ItemClickListener, position: Int) {
+    fun bind(note: Note, position: Int) {
         this.note = note
-        this.clickListener = clickListener
-
         binding.itemRecyclerMainTitle.text = note.title
         binding.itemRecyclerMainContent.text = note.content
 
         key = "card$position"
         binding.mainItemCard.transitionName = key
+    }
+
+    fun setClickListeners(clickListener: ItemClickListener) {
+        this.clickListener = clickListener
 
         binding.root.setOnClickListener(this)
         binding.root.setOnLongClickListener(this)

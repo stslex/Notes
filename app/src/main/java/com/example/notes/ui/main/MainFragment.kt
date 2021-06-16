@@ -1,9 +1,7 @@
 package com.example.notes.ui.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -23,6 +21,9 @@ import com.example.notes.NoteViewModelFactory
 import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
 import com.example.notes.model.base.Note
+import com.example.notes.ui.main.adapter.ItemClickListener
+import com.example.notes.ui.main.adapter.MainAdapter
+import com.example.notes.utilites.hideKeyBoard
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.card.MaterialCardView
@@ -30,7 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
-class MainFragment : Fragment(), View.OnClickListener {
+class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var recycler: RecyclerView
@@ -52,38 +53,64 @@ class MainFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        initFunc()
         return binding.root
     }
 
-    private fun initFunc() {
-        hideKeyboard()
-        setHasOptionsMenu(true)
-        val toolbar = (activity as AppCompatActivity).supportActionBar
-        toolbar?.setDisplayHomeAsUpEnabled(false)
-    }
-
-    private fun hideKeyboard() {
-        val imm: InputMethodManager =
-            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(activity?.window?.decorView?.windowToken, 0)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val toolbar = (activity as AppCompatActivity).supportActionBar
-        toolbar?.setDisplayShowHomeEnabled(true)
-        toolbar?.setHomeButtonEnabled(true)
+        super.onViewCreated(view, savedInstanceState)
+        initFields()
+        initRecyclerView()
+        initScreenClickListeners()
+    }
+
+    private fun initScreenClickListeners() {
+        onFabClick()
+        onMenuItemClick()
+    }
+
+    private fun onFabClick() {
+        fab.setOnClickListener {
+            if (!CARD_CHECKING) {
+                val note = Note(title = "", content = "", datestamp = "", timestamp = "")
+                val direction: NavDirections =
+                    MainFragmentDirections.actionNavHomeToEditFragment(
+                        note,
+                        false,
+                        key = "trait"
+                    )
+                findNavController().navigate(direction)
+            } else {
+                noteViewModel.deleteNotes(checkNotes)
+                checkCards.forEach { it.isChecked = false }
+
+                val snackBar =
+                    Snackbar.make(binding.root, "Successful deleted", Snackbar.LENGTH_SHORT)
+                snackBar.anchorView = fab
+                snackBar.setAction("cancel") {
+                    noteViewModel.insertAll(checkNotes)
+                    val snackBar = Snackbar.make(it, "It's Canceled", Snackbar.LENGTH_SHORT)
+                    snackBar.anchorView = fab
+                    snackBar.setAction("OK") {}
+                    snackBar.show()
+                }
+                snackBar.show()
+
+                statusPrimaryVisible()
+            }
+        }
+    }
+
+    private fun initFields() {
+        requireActivity().hideKeyBoard()
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
         fab = binding.fab
         appBar = binding.bottomBar
         navView = binding.bottomNavigation
-
-        fab.setOnClickListener(this)
-        initRecyclerView()
-        recyclerViewManagerChanger()
     }
 
-    private fun recyclerViewManagerChanger() {
-
+    private fun onMenuItemClick() {
         val appBarChangeManager = navView.menu.findItem(R.id.action_change_layout)
 
         val linerManager = LinearLayoutManager(context)
@@ -95,14 +122,17 @@ class MainFragment : Fragment(), View.OnClickListener {
             ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_view_module_24, theme)
 
         appBarChangeManager.setOnMenuItemClickListener {
-            if (recycler.layoutManager == linerManager) {
-                recycler.layoutManager = gridManager
-                it.icon = iconGrid
-                it.title = "Grid"
-            } else {
-                recycler.layoutManager = linerManager
-                it.icon = iconLiner
-                it.title = "Liner"
+            when (recycler.layoutManager) {
+                linerManager -> {
+                    recycler.layoutManager = gridManager
+                    it.icon = iconGrid
+                    it.title = "Grid"
+                }
+                else -> {
+                    recycler.layoutManager = linerManager
+                    it.icon = iconLiner
+                    it.title = "Liner"
+                }
             }
             false
         }
@@ -116,7 +146,6 @@ class MainFragment : Fragment(), View.OnClickListener {
         }
         recycler.adapter = adapter
         recycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-
         postponeEnterTransition()
         recycler.doOnPreDraw {
             startPostponedEnterTransition()
@@ -142,7 +171,6 @@ class MainFragment : Fragment(), View.OnClickListener {
     private fun firstLongInitClick() {
         checkCards.clear()
         checkNotes.clear()
-        CARD_CHECKING = true
         statusCheckingVisible()
     }
 
@@ -180,44 +208,10 @@ class MainFragment : Fragment(), View.OnClickListener {
         checkNotes.add(note)
     }
 
-    override fun onClick(v: View?) {
-        when (v) {
-            fab -> {
-                if (!CARD_CHECKING) {
-                    val note = Note(title = "", content = "", datestamp = "", timestamp = "")
-                    val direction: NavDirections =
-                        MainFragmentDirections.actionNavHomeToEditFragment(
-                            note,
-                            false,
-                            key = "trait"
-                        )
-                    findNavController().navigate(direction)
-                } else {
-                    noteViewModel.deleteNotes(checkNotes)
-                    checkCards.forEach { it.isChecked = false }
-
-                    val snackBar =
-                        Snackbar.make(binding.root, "Successful deleted", Snackbar.LENGTH_SHORT)
-                    snackBar.anchorView = fab
-                    snackBar.setAction("cancel") {
-                        noteViewModel.insertAll(checkNotes)
-                        val snackBar = Snackbar.make(it, "It's Canceled", Snackbar.LENGTH_SHORT)
-                        snackBar.anchorView = fab
-                        snackBar.setAction("OK") {}
-                        snackBar.show()
-                    }
-                    snackBar.show()
-
-                    statusPrimaryVisible()
-
-                }
-            }
-
-        }
-    }
-
     private fun statusCheckingVisible() {
+        CARD_CHECKING = true
         appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+
         navView.menu.clear()
         navView.inflateMenu(R.menu.bottom_menu_remove)
 
@@ -230,16 +224,17 @@ class MainFragment : Fragment(), View.OnClickListener {
     private fun statusPrimaryVisible() {
         CARD_CHECKING = false
         appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+
         navView.menu.clear()
         navView.inflateMenu(R.menu.bottom_menu)
-        recyclerViewManagerChanger()
+
+        onMenuItemClick()
 
         val theme = resources.newTheme()
         val iconDrawable =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_add_24, theme)
         fab.setImageDrawable(iconDrawable)
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
@@ -272,10 +267,8 @@ class MainFragment : Fragment(), View.OnClickListener {
             }
 
         })
-
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-
 }
+
