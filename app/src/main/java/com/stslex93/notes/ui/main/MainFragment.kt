@@ -21,11 +21,11 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.stslex93.notes.NoteApplication
-import com.stslex93.notes.NoteViewModel
-import com.stslex93.notes.NoteViewModelFactory
 import com.stslex93.notes.R
+import com.stslex93.notes.data.model.Note
 import com.stslex93.notes.databinding.FragmentMainBinding
-import com.stslex93.notes.model.base.Note
+import com.stslex93.notes.ui.NoteViewModel
+import com.stslex93.notes.ui.NoteViewModelFactory
 import com.stslex93.notes.ui.main.adapter.ItemClickListener
 import com.stslex93.notes.ui.main.adapter.MainAdapter
 import com.stslex93.notes.utilites.hideKeyBoard

@@ -11,10 +11,10 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialElevationScale
 import com.stslex93.notes.NoteApplication
-import com.stslex93.notes.NoteViewModel
-import com.stslex93.notes.NoteViewModelFactory
+import com.stslex93.notes.data.model.Note
 import com.stslex93.notes.databinding.FragmentEditBinding
-import com.stslex93.notes.model.base.Note
+import com.stslex93.notes.ui.NoteViewModel
+import com.stslex93.notes.ui.NoteViewModelFactory
 import com.stslex93.notes.utilites.hideKeyBoard
 import java.text.SimpleDateFormat
 

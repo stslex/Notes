@@ -6,6 +6,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.stslex93.notes.databinding.ActivityMainBinding
+import com.stslex93.notes.ui.NoteViewModel
+import com.stslex93.notes.ui.NoteViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 

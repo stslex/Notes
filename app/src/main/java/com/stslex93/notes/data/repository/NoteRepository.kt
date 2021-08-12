@@ -1,14 +1,11 @@
-package com.stslex93.notes.model
+package com.stslex93.notes.data.repository
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.MutableLiveData
-import com.stslex93.notes.model.base.Note
-import com.stslex93.notes.model.database.NoteDao
+import com.stslex93.notes.data.model.Note
+import com.stslex93.notes.data.source.NoteDao
 import kotlinx.coroutines.flow.Flow
 
 class NoteRepository(private val noteDao: NoteDao) {
-
-    val theme = MutableLiveData<Boolean>()
 
     val allNotes: Flow<List<Note>> = noteDao.getAll()
 
@@ -19,7 +16,7 @@ class NoteRepository(private val noteDao: NoteDao) {
         noteDao.insert(note)
     }
 
-    suspend fun insertAll(notes: List<Note>){
+    suspend fun insertAll(notes: List<Note>) {
         noteDao.insertAll(notes)
     }
 

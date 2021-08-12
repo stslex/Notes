@@ -1,13 +1,14 @@
-package com.stslex93.notes
+package com.stslex93.notes.ui
 
-import androidx.lifecycle.*
-import com.stslex93.notes.model.NoteRepository
-import com.stslex93.notes.model.base.Note
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.stslex93.notes.data.model.Note
+import com.stslex93.notes.data.repository.NoteRepository
 import kotlinx.coroutines.launch
 
 class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
-
-    var theme: MutableLiveData<Boolean> = repository.theme
 
     val allNotes: LiveData<List<Note>> = repository.allNotes.asLiveData()
 
@@ -33,16 +34,5 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
 
     fun deleteNotes(notes: List<Note>) = viewModelScope.launch {
         repository.deleteNotes(notes)
-    }
-}
-
-class NoteViewModelFactory(private val repository: NoteRepository) :
-        ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return NoteViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

@@ -1,4 +1,4 @@
-package com.stslex93.notes.model.base
+package com.stslex93.notes.data.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

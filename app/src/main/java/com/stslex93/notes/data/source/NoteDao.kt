@@ -1,7 +1,7 @@
-package com.stslex93.notes.model.database
+package com.stslex93.notes.data.source
 
 import androidx.room.*
-import com.stslex93.notes.model.base.Note
+import com.stslex93.notes.data.model.Note
 import kotlinx.coroutines.flow.Flow
 
 @Dao
