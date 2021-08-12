@@ -1,4 +1,4 @@
-package com.stslex93.notes.ui.main.adapter
+package com.stslex93.notes.utilites.clicker
 
 import com.google.android.material.card.MaterialCardView
 import com.stslex93.notes.data.model.Note

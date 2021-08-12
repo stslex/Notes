@@ -4,8 +4,9 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.stslex93.notes.data.model.Note
 import com.stslex93.notes.databinding.ItemRecyclerMainBinding
+import com.stslex93.notes.utilites.clicker.ItemClickListener
 
-class MainViewHolder(private val binding: ItemRecyclerMainBinding):
+class MainViewHolder(private val binding: ItemRecyclerMainBinding) :
     RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     private lateinit var clickListener: ItemClickListener
@@ -16,24 +17,22 @@ class MainViewHolder(private val binding: ItemRecyclerMainBinding):
         this.note = note
         binding.itemRecyclerMainTitle.text = note.title
         binding.itemRecyclerMainContent.text = note.content
-
         key = "card$position"
         binding.mainItemCard.transitionName = key
     }
 
     fun setClickListeners(clickListener: ItemClickListener) {
         this.clickListener = clickListener
-
         binding.root.setOnClickListener(this)
         binding.root.setOnLongClickListener(this)
     }
 
     override fun onClick(v: View?) {
-        clickListener.clickListener(binding.mainItemCard, note, key)
+        clickListener.onClick(binding.mainItemCard, note, key)
     }
 
     override fun onLongClick(v: View?): Boolean {
-        clickListener.onLongClickListener(binding.mainItemCard, note)
+        clickListener.onClickLong(binding.mainItemCard, note)
         return true
     }
 }

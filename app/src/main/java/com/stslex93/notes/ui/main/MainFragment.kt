@@ -26,9 +26,10 @@ import com.stslex93.notes.data.model.Note
 import com.stslex93.notes.databinding.FragmentMainBinding
 import com.stslex93.notes.ui.NoteViewModel
 import com.stslex93.notes.ui.NoteViewModelFactory
-import com.stslex93.notes.ui.main.adapter.ItemClickListener
 import com.stslex93.notes.ui.main.adapter.MainAdapter
+import com.stslex93.notes.utilites.clicker.ItemClickListener
 import com.stslex93.notes.utilites.hideKeyBoard
+import com.stslex93.notes.utilites.snackBarDelete
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -82,19 +83,9 @@ class MainFragment : Fragment() {
             } else {
                 noteViewModel.deleteNotes(checkNotes)
                 checkCards.forEach { it.isChecked = false }
-
-                val snackBar =
-                    Snackbar.make(binding.root, "Successful deleted", Snackbar.LENGTH_SHORT)
-                snackBar.anchorView = fab
-                snackBar.setAction("cancel") {
+                fab.snackBarDelete {
                     noteViewModel.insertAll(checkNotes)
-                    val snackBar = Snackbar.make(it, "It's Canceled", Snackbar.LENGTH_SHORT)
-                    snackBar.anchorView = fab
-                    snackBar.setAction("OK") {}
-                    snackBar.show()
                 }
-                snackBar.show()
-
                 statusPrimaryVisible()
             }
         }

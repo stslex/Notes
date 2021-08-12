@@ -18,7 +18,7 @@
         android:name="com.stslex93.notes.ui.edit.EditFragment">
         <argument
             android:name="note"
-            app:argType="com.stslex93.notes.model.base.Note"
+            app:argType="com.stslex93.notes.data.model.Note"
             app:nullable="true" />
         <argument
             android:name="edit"

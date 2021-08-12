@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.stslex93.notes.data.model.Note
 import com.stslex93.notes.databinding.ItemRecyclerMainBinding
+import com.stslex93.notes.utilites.clicker.ItemClickListener
 
 class MainAdapter(private val clickListener: ItemClickListener) :
     RecyclerView.Adapter<MainViewHolder>() {
