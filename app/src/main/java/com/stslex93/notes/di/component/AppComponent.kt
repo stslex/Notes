@@ -1,6 +1,5 @@
 package com.stslex93.notes.di.component
 
-import com.stslex93.notes.MainActivity
 import com.stslex93.notes.di.module.*
 import com.stslex93.notes.utilites.BaseFragment
 import dagger.Component
@@ -19,6 +18,5 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent {
-    fun inject(activity: MainActivity)
     fun inject(fragment: BaseFragment)
 }

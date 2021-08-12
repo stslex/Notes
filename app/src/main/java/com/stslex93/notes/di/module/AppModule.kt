@@ -1,14 +1,13 @@
 package com.stslex93.notes.di.module
 
 import android.app.Application
-import com.stslex93.notes.NoteApplication
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-interface AppModule {
-    @Binds
+class AppModule(val application: Application) {
+    @Provides
     @Singleton
-    fun bindApplication(app: NoteApplication): Application
+    fun bindApplication(): Application = application
 }
