@@ -5,6 +5,14 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
+import com.stslex93.notes.NoteApplication
+import com.stslex93.notes.di.component.AppComponent
+
+val Context.appComponent: AppComponent
+    get() = when (this) {
+        is NoteApplication -> appComponent
+        else -> this.applicationContext.appComponent
+    }
 
 fun FragmentActivity.hideKeyBoard() {
     val imm: InputMethodManager =

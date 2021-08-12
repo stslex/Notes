@@ -6,7 +6,6 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.doOnPreDraw
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -20,21 +19,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import com.stslex93.notes.NoteApplication
 import com.stslex93.notes.R
-import com.stslex93.notes.data.model.Note
+import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.FragmentMainBinding
 import com.stslex93.notes.ui.NoteViewModel
-import com.stslex93.notes.ui.NoteViewModelFactory
 import com.stslex93.notes.ui.main.adapter.MainAdapter
+import com.stslex93.notes.utilites.BaseFragment
 import com.stslex93.notes.utilites.clicker.ItemClickListener
 import com.stslex93.notes.utilites.hideKeyBoard
 import com.stslex93.notes.utilites.snackBarDelete
 import java.util.*
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentMainBinding
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: MainAdapter
     private var CARD_CHECKING = false
@@ -44,16 +43,14 @@ class MainFragment : Fragment() {
     private lateinit var appBar: BottomAppBar
     private lateinit var navView: BottomNavigationView
 
-    private val noteViewModel: NoteViewModel by viewModels {
-        NoteViewModelFactory((activity?.application as NoteApplication).repository)
-    }
+    private val noteViewModel: NoteViewModel by viewModels { viewModelFactory.get() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -61,12 +58,22 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initFields()
         initRecyclerView()
-        initScreenClickListeners()
-    }
-
-    private fun initScreenClickListeners() {
         onFabClick()
         onMenuItemClick()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initFields() {
+        requireActivity().hideKeyBoard()
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        fab = binding.fab
+        appBar = binding.bottomBar
+        navView = binding.bottomNavigation
     }
 
     private fun onFabClick() {
@@ -83,22 +90,12 @@ class MainFragment : Fragment() {
             } else {
                 noteViewModel.deleteNotes(checkNotes)
                 checkCards.forEach { it.isChecked = false }
-                fab.snackBarDelete {
+                it.snackBarDelete {
                     noteViewModel.insertAll(checkNotes)
                 }
                 statusPrimaryVisible()
             }
         }
-    }
-
-    private fun initFields() {
-        requireActivity().hideKeyBoard()
-        setHasOptionsMenu(true)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
-        fab = binding.fab
-        appBar = binding.bottomBar
-        navView = binding.bottomNavigation
     }
 
     private fun onMenuItemClick() {

@@ -2,7 +2,7 @@ package com.stslex93.notes.ui.main.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.stslex93.notes.data.model.Note
+import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.ItemRecyclerMainBinding
 import com.stslex93.notes.utilites.clicker.ItemClickListener
 

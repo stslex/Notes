@@ -1,36 +1,40 @@
 package com.stslex93.notes.ui.edit
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
-import com.google.android.material.transition.MaterialElevationScale
-import com.stslex93.notes.NoteApplication
-import com.stslex93.notes.data.model.Note
+import com.stslex93.notes.R
+import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.FragmentEditBinding
 import com.stslex93.notes.ui.NoteViewModel
-import com.stslex93.notes.ui.NoteViewModelFactory
+import com.stslex93.notes.utilites.BaseFragment
 import com.stslex93.notes.utilites.hideKeyBoard
 import java.text.SimpleDateFormat
 
-class EditFragment : Fragment() {
+class EditFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentEditBinding
+    private var _binding: FragmentEditBinding? = null
+    private val binding get() = _binding!!
+
     private var flagEdit = false
     private lateinit var note: Note
 
-    private val noteViewModel: NoteViewModel by viewModels {
-        NoteViewModelFactory((activity?.application as NoteApplication).repository)
-    }
+    private val noteViewModel: NoteViewModel by viewModels { viewModelFactory.get() }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setAnimation()
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment
+            duration = getString(R.integer.transition_duration).toLong()
+            scrimColor = Color.TRANSPARENT
+        }
     }
 
     override fun onCreateView(
@@ -38,9 +42,14 @@ class EditFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentEditBinding.inflate(inflater, container, false)
+        _binding = FragmentEditBinding.inflate(inflater, container, false)
         requireActivity().hideKeyBoard()
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 
@@ -93,18 +102,6 @@ class EditFragment : Fragment() {
                 noteViewModel.insert(note)
                 binding.editCardView.transitionName = "newTransition"
             }
-        }
-    }
-
-    private fun setAnimation() {
-        sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = 1000
-        }
-        sharedElementReturnTransition = MaterialContainerTransform().apply {
-            duration = 1000
-        }
-        enterTransition = MaterialElevationScale(true).apply {
-            duration = 1000
         }
     }
 

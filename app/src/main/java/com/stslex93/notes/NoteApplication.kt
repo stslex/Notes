@@ -1,13 +1,13 @@
 package com.stslex93.notes
 
 import android.app.Application
-import com.stslex93.notes.data.repository.NoteRepository
-import com.stslex93.notes.data.source.NoteRoomDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import com.stslex93.notes.di.component.AppComponent
+import com.stslex93.notes.di.component.DaggerAppComponent
 
 class NoteApplication : Application() {
-    private val applicationScope = CoroutineScope(SupervisorJob())
-    val database by lazy { NoteRoomDatabase.getDatabase(this, applicationScope) }
-    val repository by lazy { NoteRepository(database.noteDao()) }
+    lateinit var appComponent: AppComponent
+    override fun onCreate() {
+        super.onCreate()
+        appComponent = DaggerAppComponent.create()
+    }
 }
