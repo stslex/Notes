@@ -8,7 +8,7 @@ import javax.inject.Inject
 class NoteRepositoryImpl @Inject constructor(private val source: NoteDataSource) : NoteRepository {
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    override suspend fun getAll() = source.getAll()
+    override fun getAll() = source.getAll()
     override suspend fun insert(note: Note) = source.insert(note)
     override suspend fun insertAll(notes: List<Note>) = source.insertAll(notes)
     override suspend fun update(note: Note) = source.update(note)
