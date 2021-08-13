@@ -8,5 +8,8 @@
     <string name="content_hint">Content</string>
     <string name="transition_fab_key">transition_floating_action_button</string>
 
-
+    <string name="label_ok">OK</string>
+    <string name="label_successful_deleted">Successful deleted</string>
+    <string name="label_successful_canceled">It\'s canceled</string>
+    <string name="label_cancel">Cancel</string>
 </resources>

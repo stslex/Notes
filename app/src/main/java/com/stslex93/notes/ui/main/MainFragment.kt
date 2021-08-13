@@ -36,7 +36,7 @@ class MainFragment : BaseFragment() {
     private val binding get() = _binding!!
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: MainAdapter
-    private var CARD_CHECKING = false
+    private var cardChecking = false
     private val checkNotes = mutableListOf<Note>()
     private val checkCards = mutableListOf<MaterialCardView>()
     private lateinit var fab: FloatingActionButton
@@ -78,7 +78,7 @@ class MainFragment : BaseFragment() {
 
     private fun onFabClick() {
         fab.setOnClickListener {
-            if (!CARD_CHECKING) {
+            if (!cardChecking) {
                 val note = Note(title = "", content = "", datestamp = "", timestamp = "")
                 val direction: NavDirections =
                     MainFragmentDirections.actionNavHomeToEditFragment(
@@ -149,7 +149,7 @@ class MainFragment : BaseFragment() {
 
     private val clickListener = ItemClickListener(
         { card, note, key ->
-            if (CARD_CHECKING) {
+            if (cardChecking) {
                 checkCardClick(card, note)
             } else {
                 val direction: NavDirections =
@@ -181,7 +181,7 @@ class MainFragment : BaseFragment() {
         if (card.isChecked) {
             cardCheckRemove(card, note)
         } else if (!card.isChecked) {
-            if (!CARD_CHECKING) {
+            if (!cardChecking) {
                 firstLongInitClick()
             }
             cardCheckAdd(card, note)
@@ -204,7 +204,7 @@ class MainFragment : BaseFragment() {
     }
 
     private fun statusCheckingVisible() {
-        CARD_CHECKING = true
+        cardChecking = true
         appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
 
         navView.menu.clear()
@@ -217,7 +217,7 @@ class MainFragment : BaseFragment() {
     }
 
     private fun statusPrimaryVisible() {
-        CARD_CHECKING = false
+        cardChecking = false
         appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
 
         navView.menu.clear()
