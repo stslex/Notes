@@ -56,11 +56,6 @@ class MainFragment : BaseFragment() {
         onMenuItemClick()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun initFields() {
         requireActivity().hideKeyBoard()
         setHasOptionsMenu(true)
@@ -202,29 +197,27 @@ class MainFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
-
-        val searchItem = menu.findItem(R.id.toolbar_main_menu_search)
-        val searchView = searchItem.actionView as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                searchView.clearFocus()
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                noteViewModel.allNotes.observe(viewLifecycleOwner) {
-                    val list = it.filter { note ->
-                        note.title.lowerContains(newText)
-                                || note.content.lowerContains(newText)
+        (menu.findItem(R.id.toolbar_main_menu_search)
+            .actionView as SearchView)
+            .let {
+                it.setOnQueryTextListener(OnQueryTextListener(it) { newText ->
+                    noteViewModel.allNotes.observe(viewLifecycleOwner) { list ->
+                        adapter.setNotes(
+                            list.filter { note ->
+                                note.title.lowerContains(newText) || note.content.lowerContains(
+                                    newText
+                                )
+                            },
+                            search = true
+                        )
                     }
-                    adapter.setNotes(list, search = true)
-                }
-                return false
+                })
             }
-
-        })
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        noteViewModel.allNotes.removeObservers(viewLifecycleOwner)
+    }
 }
