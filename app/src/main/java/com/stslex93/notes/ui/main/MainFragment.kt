@@ -175,21 +175,18 @@ class MainFragment : BaseFragment() {
             ) {}
             false
         }
-        val linerManager = LinearLayoutManager(requireContext())
+        val linearManager = LinearLayoutManager(requireContext())
         val gridManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
 
         itemLayout.setOnMenuItemClickListener {
-            when (recycler.layoutManager) {
-                linerManager -> {
-                    recycler.layoutManager = gridManager
-                    it.icon = getDrawableIcon(R.drawable.ic_baseline_view_module_24)
-                    it.title = "Grid"
-                }
-                else -> {
-                    recycler.layoutManager = linerManager
-                    it.icon = getDrawableIcon(R.drawable.ic_baseline_view_stream_24)
-                    it.title = "Liner"
-                }
+            if (recycler.layoutManager == linearManager) {
+                recycler.layoutManager = gridManager
+                it.icon = getDrawableIcon(R.drawable.ic_baseline_view_module_24)
+                it.title = getString(R.string.label_grid)
+            } else {
+                recycler.layoutManager = linearManager
+                it.icon = getDrawableIcon(R.drawable.ic_baseline_view_stream_24)
+                it.title = getString(R.string.label_linear)
             }
             false
         }
