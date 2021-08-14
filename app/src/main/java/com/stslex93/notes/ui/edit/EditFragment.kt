@@ -27,7 +27,6 @@ class EditFragment : BaseFragment() {
 
     private val noteViewModel: NoteViewModel by viewModels { viewModelFactory.get() }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = MaterialContainerTransform().apply {
@@ -47,29 +46,17 @@ class EditFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val args: EditFragmentArgs by navArgs()
-        val note = args.note
-        val key = args.key
-
-        binding.editCardView.transitionName = key
+        binding.editCardView.transitionName = args.transitionName
         flagEdit = args.edit
-
-        if (note != null) {
-            this.note = note
+        args.note?.let {
+            this.note = it
             if (flagEdit) {
-                binding.editInputTitle.editText?.setText(note.title)
-                binding.editInputContent.editText?.setText(note.content)
+                binding.editInputTitle.editText?.setText(it.title)
+                binding.editInputContent.editText?.setText(it.content)
             }
         }
     }
@@ -89,20 +76,23 @@ class EditFragment : BaseFragment() {
         if (flagEdit) {
             val note = Note(note.id, title, content, datestamp, timestamp)
             noteViewModel.update(note)
-        } else {
-            if (title.isNotEmpty() || content.isNotEmpty()) {
-                val note =
-                    Note(
-                        note.id,
-                        title = title,
-                        content = content,
-                        datestamp = datestamp,
-                        timestamp = timestamp
-                    )
-                noteViewModel.insert(note)
-                binding.editCardView.transitionName = "newTransition"
-            }
+        } else if (title.isNotEmpty() || content.isNotEmpty()) {
+            val note =
+                Note(
+                    note.id,
+                    title = title,
+                    content = content,
+                    datestamp = datestamp,
+                    timestamp = timestamp
+                )
+            noteViewModel.insert(note)
+            binding.editCardView.transitionName = "newTransition"
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

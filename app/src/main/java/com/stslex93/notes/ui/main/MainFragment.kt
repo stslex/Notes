@@ -72,7 +72,7 @@ class MainFragment : BaseFragment() {
                 it.navigation(note, false)
             } else {
                 noteViewModel.deleteNotes(mainNoteClick.checkNotes)
-                mainNoteClick.checkCards.forEach { it.isChecked = false }
+                mainNoteClick.checkCards.forEach { card -> card.isChecked = false }
                 it.showSnackBar(
                     getString(R.string.label_successful_deleted),
                     getString(R.string.label_successful_canceled)
@@ -111,7 +111,7 @@ class MainFragment : BaseFragment() {
     }
 
     private val clickListener = ItemClickListener(
-        { card, note, key ->
+        { card, note ->
             if (cardChecking) {
                 checkCardClick(card, note)
             } else {

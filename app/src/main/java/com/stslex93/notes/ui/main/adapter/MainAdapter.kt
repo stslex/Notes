@@ -19,7 +19,7 @@ class MainAdapter(private val clickListener: ItemClickListener) :
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind(notes[position], position)
+        holder.bind(notes[position])
         holder.setClickListeners(clickListener)
     }
 

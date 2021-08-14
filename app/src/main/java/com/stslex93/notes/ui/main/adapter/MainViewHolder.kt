@@ -11,14 +11,12 @@ class MainViewHolder(private val binding: ItemRecyclerMainBinding) :
 
     private lateinit var clickListener: ItemClickListener
     private lateinit var note: Note
-    private lateinit var key: String
 
-    fun bind(note: Note, position: Int) {
+    fun bind(note: Note) {
         this.note = note
         binding.itemRecyclerMainTitle.text = note.title
         binding.itemRecyclerMainContent.text = note.content
-        key = "card$position"
-        binding.mainItemCard.transitionName = key
+        binding.mainItemCard.transitionName = note.id.toString()
     }
 
     fun setClickListeners(clickListener: ItemClickListener) {
@@ -28,7 +26,7 @@ class MainViewHolder(private val binding: ItemRecyclerMainBinding) :
     }
 
     override fun onClick(v: View) {
-        clickListener.onClick(binding.mainItemCard, note, key)
+        clickListener.onClick(binding.mainItemCard, note)
     }
 
     override fun onLongClick(v: View): Boolean {

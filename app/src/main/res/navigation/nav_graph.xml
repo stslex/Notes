@@ -24,7 +24,7 @@
             android:name="edit"
             app:argType="boolean" />
         <argument
-            android:name="key"
+            android:name="transition_name"
             android:defaultValue="default"
             app:argType="string" />
     </fragment>
