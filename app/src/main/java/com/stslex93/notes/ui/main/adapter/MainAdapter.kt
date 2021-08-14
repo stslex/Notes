@@ -25,8 +25,13 @@ class MainAdapter(private val clickListener: ItemClickListener) :
 
     override fun getItemCount(): Int = notes.size
 
-    fun setNotes(notes: List<Note>) {
+    fun setNotes(notes: List<Note>, search: Boolean = false) {
+        val positionStart = this.notes.size
         this.notes = notes as MutableList<Note>
-        notifyDataSetChanged()
+        if (search) {
+            notifyItemRangeChanged(0, positionStart)
+        } else {
+            notifyItemRangeChanged(positionStart, this.notes.size)
+        }
     }
 }

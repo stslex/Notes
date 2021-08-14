@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,17 +16,13 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.stslex93.notes.R
 import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.FragmentMainBinding
 import com.stslex93.notes.ui.NoteViewModel
 import com.stslex93.notes.ui.main.adapter.MainAdapter
-import com.stslex93.notes.utilites.BaseFragment
+import com.stslex93.notes.utilites.*
 import com.stslex93.notes.utilites.clicker.ItemClickListener
-import com.stslex93.notes.utilites.hideKeyBoard
-import com.stslex93.notes.utilites.snackBarDelete
-import java.util.*
 
 class MainFragment : BaseFragment() {
 
@@ -37,8 +31,8 @@ class MainFragment : BaseFragment() {
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: MainAdapter
     private var cardChecking = false
-    private val checkNotes = mutableListOf<Note>()
-    private val checkCards = mutableListOf<MaterialCardView>()
+    private val mainNoteClick = MainNoteClick()
+
     private lateinit var fab: FloatingActionButton
     private lateinit var appBar: BottomAppBar
     private lateinit var navView: BottomNavigationView
@@ -80,56 +74,22 @@ class MainFragment : BaseFragment() {
         fab.setOnClickListener {
             if (!cardChecking) {
                 val note = Note(title = "", content = "", datestamp = "", timestamp = "")
-                val direction: NavDirections =
-                    MainFragmentDirections.actionNavHomeToEditFragment(
-                        note,
-                        false,
-                        key = "trait"
-                    )
-                findNavController().navigate(direction)
+                it.navigation(note, false)
             } else {
-                noteViewModel.deleteNotes(checkNotes)
-                checkCards.forEach { it.isChecked = false }
-                it.snackBarDelete {
-                    noteViewModel.insertAll(checkNotes)
+                noteViewModel.deleteNotes(mainNoteClick.checkNotes)
+                mainNoteClick.checkCards.forEach { it.isChecked = false }
+                it.showSnackBar(
+                    getString(R.string.label_successful_deleted),
+                    getString(R.string.label_successful_canceled)
+                ) {
+                    noteViewModel.insertAll(mainNoteClick.checkNotes)
+                    it.showSnackBar(
+                        getString(R.string.label_successful_canceled),
+                        getString(R.string.label_ok)
+                    ) {}
                 }
                 statusPrimaryVisible()
             }
-        }
-    }
-
-    private fun onMenuItemClick() {
-        val itemLayout = navView.menu.findItem(R.id.action_change_layout)
-        val itemTheme = navView.menu.findItem(R.id.action_change_theme)
-        itemTheme.setOnMenuItemClickListener {
-            val snackbar = Snackbar.make(binding.root, "Be available soon", Snackbar.LENGTH_SHORT)
-            snackbar.anchorView = binding.fab
-            snackbar.setAction("OK") {}
-            snackbar.show()
-            false
-        }
-        val linerManager = LinearLayoutManager(context)
-        val gridManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
-        val theme = this.activity?.theme
-        val iconLiner =
-            ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_view_stream_24, theme)
-        val iconGrid =
-            ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_view_module_24, theme)
-
-        itemLayout.setOnMenuItemClickListener {
-            when (recycler.layoutManager) {
-                linerManager -> {
-                    recycler.layoutManager = gridManager
-                    it.icon = iconGrid
-                    it.title = "Grid"
-                }
-                else -> {
-                    recycler.layoutManager = linerManager
-                    it.icon = iconLiner
-                    it.title = "Liner"
-                }
-            }
-            false
         }
     }
 
@@ -147,16 +107,20 @@ class MainFragment : BaseFragment() {
         }
     }
 
+    private fun View.navigation(note: Note, edit: Boolean) {
+        val direction =
+            MainFragmentDirections.actionNavHomeToEditFragment(note, edit, this.transitionName)
+        if (this is MaterialCardView) this.isTransitionGroup = true
+        val extras = FragmentNavigatorExtras(this to this.transitionName)
+        findNavController().navigate(direction, extras)
+    }
+
     private val clickListener = ItemClickListener(
         { card, note, key ->
             if (cardChecking) {
                 checkCardClick(card, note)
             } else {
-                val direction: NavDirections =
-                    MainFragmentDirections.actionNavHomeToEditFragment(note, true, key)
-                card.isTransitionGroup = true
-                val extras = FragmentNavigatorExtras(card to key)
-                findNavController().navigate(direction, extras)
+                card.navigation(note, true)
             }
 
         }, { card, note ->
@@ -164,71 +128,76 @@ class MainFragment : BaseFragment() {
         })
 
     private fun firstLongInitClick() {
-        checkCards.clear()
-        checkNotes.clear()
+        mainNoteClick.checkCards.clear()
+        mainNoteClick.checkNotes.clear()
         statusCheckingVisible()
     }
 
     private fun checkCardClick(card: MaterialCardView, note: Note) {
         if (card.isChecked) {
-            cardCheckRemove(card, note)
-        } else if (!card.isChecked) {
-            cardCheckAdd(card, note)
+            mainNoteClick.cardCheckRemove(card, note) { statusPrimaryVisible() }
+        } else {
+            mainNoteClick.cardCheckAdd(card, note)
         }
     }
 
     private fun checkCardLongClick(card: MaterialCardView, note: Note) {
         if (card.isChecked) {
-            cardCheckRemove(card, note)
-        } else if (!card.isChecked) {
+            mainNoteClick.cardCheckRemove(card, note) { statusPrimaryVisible() }
+        } else {
             if (!cardChecking) {
                 firstLongInitClick()
             }
-            cardCheckAdd(card, note)
+            mainNoteClick.cardCheckAdd(card, note)
         }
-    }
-
-    private fun cardCheckRemove(card: MaterialCardView, note: Note) {
-        card.isChecked = false
-        checkCards.remove(card)
-        checkNotes.remove(note)
-        if (checkCards.isEmpty()) {
-            statusPrimaryVisible()
-        }
-    }
-
-    private fun cardCheckAdd(card: MaterialCardView, note: Note) {
-        card.isChecked = true
-        checkCards.add(card)
-        checkNotes.add(note)
     }
 
     private fun statusCheckingVisible() {
         cardChecking = true
         appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-
         navView.menu.clear()
         navView.inflateMenu(R.menu.bottom_menu_remove)
-
-        val theme = resources.newTheme()
-        val iconDrawable =
-            ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_remove_24, theme)
-        fab.setImageDrawable(iconDrawable)
+        fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
     }
 
     private fun statusPrimaryVisible() {
         cardChecking = false
         appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-
         navView.menu.clear()
         navView.inflateMenu(R.menu.bottom_menu)
-
         onMenuItemClick()
+        fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
+    }
 
-        val theme = resources.newTheme()
-        val iconDrawable =
-            ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_add_24, theme)
-        fab.setImageDrawable(iconDrawable)
+    private fun onMenuItemClick() {
+        val itemLayout = navView.menu.findItem(R.id.action_change_layout)
+        val itemTheme = navView.menu.findItem(R.id.action_change_theme)
+
+        itemTheme.setOnMenuItemClickListener {
+            fab.showSnackBar(
+                text = getString(R.string.label_be_soon),
+                textAction = getString(R.string.label_ok)
+            ) {}
+            false
+        }
+        val linerManager = LinearLayoutManager(requireContext())
+        val gridManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
+
+        itemLayout.setOnMenuItemClickListener {
+            when (recycler.layoutManager) {
+                linerManager -> {
+                    recycler.layoutManager = gridManager
+                    it.icon = getDrawableIcon(R.drawable.ic_baseline_view_module_24)
+                    it.title = "Grid"
+                }
+                else -> {
+                    recycler.layoutManager = linerManager
+                    it.icon = getDrawableIcon(R.drawable.ic_baseline_view_stream_24)
+                    it.title = "Liner"
+                }
+            }
+            false
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -243,20 +212,13 @@ class MainFragment : BaseFragment() {
                 return false
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
+            override fun onQueryTextChange(newText: String): Boolean {
                 noteViewModel.allNotes.observe(viewLifecycleOwner) {
-                    val list = mutableListOf<Note>()
-                    val filter = newText?.lowercase(Locale.getDefault())
-                    it.forEach { note ->
-                        val title = note.title.lowercase(Locale.getDefault())
-                        val content = note.content.lowercase(Locale.getDefault())
-
-                        if (title.contains(filter.toString()) || content.contains(filter.toString())) {
-                            if (!list.contains(note)) list.add(note)
-                        }
+                    val list = it.filter { note ->
+                        note.title.lowerContains(newText)
+                                || note.content.lowerContains(newText)
                     }
-                    adapter.setNotes(list)
-                    adapter.notifyDataSetChanged()
+                    adapter.setNotes(list, search = true)
                 }
                 return false
             }
@@ -266,4 +228,3 @@ class MainFragment : BaseFragment() {
     }
 
 }
-

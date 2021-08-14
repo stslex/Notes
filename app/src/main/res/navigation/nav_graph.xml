@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.stslex93.notes.ui.main.MainFragment"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_nav_home_to_editFragment"
             app:destination="@id/editFragment" />
@@ -25,6 +25,7 @@
             app:argType="boolean" />
         <argument
             android:name="key"
+            android:defaultValue="default"
             app:argType="string" />
     </fragment>
 

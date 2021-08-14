@@ -27,11 +27,11 @@ class MainViewHolder(private val binding: ItemRecyclerMainBinding) :
         binding.root.setOnLongClickListener(this)
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
         clickListener.onClick(binding.mainItemCard, note, key)
     }
 
-    override fun onLongClick(v: View?): Boolean {
+    override fun onLongClick(v: View): Boolean {
         clickListener.onClickLong(binding.mainItemCard, note)
         return true
     }

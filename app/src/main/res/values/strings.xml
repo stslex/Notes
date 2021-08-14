@@ -12,4 +12,11 @@
     <string name="label_successful_deleted">Successful deleted</string>
     <string name="label_successful_canceled">It\'s canceled</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_be_soon">Be available soon</string>
+    <string name="label_grid">Grid</string>
+    <string name="label_linear">Linear</string>
+
+    <string name="grid_layout">Grid Layout</string>
+    <string name="add_note">Add Note</string>
+    <string name="style">Style</string>
 </resources>

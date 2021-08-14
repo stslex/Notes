@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_change_layout"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_view_module_24"
-        android:title="Grid Layout"
-        app:showAsAction="always" />
+        android:title="@string/grid_layout"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 
     <item
         android:checkable="false"
         android:checked="false"
         android:enabled="false"
-        android:title="Add Note"
+        android:title="@string/add_note"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/action_change_theme"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_style_24"
-        android:title="Style"
+        android:title="@string/style"
         app:showAsAction="withText" />
 
 </menu>
