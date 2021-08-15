@@ -1,29 +1,29 @@
 package com.stslex93.notes.ui.main
 
 import com.google.android.material.card.MaterialCardView
-import com.stslex93.notes.data.entity.Note
 
 open class MainNoteClick {
-    val checkNotes = mutableListOf<Note>()
+    val checkNotes = mutableListOf<String>()
     val checkCards = mutableListOf<MaterialCardView>()
 
     inline fun cardCheckRemove(
         card: MaterialCardView,
-        note: Note,
+        id: String,
         crossinline function: () -> Unit
     ) {
         card.isChecked = false
         checkCards.remove(card)
-        checkNotes.remove(note)
+        checkNotes.remove(id)
         if (checkCards.isEmpty()) {
             function()
         }
     }
 
-    fun cardCheckAdd(card: MaterialCardView, note: Note) {
+    fun cardCheckAdd(card: MaterialCardView, id: String) {
         card.isChecked = true
         checkCards.add(card)
-        checkNotes.add(note)
+        checkNotes.add(id)
     }
+
 
 }

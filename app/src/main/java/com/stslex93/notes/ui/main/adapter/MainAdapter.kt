@@ -28,10 +28,11 @@ class MainAdapter(private val clickListener: ItemClickListener) :
     fun setNotes(notes: List<Note>, search: Boolean = false) {
         val positionStart = this.notes.size
         this.notes = notes as MutableList<Note>
-        if (search) {
+        /*if (search) {
             notifyItemRangeChanged(0, positionStart)
         } else {
             notifyItemRangeChanged(positionStart, this.notes.size)
-        }
+        }*/
+        notifyDataSetChanged()
     }
 }

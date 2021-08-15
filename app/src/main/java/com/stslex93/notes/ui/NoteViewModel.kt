@@ -14,20 +14,29 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
     val allNotes: LiveData<List<Note>> = repository.getAll().asLiveData()
 
     fun note(id: String): LiveData<Note> = repository.getNote(id = id).asLiveData()
+    private fun getNotesByIds(ids: List<String>) = repository.getNotesById(ids = ids).asLiveData()
+
+    fun deleteNotesByIds(ids: List<String>): LiveData<List<Note>> {
+        val notes = getNotesByIds(ids = ids)
+        viewModelScope.launch {
+            repository.deleteNotesById(ids = ids)
+        }
+        return notes
+    }
 
     fun insert(note: Note) = viewModelScope.launch {
-        repository.insert(note)
+        repository.insert(note = note)
     }
 
     fun insertAll(notes: List<Note>) = viewModelScope.launch {
-        repository.insertAll(notes)
+        repository.insertAll(notes = notes)
     }
 
     fun update(note: Note) = viewModelScope.launch {
-        repository.update(note)
+        repository.update(note = note)
     }
 
     fun deleteNotes(notes: List<Note>) = viewModelScope.launch {
-        repository.deleteNotes(notes)
+        repository.deleteNotes(notes = notes)
     }
 }

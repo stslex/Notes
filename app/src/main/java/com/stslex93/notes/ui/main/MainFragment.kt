@@ -1,6 +1,7 @@
 package com.stslex93.notes.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.stslex93.notes.R
 import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.FragmentMainBinding
@@ -30,12 +29,8 @@ class MainFragment : BaseFragment() {
     private val binding get() = _binding!!
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: MainAdapter
-    private var cardChecking = false
+    private var isChecking = false
     private val mainNoteClick = MainNoteClick()
-
-    private lateinit var fab: FloatingActionButton
-    private lateinit var appBar: BottomAppBar
-    private lateinit var navView: BottomNavigationView
 
     private val noteViewModel: NoteViewModel by viewModels { viewModelFactory.get() }
 
@@ -52,7 +47,6 @@ class MainFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initFields()
         initRecyclerView()
-        onFabClick()
         onMenuItemClick()
     }
 
@@ -60,35 +54,35 @@ class MainFragment : BaseFragment() {
         requireActivity().hideKeyBoard()
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        fab = binding.fab
-        appBar = binding.bottomBar
-        navView = binding.bottomNavigation
-    }
-
-    private fun onFabClick() {
-        fab.setOnClickListener {
-            if (!cardChecking) {
+        binding.fab.setOnClickListener {
+            if (!isChecking) {
                 val note = Note(title = "", content = "", datestamp = "", timestamp = "")
-                it.navigation(note, false)
+                it.navigation(note.id.toString(), false)
             } else {
-                noteViewModel.deleteNotes(mainNoteClick.checkNotes)
+                noteViewModel.deleteNotesByIds(mainNoteClick.checkNotes)
+                    .observeOnce(viewLifecycleOwner) { insertList ->
+                        Log.i("FixProblemList:", insertList.toString())
+                        mainNoteClick.checkCards.forEach { card -> card.isChecked = false }
+                        it.showSnackBar(
+                            getString(R.string.label_successful_deleted),
+                            getString(R.string.label_cancel)
+                        ) {
+                            noteViewModel.insertAll(insertList)
+                            it.showSnackBar(
+                                getString(R.string.label_successful_canceled),
+                                getString(R.string.label_ok)
+                            ) {}
+                        }
+                    }
+
                 adapter.notifyItemRangeChanged(
                     0,
                     adapter.itemCount - mainNoteClick.checkNotes.size
                 )
-                mainNoteClick.checkCards.forEach { card -> card.isChecked = false }
-                it.showSnackBar(
-                    getString(R.string.label_successful_deleted),
-                    getString(R.string.label_cancel)
-                ) {
-                    noteViewModel.insertAll(mainNoteClick.checkNotes)
-                    it.showSnackBar(
-                        getString(R.string.label_successful_canceled),
-                        getString(R.string.label_ok)
-                    ) {}
-                }
+
                 statusPrimaryVisible()
             }
+
         }
     }
 
@@ -106,10 +100,10 @@ class MainFragment : BaseFragment() {
         }
     }
 
-    private fun View.navigation(note: Note, edit: Boolean) {
+    private fun View.navigation(id: String, edit: Boolean) {
         val direction =
             MainFragmentDirections.actionNavHomeToEditFragment(
-                note.id.toString(),
+                id,
                 edit
             )
         if (this is MaterialCardView) this.isTransitionGroup = true
@@ -118,15 +112,15 @@ class MainFragment : BaseFragment() {
     }
 
     private val clickListener = ItemClickListener(
-        { card, note ->
-            if (cardChecking) {
-                checkCardClick(card, note)
+        { card, id ->
+            if (isChecking) {
+                checkCardClick(card, id)
             } else {
-                card.navigation(note, true)
+                card.navigation(id, true)
             }
 
-        }, { card, note ->
-            checkCardLongClick(card, note)
+        }, { card, id ->
+            checkCardLongClick(card, id)
         })
 
     private fun firstLongInitClick() {
@@ -135,48 +129,50 @@ class MainFragment : BaseFragment() {
         statusCheckingVisible()
     }
 
-    private fun checkCardClick(card: MaterialCardView, note: Note) {
+    private fun checkCardClick(card: MaterialCardView, id: String) {
         if (card.isChecked) {
-            mainNoteClick.cardCheckRemove(card, note) { statusPrimaryVisible() }
+            mainNoteClick.cardCheckRemove(card, id) { statusPrimaryVisible() }
         } else {
-            mainNoteClick.cardCheckAdd(card, note)
+            mainNoteClick.cardCheckAdd(card, id)
         }
     }
 
-    private fun checkCardLongClick(card: MaterialCardView, note: Note) {
+    private fun checkCardLongClick(card: MaterialCardView, id: String) {
         if (card.isChecked) {
-            mainNoteClick.cardCheckRemove(card, note) { statusPrimaryVisible() }
+            mainNoteClick.cardCheckRemove(card, id) { statusPrimaryVisible() }
         } else {
-            if (!cardChecking) {
+            if (!isChecking) {
                 firstLongInitClick()
             }
-            mainNoteClick.cardCheckAdd(card, note)
+            mainNoteClick.cardCheckAdd(card, id)
         }
     }
 
     private fun statusCheckingVisible() {
-        cardChecking = true
-        appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-        navView.menu.clear()
-        navView.inflateMenu(R.menu.bottom_menu_remove)
-        fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
+        isChecking = !isChecking
+        binding.bottomNavigation.menu.clear()
+
+        binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+        binding.bottomNavigation.inflateMenu(R.menu.bottom_menu_remove)
+        binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
     }
 
     private fun statusPrimaryVisible() {
-        cardChecking = false
-        appBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-        navView.menu.clear()
-        navView.inflateMenu(R.menu.bottom_menu)
+        isChecking = !isChecking
+        binding.bottomNavigation.menu.clear()
+
+        binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+        binding.bottomNavigation.inflateMenu(R.menu.bottom_menu)
         onMenuItemClick()
-        fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
+        binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
     }
 
     private fun onMenuItemClick() {
-        val itemLayout = navView.menu.findItem(R.id.action_change_layout)
-        val itemTheme = navView.menu.findItem(R.id.action_change_theme)
+        val itemLayout = binding.bottomNavigation.menu.findItem(R.id.action_change_layout)
+        val itemTheme = binding.bottomNavigation.menu.findItem(R.id.action_change_theme)
 
         itemTheme.setOnMenuItemClickListener {
-            fab.showSnackBar(
+            binding.fab.showSnackBar(
                 text = getString(R.string.label_be_soon),
                 textAction = getString(R.string.label_ok)
             ) {}
@@ -225,3 +221,4 @@ class MainFragment : BaseFragment() {
         noteViewModel.allNotes.removeObservers(viewLifecycleOwner)
     }
 }
+

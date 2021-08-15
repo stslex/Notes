@@ -9,9 +9,11 @@ import javax.inject.Inject
 class NoteRepositoryImpl @Inject constructor(private val source: NoteDataSource) : NoteRepository {
     override fun getAll() = source.getAll()
     override fun getNote(id: String): Flow<Note> = source.getNote(id = id)
+    override fun getNotesById(ids: List<String>): Flow<List<Note>> = source.getNotesById(ids = ids)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
+    override suspend fun deleteNotesById(ids: List<String>) = source.deleteNotesById(ids = ids)
     override suspend fun insert(note: Note) = source.insert(note = note)
     override suspend fun insertAll(notes: List<Note>) = source.insertAll(notes = notes)
     override suspend fun update(note: Note) = source.update(note = note)
