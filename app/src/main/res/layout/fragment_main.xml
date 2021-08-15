@@ -46,8 +46,9 @@
         style="@style/Widget.Design.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/description_create_note"
         android:src="@drawable/ic_baseline_add_24"
-        android:transitionName="default"
+        android:transitionName="@string/default_transition_name"
         app:layout_anchor="@id/bottom_bar" />
 
 

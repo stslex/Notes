@@ -1,13 +1,10 @@
 <resources>
     <string name="app_name">Notes</string>
-    <string name="description_button_create">create new button</string>
-    <string name="description_button_remove">create new button</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_hint">Title</string>
     <string name="content_hint">Content</string>
-    <string name="transition_fab_key">transition_floating_action_button</string>
+    <string name="default_transition_name">default</string>
 
+    <!--Labels-->
     <string name="label_ok">OK</string>
     <string name="label_successful_deleted">Successful deleted</string>
     <string name="label_successful_canceled">It\'s canceled</string>
@@ -19,4 +16,13 @@
     <string name="grid_layout">Grid Layout</string>
     <string name="add_note">Add Note</string>
     <string name="style">Style</string>
+
+    <!--Format-->
+    <string name="date_format">dd.MM.yyyy</string>
+    <string name="time_format">kk.mm</string>\
+
+    <!--Description-->
+    <string name="description_create_note">create note</string>
+    <string name="description_button_create">create new button</string>
+    <string name="description_button_remove">create new button</string>
 </resources>

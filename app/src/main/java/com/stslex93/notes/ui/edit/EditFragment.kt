@@ -70,8 +70,10 @@ class EditFragment : BaseFragment() {
         val title = binding.editInputTitle.editText?.text.toString()
         val content = binding.editInputContent.editText?.text.toString()
 
-        val datestamp = SimpleDateFormat("dd.MM.yyyy").format(System.currentTimeMillis())
-        val timestamp = SimpleDateFormat("kk.mm").format(System.currentTimeMillis())
+        val datestamp =
+            SimpleDateFormat(getString(R.string.date_format)).format(System.currentTimeMillis())
+        val timestamp =
+            SimpleDateFormat(getString(R.string.time_format)).format(System.currentTimeMillis())
 
         if (flagEdit) {
             val note = Note(note.id, title, content, datestamp, timestamp)
@@ -86,7 +88,7 @@ class EditFragment : BaseFragment() {
                     timestamp = timestamp
                 )
             noteViewModel.insert(note)
-            binding.editCardView.transitionName = "newTransition"
+            binding.editCardView.transitionName = getString(R.string.default_transition_name)
         }
     }
 
