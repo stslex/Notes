@@ -10,6 +10,9 @@ interface NoteDao {
     @Query("SELECT * FROM note_table")
     fun getAll(): Flow<List<Note>>
 
+    @Query("SELECT * FROM note_table WHERE id=:id")
+    fun getNote(id: String): Flow<Note>
+
     @Insert
     suspend fun insert(note: Note)
 

@@ -23,9 +23,9 @@ class EditFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private var flagEdit = false
-    private lateinit var note: Note
+    private lateinit var id: String
 
-    private val noteViewModel: NoteViewModel by viewModels { viewModelFactory.get() }
+    private val viewModel: NoteViewModel by viewModels { viewModelFactory.get() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,15 +50,16 @@ class EditFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val args: EditFragmentArgs by navArgs()
-        binding.editCardView.transitionName = args.transitionName
+        id = args.id
         flagEdit = args.edit
-        args.note?.let {
-            this.note = it
-            if (flagEdit) {
-                binding.editInputTitle.editText?.setText(it.title)
-                binding.editInputContent.editText?.setText(it.content)
+        if (flagEdit) {
+            binding.editCardView.transitionName = id
+            viewModel.note(id).observe(viewLifecycleOwner) { note ->
+                binding.editInputTitle.editText?.setText(note.title)
+                binding.editInputContent.editText?.setText(note.content)
             }
-        }
+        } else binding.editCardView.transitionName = getString(R.string.default_transition_name)
+
     }
 
     override fun onStop() {
@@ -76,19 +77,18 @@ class EditFragment : BaseFragment() {
             SimpleDateFormat(getString(R.string.time_format)).format(System.currentTimeMillis())
 
         if (flagEdit) {
-            val note = Note(note.id, title, content, datestamp, timestamp)
-            noteViewModel.update(note)
+            val note = Note(id.toInt(), title, content, datestamp, timestamp)
+            viewModel.update(note)
         } else if (title.isNotEmpty() || content.isNotEmpty()) {
             val note =
                 Note(
-                    note.id,
+                    id.toInt(),
                     title = title,
                     content = content,
                     datestamp = datestamp,
                     timestamp = timestamp
                 )
-            noteViewModel.insert(note)
-            binding.editCardView.transitionName = getString(R.string.default_transition_name)
+            viewModel.insert(note)
         }
     }
 

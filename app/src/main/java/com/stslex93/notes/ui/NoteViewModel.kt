@@ -13,6 +13,8 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
 
     val allNotes: LiveData<List<Note>> = repository.getAll().asLiveData()
 
+    fun note(id: String): LiveData<Note> = repository.getNote(id = id).asLiveData()
+
     fun insert(note: Note) = viewModelScope.launch {
         repository.insert(note)
     }

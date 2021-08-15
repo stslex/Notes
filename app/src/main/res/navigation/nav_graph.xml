@@ -17,16 +17,12 @@
         android:id="@+id/editFragment"
         android:name="com.stslex93.notes.ui.edit.EditFragment">
         <argument
-            android:name="note"
-            app:argType="com.stslex93.notes.data.entity.Note"
-            app:nullable="true" />
+            android:name="id"
+            android:defaultValue="default"
+            app:argType="string" />
         <argument
             android:name="edit"
             app:argType="boolean" />
-        <argument
-            android:name="transition_name"
-            android:defaultValue="default"
-            app:argType="string" />
     </fragment>
 
 </navigation>

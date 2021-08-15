@@ -72,10 +72,14 @@ class MainFragment : BaseFragment() {
                 it.navigation(note, false)
             } else {
                 noteViewModel.deleteNotes(mainNoteClick.checkNotes)
+                adapter.notifyItemRangeChanged(
+                    0,
+                    adapter.itemCount - mainNoteClick.checkNotes.size
+                )
                 mainNoteClick.checkCards.forEach { card -> card.isChecked = false }
                 it.showSnackBar(
                     getString(R.string.label_successful_deleted),
-                    getString(R.string.label_successful_canceled)
+                    getString(R.string.label_cancel)
                 ) {
                     noteViewModel.insertAll(mainNoteClick.checkNotes)
                     it.showSnackBar(
@@ -104,7 +108,10 @@ class MainFragment : BaseFragment() {
 
     private fun View.navigation(note: Note, edit: Boolean) {
         val direction =
-            MainFragmentDirections.actionNavHomeToEditFragment(note, edit, this.transitionName)
+            MainFragmentDirections.actionNavHomeToEditFragment(
+                note.id.toString(),
+                edit
+            )
         if (this is MaterialCardView) this.isTransitionGroup = true
         val extras = FragmentNavigatorExtras(this to this.transitionName)
         findNavController().navigate(direction, extras)
