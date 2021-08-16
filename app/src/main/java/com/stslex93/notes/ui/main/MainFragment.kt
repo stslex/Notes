@@ -73,8 +73,8 @@ class MainFragment : BaseFragment() {
                             ) {}
                         }
                     }
-
                 statusPrimaryVisible()
+                onMenuItemClick()
             }
 
         }
@@ -114,49 +114,34 @@ class MainFragment : BaseFragment() {
             }
 
         }, { card, id ->
-            checkCardLongClick(card, id)
+            checkCardClick(card, id)
         })
-
-    private fun firstLongInitClick() {
-        mainNoteClick.checkCards.clear()
-        mainNoteClick.checkNotes.clear()
-        statusCheckingVisible()
-    }
 
     private fun checkCardClick(card: MaterialCardView, id: String) {
         if (card.isChecked) {
-            mainNoteClick.cardCheckRemove(card, id) { statusPrimaryVisible() }
-        } else {
-            mainNoteClick.cardCheckAdd(card, id)
-        }
-    }
-
-    private fun checkCardLongClick(card: MaterialCardView, id: String) {
-        if (card.isChecked) {
-            mainNoteClick.cardCheckRemove(card, id) { statusPrimaryVisible() }
+            mainNoteClick.cardCheckRemove(card, id) {
+                statusPrimaryVisible()
+                onMenuItemClick()
+            }
         } else {
             if (!isChecking) {
-                firstLongInitClick()
+                mainNoteClick.checkCards.clear()
+                mainNoteClick.checkNotes.clear()
+                isChecking = !isChecking
+                binding.bottomNavigation.menu.clear()
+                binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+                binding.bottomNavigation.inflateMenu(R.menu.bottom_menu_remove)
+                binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
             }
             mainNoteClick.cardCheckAdd(card, id)
         }
     }
 
-    private fun statusCheckingVisible() {
-        isChecking = !isChecking
-        binding.bottomNavigation.menu.clear()
-        binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-        binding.bottomNavigation.inflateMenu(R.menu.bottom_menu_remove)
-        binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
-    }
-
     private fun statusPrimaryVisible() {
         isChecking = !isChecking
         binding.bottomNavigation.menu.clear()
-
         binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
         binding.bottomNavigation.inflateMenu(R.menu.bottom_menu)
-        onMenuItemClick()
         binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
     }
 
@@ -190,21 +175,17 @@ class MainFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
-        (menu.findItem(R.id.toolbar_main_menu_search)
-            .actionView as SearchView)
-            .let {
-                it.setOnQueryTextListener(OnQueryTextListener(it) { newText ->
-                    noteViewModel.allNotes.observe(viewLifecycleOwner) { list ->
-                        adapter.setNotes(
-                            list.filter { note ->
-                                note.title.lowerContains(newText) || note.content.lowerContains(
-                                    newText
-                                )
-                            }
-                        )
-                    }
-                })
-            }
+        val searchView: SearchView =
+            menu.findItem(R.id.toolbar_main_menu_search).actionView as SearchView
+        searchView.setOnQueryTextListener(
+            OnQueryTextListener(searchView) { newText ->
+                noteViewModel.allNotes.observe(viewLifecycleOwner) { list ->
+                    adapter.setNotes(
+                        list.filter { it.checkTitleContentContains(newText) },
+                        search = true
+                    )
+                }
+            })
     }
 
     override fun onDestroyView() {

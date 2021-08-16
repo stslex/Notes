@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.stslex93.notes.utilites.lowerContains
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -16,4 +17,8 @@ data class Note(
     @ColumnInfo(name = "content") val content: String,
     @ColumnInfo(name = "datestamp") val datestamp: String,
     @ColumnInfo(name = "timestamp") val timestamp: String,
-) : Parcelable
+) : Parcelable {
+    fun checkTitleContentContains(text: String): Boolean =
+        title.lowerContains(text = text) || content.lowerContains(text = text)
+
+}

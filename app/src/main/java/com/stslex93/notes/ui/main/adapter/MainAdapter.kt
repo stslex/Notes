@@ -10,7 +10,7 @@ import com.stslex93.notes.utilites.clicker.ItemClickListener
 class MainAdapter(private val clickListener: ItemClickListener) :
     RecyclerView.Adapter<MainViewHolder>() {
 
-    private var notes = mutableListOf<Note>()
+    private var listOfNotes = emptyList<Note>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -19,20 +19,28 @@ class MainAdapter(private val clickListener: ItemClickListener) :
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind(notes[position])
+        holder.bind(listOfNotes[position])
         holder.setClickListeners(clickListener)
     }
 
-    override fun getItemCount(): Int = notes.size
+    override fun getItemCount(): Int = listOfNotes.size
 
-    fun setNotes(notes: List<Note>) {
-        val startPosition = this.itemCount
-        this.notes = notes as MutableList<Note>
-        if (startPosition > this.itemCount) {
-            notifyItemRangeRemoved(this.itemCount, startPosition)
-        } else {
-            notifyItemRangeInserted(startPosition, this.itemCount)
+    fun setNotes(notes: List<Note>, search: Boolean = false) {
+        val startPosition = itemCount
+        listOfNotes = notes
+        when {
+            search -> {
+                notifyItemRangeChanged(0, itemCount)
+                notifyItemRangeRemoved(itemCount, startPosition - itemCount)
+            }
+            startPosition > itemCount -> {
+                notifyItemRangeRemoved(itemCount, startPosition)
+            }
+            startPosition < itemCount -> {
+                notifyItemRangeInserted(startPosition, itemCount)
+            }
         }
+
     }
 
 }
