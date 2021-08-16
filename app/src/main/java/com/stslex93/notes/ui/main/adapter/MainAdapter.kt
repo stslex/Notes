@@ -1,5 +1,6 @@
 package com.stslex93.notes.ui.main.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,14 +26,9 @@ class MainAdapter(private val clickListener: ItemClickListener) :
 
     override fun getItemCount(): Int = notes.size
 
-    fun setNotes(notes: List<Note>, search: Boolean = false) {
-        val positionStart = this.notes.size
+    fun setNotes(notes: List<Note>) {
+        Log.i("FixProblem", notes.size.toString())
         this.notes = notes as MutableList<Note>
-        /*if (search) {
-            notifyItemRangeChanged(0, positionStart)
-        } else {
-            notifyItemRangeChanged(positionStart, this.notes.size)
-        }*/
         notifyDataSetChanged()
     }
 }

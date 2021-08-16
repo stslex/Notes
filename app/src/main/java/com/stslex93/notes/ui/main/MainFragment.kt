@@ -59,9 +59,10 @@ class MainFragment : BaseFragment() {
                 val note = Note(title = "", content = "", datestamp = "", timestamp = "")
                 it.navigation(note.id.toString(), false)
             } else {
-                noteViewModel.deleteNotesByIds(mainNoteClick.checkNotes)
+                noteViewModel.getNotesByIds(mainNoteClick.checkNotes)
                     .observeOnce(viewLifecycleOwner) { insertList ->
                         Log.i("FixProblemList:", insertList.toString())
+                        noteViewModel.deleteNotesByIds(mainNoteClick.checkNotes)
                         mainNoteClick.checkCards.forEach { card -> card.isChecked = false }
                         it.showSnackBar(
                             getString(R.string.label_successful_deleted),
@@ -73,12 +74,8 @@ class MainFragment : BaseFragment() {
                                 getString(R.string.label_ok)
                             ) {}
                         }
-                    }
 
-                adapter.notifyItemRangeChanged(
-                    0,
-                    adapter.itemCount - mainNoteClick.checkNotes.size
-                )
+                    }
 
                 statusPrimaryVisible()
             }
@@ -151,7 +148,6 @@ class MainFragment : BaseFragment() {
     private fun statusCheckingVisible() {
         isChecking = !isChecking
         binding.bottomNavigation.menu.clear()
-
         binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
         binding.bottomNavigation.inflateMenu(R.menu.bottom_menu_remove)
         binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
@@ -207,8 +203,7 @@ class MainFragment : BaseFragment() {
                                 note.title.lowerContains(newText) || note.content.lowerContains(
                                     newText
                                 )
-                            },
-                            search = true
+                            }
                         )
                     }
                 })

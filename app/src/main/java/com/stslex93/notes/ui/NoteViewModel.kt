@@ -1,9 +1,6 @@
 package com.stslex93.notes.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.data.repository.NoteRepository
 import kotlinx.coroutines.launch
@@ -11,17 +8,20 @@ import javax.inject.Inject
 
 class NoteViewModel @Inject constructor(private val repository: NoteRepository) : ViewModel() {
 
+    private var _notes = MutableLiveData<List<Note>>()
+    val notes: LiveData<List<Note>> get() = _notes
+
     val allNotes: LiveData<List<Note>> = repository.getAll().asLiveData()
 
     fun note(id: String): LiveData<Note> = repository.getNote(id = id).asLiveData()
-    private fun getNotesByIds(ids: List<String>) = repository.getNotesById(ids = ids).asLiveData()
+    fun getNotesByIds(ids: List<String>) = repository.getNotesById(ids = ids).asLiveData()
 
-    fun deleteNotesByIds(ids: List<String>): LiveData<List<Note>> {
-        val notes = getNotesByIds(ids = ids)
+
+    fun deleteNotesByIds(ids: List<String>) {
+        _notes = getNotesByIds(ids = ids) as MutableLiveData<List<Note>>
         viewModelScope.launch {
             repository.deleteNotesById(ids = ids)
         }
-        return notes
     }
 
     fun insert(note: Note) = viewModelScope.launch {
