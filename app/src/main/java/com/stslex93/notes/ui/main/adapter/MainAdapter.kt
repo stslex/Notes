@@ -31,10 +31,10 @@ class MainAdapter(private val clickListener: ItemClickListener) :
         if (notes.isNotEmpty()) {
             when {
                 position == 0 -> {
-                    notifyItemRangeInserted(0, notes.size)
+                    notifyItemRangeInserted(0, listOfNotes.size)
                 }
                 position < notes.size -> {
-                    notifyItemRangeChanged(0, notes.size)
+                    notifyItemRangeChanged(0, listOfNotes.size)
                 }
                 position > notes.size -> {
                     notifyItemRangeChanged(0, position)
@@ -46,6 +46,7 @@ class MainAdapter(private val clickListener: ItemClickListener) :
         } else {
             notifyItemRangeRemoved(0, position)
         }
+
     }
 
 }

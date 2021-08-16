@@ -54,6 +54,22 @@ class MainFragment : BaseFragment(), View.OnClickListener {
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         binding.fab.setOnClickListener(this)
+
+        mainNoteClick.isChecking.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.bottomNavigation.menu.clear()
+                binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+                binding.bottomNavigation.inflateMenu(R.menu.bottom_menu_remove)
+                binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
+            } else {
+                binding.bottomNavigation.menu.clear()
+                isChecking = !isChecking
+                binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+                binding.bottomNavigation.inflateMenu(R.menu.bottom_menu)
+                binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
+                onMenuItemClick()
+            }
+        }
     }
 
     private fun initRecyclerView() {
@@ -76,7 +92,7 @@ class MainFragment : BaseFragment(), View.OnClickListener {
                 id,
                 edit
             )
-        if (this is MaterialCardView) this.isTransitionGroup = true
+        //if (this is MaterialCardView) this.isTransitionGroup = true
         val extras = FragmentNavigatorExtras(this to this.transitionName)
         findNavController().navigate(direction, extras)
     }
@@ -95,30 +111,11 @@ class MainFragment : BaseFragment(), View.OnClickListener {
 
     private fun checkCardClick(card: MaterialCardView, id: String) {
         if (card.isChecked) {
-            mainNoteClick.cardCheckRemove(card, id) {
-                statusPrimaryVisible()
-                onMenuItemClick()
-            }
+            mainNoteClick.cardCheckRemove(card, id)
         } else {
-            if (!isChecking) {
-                mainNoteClick.checkCards.clear()
-                mainNoteClick.checkNotes.clear()
-                isChecking = !isChecking
-                binding.bottomNavigation.menu.clear()
-                binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-                binding.bottomNavigation.inflateMenu(R.menu.bottom_menu_remove)
-                binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
-            }
+            if (!isChecking) isChecking = !isChecking
             mainNoteClick.cardCheckAdd(card, id)
         }
-    }
-
-    private fun statusPrimaryVisible() {
-        isChecking = !isChecking
-        binding.bottomNavigation.menu.clear()
-        binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-        binding.bottomNavigation.inflateMenu(R.menu.bottom_menu)
-        binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
     }
 
     private fun onMenuItemClick() {
@@ -176,10 +173,11 @@ class MainFragment : BaseFragment(), View.OnClickListener {
                     val note = Note(title = "", content = "", datestamp = "", timestamp = "")
                     p0.navigation(note.id.toString(), false)
                 } else {
-                    noteViewModel.getNotesByIds(mainNoteClick.checkNotes)
+                    val checkNotes = mainNoteClick.checkNotes
+                    noteViewModel.getNotesByIds(checkNotes)
                         .observeOnce(viewLifecycleOwner) { insertList ->
-                            noteViewModel.deleteNotesByIds(mainNoteClick.checkNotes)
-                            mainNoteClick.checkCards.forEach { card -> card.isChecked = false }
+                            noteViewModel.deleteNotesByIds(checkNotes)
+                            mainNoteClick.clear()
                             p0.showSnackBar(
                                 getString(R.string.label_successful_deleted),
                                 getString(R.string.label_cancel)
@@ -190,9 +188,9 @@ class MainFragment : BaseFragment(), View.OnClickListener {
                                     getString(R.string.label_ok)
                                 ) {}
                             }
+                            mainNoteClick.deleteAll()
                         }
-                    statusPrimaryVisible()
-                    onMenuItemClick()
+
                 }
             }
         }
