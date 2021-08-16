@@ -11,5 +11,4 @@ interface NoteDataSource {
     suspend fun insertAll(notes: List<Note>)
     suspend fun insert(note: Note)
     suspend fun update(note: Note)
-    suspend fun deleteNotes(notes: List<Note>)
 }

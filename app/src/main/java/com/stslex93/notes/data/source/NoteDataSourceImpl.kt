@@ -13,5 +13,4 @@ class NoteDataSourceImpl @Inject constructor(private val dao: NoteDao) : NoteDat
     override suspend fun insertAll(notes: List<Note>) = dao.insertAll(notes = notes)
     override suspend fun insert(note: Note) = dao.insert(note = note)
     override suspend fun update(note: Note) = dao.update(note = note)
-    override suspend fun deleteNotes(notes: List<Note>) = dao.deleteNotes(notes = notes)
 }

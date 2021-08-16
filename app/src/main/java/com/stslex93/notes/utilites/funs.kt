@@ -1,7 +1,6 @@
 package com.stslex93.notes.utilites
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.res.ResourcesCompat
@@ -47,13 +46,10 @@ fun <T> LiveData<T>.observeOnce(
 ) {
     observe(viewLifecycleOwner, object : Observer<T> {
         override fun onChanged(t: T) {
-            Log.i("FixProblemObserver", "$t")
-
             if (t != null) {
                 observer.onChanged(t)
                 removeObserver(this)
             }
-
         }
     })
 }

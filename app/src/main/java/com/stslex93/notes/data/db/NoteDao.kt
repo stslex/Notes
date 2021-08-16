@@ -31,9 +31,6 @@ interface NoteDao {
     @Delete
     suspend fun delete(note: Note)
 
-    @Delete
-    suspend fun deleteNotes(notes: List<Note>)
-
     @Update(entity = Note::class)
     suspend fun update(note: Note)
 

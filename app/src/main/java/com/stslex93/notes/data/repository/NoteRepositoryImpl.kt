@@ -17,5 +17,4 @@ class NoteRepositoryImpl @Inject constructor(private val source: NoteDataSource)
     override suspend fun insert(note: Note) = source.insert(note = note)
     override suspend fun insertAll(notes: List<Note>) = source.insertAll(notes = notes)
     override suspend fun update(note: Note) = source.update(note = note)
-    override suspend fun deleteNotes(notes: List<Note>) = source.deleteNotes(notes = notes)
 }

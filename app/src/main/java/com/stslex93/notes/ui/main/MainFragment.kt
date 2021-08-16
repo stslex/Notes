@@ -1,7 +1,6 @@
 package com.stslex93.notes.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -61,7 +60,6 @@ class MainFragment : BaseFragment() {
             } else {
                 noteViewModel.getNotesByIds(mainNoteClick.checkNotes)
                     .observeOnce(viewLifecycleOwner) { insertList ->
-                        Log.i("FixProblemList:", insertList.toString())
                         noteViewModel.deleteNotesByIds(mainNoteClick.checkNotes)
                         mainNoteClick.checkCards.forEach { card -> card.isChecked = false }
                         it.showSnackBar(
@@ -74,7 +72,6 @@ class MainFragment : BaseFragment() {
                                 getString(R.string.label_ok)
                             ) {}
                         }
-
                     }
 
                 statusPrimaryVisible()
