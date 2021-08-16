@@ -25,22 +25,27 @@ class MainAdapter(private val clickListener: ItemClickListener) :
 
     override fun getItemCount(): Int = listOfNotes.size
 
-    fun setNotes(notes: List<Note>, search: Boolean = false) {
-        val startPosition = itemCount
+    fun setNotes(notes: List<Note>) {
+        val position = itemCount
         listOfNotes = notes
-        when {
-            search -> {
-                notifyItemRangeChanged(0, itemCount)
-                notifyItemRangeRemoved(itemCount, startPosition - itemCount)
+        if (notes.isNotEmpty()) {
+            when {
+                position == 0 -> {
+                    notifyItemRangeInserted(0, notes.size)
+                }
+                position < notes.size -> {
+                    notifyItemRangeChanged(0, notes.size)
+                }
+                position > notes.size -> {
+                    notifyItemRangeChanged(0, position)
+                }
+                position == notes.size -> {
+                    notifyItemRangeChanged(0, position)
+                }
             }
-            startPosition > itemCount -> {
-                notifyItemRangeRemoved(itemCount, startPosition)
-            }
-            startPosition < itemCount -> {
-                notifyItemRangeInserted(startPosition, itemCount)
-            }
+        } else {
+            notifyItemRangeRemoved(0, position)
         }
-
     }
 
 }

@@ -22,7 +22,7 @@ import com.stslex93.notes.ui.main.adapter.MainAdapter
 import com.stslex93.notes.utilites.*
 import com.stslex93.notes.utilites.clicker.ItemClickListener
 
-class MainFragment : BaseFragment() {
+class MainFragment : BaseFragment(), View.OnClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -53,31 +53,7 @@ class MainFragment : BaseFragment() {
         requireActivity().hideKeyBoard()
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        binding.fab.setOnClickListener {
-            if (!isChecking) {
-                val note = Note(title = "", content = "", datestamp = "", timestamp = "")
-                it.navigation(note.id.toString(), false)
-            } else {
-                noteViewModel.getNotesByIds(mainNoteClick.checkNotes)
-                    .observeOnce(viewLifecycleOwner) { insertList ->
-                        noteViewModel.deleteNotesByIds(mainNoteClick.checkNotes)
-                        mainNoteClick.checkCards.forEach { card -> card.isChecked = false }
-                        it.showSnackBar(
-                            getString(R.string.label_successful_deleted),
-                            getString(R.string.label_cancel)
-                        ) {
-                            noteViewModel.insertAll(insertList)
-                            it.showSnackBar(
-                                getString(R.string.label_successful_canceled),
-                                getString(R.string.label_ok)
-                            ) {}
-                        }
-                    }
-                statusPrimaryVisible()
-                onMenuItemClick()
-            }
-
-        }
+        binding.fab.setOnClickListener(this)
     }
 
     private fun initRecyclerView() {
@@ -181,8 +157,7 @@ class MainFragment : BaseFragment() {
             OnQueryTextListener(searchView) { newText ->
                 noteViewModel.allNotes.observe(viewLifecycleOwner) { list ->
                     adapter.setNotes(
-                        list.filter { it.checkTitleContentContains(newText) },
-                        search = true
+                        list.filter { it.checkTitleContentContains(newText) }
                     )
                 }
             })
@@ -192,6 +167,35 @@ class MainFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null
         noteViewModel.allNotes.removeObservers(viewLifecycleOwner)
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0) {
+            binding.fab -> {
+                if (!isChecking) {
+                    val note = Note(title = "", content = "", datestamp = "", timestamp = "")
+                    p0.navigation(note.id.toString(), false)
+                } else {
+                    noteViewModel.getNotesByIds(mainNoteClick.checkNotes)
+                        .observeOnce(viewLifecycleOwner) { insertList ->
+                            noteViewModel.deleteNotesByIds(mainNoteClick.checkNotes)
+                            mainNoteClick.checkCards.forEach { card -> card.isChecked = false }
+                            p0.showSnackBar(
+                                getString(R.string.label_successful_deleted),
+                                getString(R.string.label_cancel)
+                            ) {
+                                noteViewModel.insertAll(insertList)
+                                p0.showSnackBar(
+                                    getString(R.string.label_successful_canceled),
+                                    getString(R.string.label_ok)
+                                ) {}
+                            }
+                        }
+                    statusPrimaryVisible()
+                    onMenuItemClick()
+                }
+            }
+        }
     }
 }
 
