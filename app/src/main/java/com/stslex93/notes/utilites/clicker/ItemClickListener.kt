@@ -3,16 +3,14 @@ package com.stslex93.notes.utilites.clicker
 import com.google.android.material.card.MaterialCardView
 
 class ItemClickListener(
-    val clickListener: (MaterialCardView, String) -> Unit,
-    val onLongClickListener: (MaterialCardView, String) -> Unit
+    val clickListener: (MaterialCardView) -> Unit,
+    val onLongClickListener: (MaterialCardView) -> Unit
 ) {
     fun onClick(
-        card: MaterialCardView,
-        id: String
-    ) = clickListener(card, id)
+        card: MaterialCardView
+    ) = clickListener(card)
 
     fun onClickLong(
-        card: MaterialCardView,
-        id: String
-    ) = onLongClickListener(card, id)
+        card: MaterialCardView
+    ) = onLongClickListener(card)
 }

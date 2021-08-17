@@ -40,7 +40,7 @@ class MainAdapter(private val clickListener: ItemClickListener) :
                     notifyItemRangeChanged(0, position)
                 }
                 position == notes.size -> {
-                    notifyItemRangeChanged(0, position)
+                    notifyDataSetChanged()
                 }
             }
         } else {

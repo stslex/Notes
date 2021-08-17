@@ -90,6 +90,7 @@ class EditFragment : BaseFragment() {
                 )
             viewModel.insert(note)
         }
+
     }
 
     override fun onDestroyView() {

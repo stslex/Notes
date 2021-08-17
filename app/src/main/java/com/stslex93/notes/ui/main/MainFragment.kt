@@ -28,9 +28,7 @@ class MainFragment : BaseFragment(), View.OnClickListener {
     private val binding get() = _binding!!
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: MainAdapter
-    private var isChecking = false
     private val mainNoteClick = MainNoteClick()
-
     private val noteViewModel: NoteViewModel by viewModels { viewModelFactory.get() }
 
     override fun onCreateView(
@@ -63,7 +61,6 @@ class MainFragment : BaseFragment(), View.OnClickListener {
                 binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
             } else {
                 binding.bottomNavigation.menu.clear()
-                isChecking = !isChecking
                 binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
                 binding.bottomNavigation.inflateMenu(R.menu.bottom_menu)
                 binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
@@ -92,31 +89,24 @@ class MainFragment : BaseFragment(), View.OnClickListener {
                 id,
                 edit
             )
-        //if (this is MaterialCardView) this.isTransitionGroup = true
+        if (this is MaterialCardView) this.isTransitionGroup = true
         val extras = FragmentNavigatorExtras(this to this.transitionName)
         findNavController().navigate(direction, extras)
     }
 
     private val clickListener = ItemClickListener(
-        { card, id ->
-            if (isChecking) {
-                checkCardClick(card, id)
-            } else {
-                card.navigation(id, true)
+        { card ->
+            mainNoteClick.isChecking.observeOnce(viewLifecycleOwner) {
+                if (it) {
+                    mainNoteClick.checkCardClick(card = card)
+                } else {
+                    card.navigation(id = card.transitionName, edit = true)
+                }
             }
 
-        }, { card, id ->
-            checkCardClick(card, id)
+        }, { card ->
+            mainNoteClick.checkCardClick(card = card)
         })
-
-    private fun checkCardClick(card: MaterialCardView, id: String) {
-        if (card.isChecked) {
-            mainNoteClick.cardCheckRemove(card, id)
-        } else {
-            if (!isChecking) isChecking = !isChecking
-            mainNoteClick.cardCheckAdd(card, id)
-        }
-    }
 
     private fun onMenuItemClick() {
         val itemLayout = binding.bottomNavigation.menu.findItem(R.id.action_change_layout)
@@ -164,33 +154,39 @@ class MainFragment : BaseFragment(), View.OnClickListener {
         super.onDestroyView()
         _binding = null
         noteViewModel.allNotes.removeObservers(viewLifecycleOwner)
+        mainNoteClick.apply {
+            isChecking.removeObservers(viewLifecycleOwner)
+            clear()
+            deleteAll()
+        }
     }
 
     override fun onClick(p0: View?) {
         when (p0) {
             binding.fab -> {
-                if (!isChecking) {
-                    val note = Note(title = "", content = "", datestamp = "", timestamp = "")
-                    p0.navigation(note.id.toString(), false)
-                } else {
-                    val checkNotes = mainNoteClick.checkNotes
-                    noteViewModel.getNotesByIds(checkNotes)
-                        .observeOnce(viewLifecycleOwner) { insertList ->
-                            noteViewModel.deleteNotesByIds(checkNotes)
-                            mainNoteClick.clear()
-                            p0.showSnackBar(
-                                getString(R.string.label_successful_deleted),
-                                getString(R.string.label_cancel)
-                            ) {
-                                noteViewModel.insertAll(insertList)
+                mainNoteClick.isChecking.observeOnce(viewLifecycleOwner) {
+                    if (it) {
+                        val checkNotes = mainNoteClick.checkNotes
+                        noteViewModel.getNotesByIds(checkNotes)
+                            .observeOnce(viewLifecycleOwner) { insertList ->
+                                noteViewModel.deleteNotesByIds(checkNotes)
+                                mainNoteClick.clear()
                                 p0.showSnackBar(
-                                    getString(R.string.label_successful_canceled),
-                                    getString(R.string.label_ok)
-                                ) {}
+                                    getString(R.string.label_successful_deleted),
+                                    getString(R.string.label_cancel)
+                                ) {
+                                    noteViewModel.insertAll(insertList)
+                                    p0.showSnackBar(
+                                        getString(R.string.label_successful_canceled),
+                                        getString(R.string.label_ok)
+                                    ) {}
+                                }
+                                mainNoteClick.deleteAll()
                             }
-                            mainNoteClick.deleteAll()
-                        }
-
+                    } else {
+                        val note = Note(title = "", content = "", datestamp = "", timestamp = "")
+                        p0.navigation(note.id.toString(), false)
+                    }
                 }
             }
         }
