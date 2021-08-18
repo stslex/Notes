@@ -8,7 +8,6 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -28,6 +27,8 @@ class MainFragment : BaseFragment(), View.OnClickListener {
     private val binding get() = _binding!!
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: MainAdapter
+    private lateinit var gridLayoutManager: StaggeredGridLayoutManager
+    private lateinit var linearLayoutManager: LinearLayoutManager
     private val mainNoteClick = MainNoteClick()
     private val noteViewModel: NoteViewModel by viewModels { viewModelFactory.get() }
 
@@ -44,7 +45,6 @@ class MainFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initFields()
         initRecyclerView()
-        onMenuItemClick()
     }
 
     private fun initFields() {
@@ -54,13 +54,12 @@ class MainFragment : BaseFragment(), View.OnClickListener {
         binding.fab.setOnClickListener(this)
 
         mainNoteClick.isChecking.observe(viewLifecycleOwner) {
+            binding.bottomNavigation.menu.clear()
             if (it) {
-                binding.bottomNavigation.menu.clear()
                 binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
                 binding.bottomNavigation.inflateMenu(R.menu.bottom_menu_remove)
                 binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
             } else {
-                binding.bottomNavigation.menu.clear()
                 binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
                 binding.bottomNavigation.inflateMenu(R.menu.bottom_menu)
                 binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
@@ -72,11 +71,13 @@ class MainFragment : BaseFragment(), View.OnClickListener {
     private fun initRecyclerView() {
         recycler = binding.mainFragmentRecyclerView
         adapter = MainAdapter(clickListener)
+        gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        linearLayoutManager = LinearLayoutManager(requireContext())
         noteViewModel.allNotes.observe(viewLifecycleOwner) {
             adapter.setNotes(it)
         }
         recycler.adapter = adapter
-        recycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recycler.layoutManager = gridLayoutManager
         postponeEnterTransition()
         recycler.doOnPreDraw {
             startPostponedEnterTransition()
@@ -119,16 +120,14 @@ class MainFragment : BaseFragment(), View.OnClickListener {
             ) {}
             false
         }
-        val linearManager = LinearLayoutManager(requireContext())
-        val gridManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
 
         itemLayout.setOnMenuItemClickListener {
-            if (recycler.layoutManager == linearManager) {
-                recycler.layoutManager = gridManager
+            if (recycler.layoutManager == linearLayoutManager) {
+                recycler.layoutManager = gridLayoutManager
                 it.icon = getDrawableIcon(R.drawable.ic_baseline_view_module_24)
                 it.title = getString(R.string.label_grid)
             } else {
-                recycler.layoutManager = linearManager
+                recycler.layoutManager = linearLayoutManager
                 it.icon = getDrawableIcon(R.drawable.ic_baseline_view_stream_24)
                 it.title = getString(R.string.label_linear)
             }
@@ -156,7 +155,7 @@ class MainFragment : BaseFragment(), View.OnClickListener {
         noteViewModel.allNotes.removeObservers(viewLifecycleOwner)
         mainNoteClick.apply {
             isChecking.removeObservers(viewLifecycleOwner)
-            clear()
+            clearCheck()
             deleteAll()
         }
     }
@@ -166,11 +165,11 @@ class MainFragment : BaseFragment(), View.OnClickListener {
             binding.fab -> {
                 mainNoteClick.isChecking.observeOnce(viewLifecycleOwner) {
                     if (it) {
-                        val checkNotes = mainNoteClick.checkNotes
+                        val checkNotes = mainNoteClick.checkNotesId
                         noteViewModel.getNotesByIds(checkNotes)
                             .observeOnce(viewLifecycleOwner) { insertList ->
                                 noteViewModel.deleteNotesByIds(checkNotes)
-                                mainNoteClick.clear()
+                                mainNoteClick.clearCheck()
                                 p0.showSnackBar(
                                     getString(R.string.label_successful_deleted),
                                     getString(R.string.label_cancel)

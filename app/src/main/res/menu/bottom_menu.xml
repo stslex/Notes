@@ -7,7 +7,7 @@
         android:id="@+id/action_change_layout"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_view_module_24"
-        android:title="@string/grid_layout"
+        android:title="@string/label_grid"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
 

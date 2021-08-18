@@ -9,7 +9,7 @@
         android:checkable="false"
         android:checked="false"
         android:enabled="false"
-        android:title="   Delete"
+        android:title="@string/label_bottom_menu_delete"
         app:showAsAction="always" />
 
 </menu>

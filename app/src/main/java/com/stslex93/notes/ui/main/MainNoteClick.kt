@@ -6,11 +6,10 @@ import com.google.android.material.card.MaterialCardView
 
 open class MainNoteClick {
 
-    private val _checkNotes = mutableListOf<String>()
-    val checkNotes: List<String> get() = _checkNotes
+    private val _checkNotesId = mutableListOf<String>()
+    val checkNotesId: List<String> get() = _checkNotesId
 
     private val _checkCards = mutableListOf<MaterialCardView>()
-    val checkCards: List<MaterialCardView> get() = _checkCards
 
     private val _isChecking: MutableLiveData<Boolean> = MutableLiveData(false)
     val isChecking: LiveData<Boolean> get() = _isChecking
@@ -27,13 +26,13 @@ open class MainNoteClick {
         isChecked = true
         _isChecking.value = true
         _checkCards.add(this)
-        _checkNotes.add(transitionName)
+        _checkNotesId.add(transitionName)
     }
 
     private fun MaterialCardView.cardCheckRemove() {
         isChecked = false
         _checkCards.remove(this)
-        _checkNotes.remove(transitionName)
+        _checkNotesId.remove(transitionName)
         if (_checkCards.isEmpty()) {
             _isChecking.value = false
         }
@@ -41,15 +40,12 @@ open class MainNoteClick {
 
     fun deleteAll() {
         _checkCards.clear()
-        _checkNotes.clear()
+        _checkNotesId.clear()
     }
 
-    fun clear() {
-        _checkCards.forEach {
-            it.isChecked = false
-        }
+    fun clearCheck() {
+        _checkCards.forEach { it.isChecked = false }
         _isChecking.value = false
     }
-
 
 }
