@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Заметки</string>
+    <string name="title_hint">Название</string>
+    <string name="content_hint">Текст</string>
+    <string name="default_transition_name">default</string>
+
+    <!--Labels-->
+    <string name="label_ok">Подтвердить</string>
+    <string name="label_successful_deleted">Успешно удалено</string>
+    <string name="label_successful_canceled">Отменено</string>
+    <string name="label_cancel">Отмена</string>
+    <string name="label_be_soon">Будет доступно в ближайшее время</string>
+    <string name="label_grid">Сетка</string>
+    <string name="label_linear">Строки</string>
+    <string name="add_note">Создать</string>
+    <string name="style">Стиль</string>
+    <string name="label_bottom_menu_delete">"   "Удалить</string>
+    <string name="label_toolbar_search">поиск</string>
+
+    <!--Format-->
+    <string name="date_format">dd.MM.yyyy</string>
+    <string name="time_format">kk.mm</string>\
+
+    <!--Description-->
+    <string name="description_create_note">создать заметку</string>
+    <string name="description_button_create">кнопка создания заметки</string>
+    <string name="description_button_remove">кнопка удаления заметки</string>
+</resources>

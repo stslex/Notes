@@ -23,7 +23,7 @@
 
     <!--Description-->
     <string name="description_create_note">create note</string>
-    <string name="description_button_create">create new button</string>
-    <string name="description_button_remove">create new button</string>
+    <string name="description_button_create">button create new note</string>
+    <string name="description_button_remove">button remove note </string>
 
 </resources>
