@@ -1,7 +1,4 @@
-# Notes 
-![Notes screenshot for Android preview](https://github.com/Slex93/Notes/blob/master/ic_launcher_test.png "Notes for Android")
-
-
+# <code><img width="5%" src="https://github.com/Slex93/Notes/blob/master/ic_launcher_test.png"></code> Notes 
 
 ## Table of Contents
 
@@ -28,9 +25,8 @@
 
 ## Installation
 
-You can use [Prerelease](https://github.com/Slex93/Notes/releases) 
-
-- Or write me to get access to close test version in Play Market
+You can use [Github release version](https://github.com/Slex93/Notes/releases) </br>
+You can use [Play market version](https://play.google.com/store/apps/details?id=com.stslex93.notes)
 
 ## Screenshots
 
