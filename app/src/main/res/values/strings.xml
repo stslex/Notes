@@ -16,10 +16,11 @@
     <string name="style">Style</string>
     <string name="label_bottom_menu_delete">"   "Delete</string>
     <string name="label_toolbar_search">search</string>
+    <string name="label_edit">Edit</string>
 
     <!--Format-->
     <string name="date_format">dd.MM.yyyy</string>
-    <string name="time_format">kk.mm</string>\
+    <string name="time_format">kk:mm</string>\
 
     <!--Description-->
     <string name="description_create_note">create note</string>

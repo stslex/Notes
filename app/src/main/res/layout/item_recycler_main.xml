@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    android:id="@+id/main_item_card"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_item_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/primary_padding"
-    android:clickable="true"
-    android:focusable="true"
     android:checkable="true"
-    android:elevation="@dimen/primary_padding">
+    android:clickable="true"
+    android:elevation="@dimen/primary_padding"
+    android:focusable="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/primary_padding"
-        android:orientation="vertical">
+        android:padding="@dimen/primary_padding">
 
         <TextView
             android:id="@+id/item_recycler_main_title"
@@ -33,17 +31,19 @@
         <TextView
             android:id="@+id/item_recycler_main_content"
             style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_small"
+            android:layout_marginTop="@dimen/primary_padding"
             android:ellipsize="end"
             android:maxLines="10"
-            android:layout_marginTop="@dimen/primary_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/item_recycler_main_title"
+            app:layout_constraintStart_toStartOf="@+id/item_recycler_main_title"
             app:layout_constraintTop_toBottomOf="@id/item_recycler_main_title"
-            tools:text="Content"/>
+            tools:text="Content" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </com.google.android.material.card.MaterialCardView>
