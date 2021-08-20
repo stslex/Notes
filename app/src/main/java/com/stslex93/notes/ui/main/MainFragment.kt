@@ -86,7 +86,7 @@ class MainFragment : BaseFragment(), View.OnClickListener {
 
     private fun View.navigation(id: String, edit: Boolean) {
         val direction =
-            MainFragmentDirections.actionNavHomeToEditFragment(
+            MainFragmentDirections.actionNavHomeToNavEdit(
                 id,
                 edit
             )
@@ -111,13 +111,13 @@ class MainFragment : BaseFragment(), View.OnClickListener {
 
     private fun onMenuItemClick() {
         val itemLayout = binding.bottomNavigation.menu.findItem(R.id.action_change_layout)
-        val itemTheme = binding.bottomNavigation.menu.findItem(R.id.action_change_theme)
+        val itemTheme = binding.bottomNavigation.menu.findItem(R.id.action_search)
 
         itemTheme.setOnMenuItemClickListener {
-            binding.fab.showSnackBar(
-                text = getString(R.string.label_be_soon),
-                textAction = getString(R.string.label_ok)
-            ) {}
+            it.actionView.transitionName = getString(R.string.search_transition_name)
+            val directions = MainFragmentDirections.actionNavHomeToNavSearch()
+            val extras = FragmentNavigatorExtras(it.actionView to it.actionView.transitionName)
+            findNavController().navigate(directions, extras)
             false
         }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/action_change_layout"
@@ -19,10 +19,11 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_change_theme"
+        android:id="@+id/action_search"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_style_24"
-        android:title="@string/style"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/label_search"
+        app:actionViewClass="com.google.android.material.card.MaterialCardView"
         app:showAsAction="withText" />
 
 </menu>
