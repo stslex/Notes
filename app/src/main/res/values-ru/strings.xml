@@ -18,6 +18,7 @@
     <string name="label_bottom_menu_delete">"   "Удалить</string>
     <string name="label_toolbar_search">поиск</string>
     <string name="label_edit">Изменено</string>
+    <string name="label_search">Поиск</string>
 
     <!--Format-->
     <string name="date_format">dd.MM.yyyy</string>

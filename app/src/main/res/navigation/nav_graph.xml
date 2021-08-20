@@ -10,11 +10,14 @@
         android:name="com.stslex93.notes.ui.main.MainFragment"
         tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_nav_home_to_editFragment"
-            app:destination="@id/editFragment" />
+            android:id="@+id/action_nav_home_to_nav_edit"
+            app:destination="@id/nav_edit" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_search"
+            app:destination="@id/nav_search" />
     </fragment>
     <fragment
-        android:id="@+id/editFragment"
+        android:id="@+id/nav_edit"
         android:name="com.stslex93.notes.ui.edit.EditFragment">
         <argument
             android:name="id"
@@ -24,5 +27,10 @@
             android:name="edit"
             app:argType="boolean" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.stslex93.notes.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 
 </navigation>
