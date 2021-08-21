@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Description](#description)
+- [Plans](#plans)
 - [Tools](#tools)
 - [Installation](#installation)
 - [Screenshots](#screenshots)
@@ -14,6 +15,15 @@
 - This project is made in Material design guidelines.
 - Gonna be my first application in Play Market. 
 - In the future it may be something more.
+
+## Plans
+
+- Refactor all UI design
+- Login with Google account
+- Notes synchronizing 
+- Write and change notes with friends
+- Organise notes in folders 
+- Pin notes 
 
 ## Tools
 
