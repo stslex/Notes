@@ -27,11 +27,19 @@
 
 ## Tools
 
+#### Already:
 - Kotlin
 - MVVM
 - Room database
-- Navigation component / Jetpack's navigation
 - Coroutines
+- Dagger 2
+- Navigation component / Jetpack's navigation
+
+#### In the near future:
+
+- Retrofit 2
+- Firebase
+- Glide
 
 ## Installation
 
