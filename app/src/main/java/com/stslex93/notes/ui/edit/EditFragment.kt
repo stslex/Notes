@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
@@ -51,7 +50,6 @@ class EditFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val args: EditFragmentArgs by navArgs()
         id = args.id
         flagEdit = args.edit
@@ -106,7 +104,7 @@ class EditFragment : BaseFragment() {
             && (editTitle != title || editContent != content)
         ) {
             viewModel.update(note)
-        } else if (title.isNotEmpty() || content.isNotEmpty()) {
+        } else if (!flagEdit && (title.isNotEmpty() || content.isNotEmpty())) {
             viewModel.insert(note)
         }
 

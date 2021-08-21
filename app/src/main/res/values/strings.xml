@@ -28,5 +28,8 @@
     <string name="description_create_note">create note</string>
     <string name="description_button_create">button create new note</string>
     <string name="description_button_remove">button remove note </string>
+    <string name="content_description_search">search for the item</string>
+    <string name="more">more</string>
+    <string name="content_description_more">"show more "</string>
 
 </resources>

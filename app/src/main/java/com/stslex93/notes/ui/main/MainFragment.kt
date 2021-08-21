@@ -1,10 +1,16 @@
 package com.stslex93.notes.ui.main
 
+import android.graphics.Color
 import android.os.Bundle
-import android.view.*
-import android.widget.SearchView
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -12,7 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.math.MathUtils
 import com.stslex93.notes.R
 import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.FragmentMainBinding
@@ -43,25 +51,77 @@ class MainFragment : BaseFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initBottomNavigation()
         initFields()
         initRecyclerView()
+    }
+
+    private fun initBottomNavigation() {
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomNavView)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        binding.bottomBar.setNavigationOnClickListener {
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                binding.fab.show()
+                binding.scrim.visibility = View.GONE
+            } else {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                binding.fab.hide()
+                binding.scrim.visibility = View.VISIBLE
+            }
+        }
+
+        binding.bottomNavView.setNavigationItemSelectedListener { menuItem ->
+            binding.bottomNavView.menu.forEach { it.isChecked = false }
+            menuItem.isChecked = true
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            true
+        }
+
+        binding.scrim.setOnClickListener {
+            binding.fab.show()
+            binding.scrim.visibility = View.GONE
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
+
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                val baseColor = Color.BLACK
+                // 60% opacity
+                val baseAlpha =
+                    ResourcesCompat.getFloat(resources, R.dimen.material_emphasis_medium)
+                // Map slideOffset from [-1.0, 1.0] to [0.0, 1.0]
+                val offset = (slideOffset - (-1f)) / (1f - (-1f)) * (1f - 0f) + 0f
+                val alpha = MathUtils.lerp(0f, 255f, offset * baseAlpha).toInt()
+                val color = Color.argb(alpha, baseColor.red, baseColor.green, baseColor.blue)
+                binding.scrim.setBackgroundColor(color)
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    binding.fab.show()
+                    binding.scrim.visibility = View.GONE
+                }
+            }
+        })
     }
 
     private fun initFields() {
         requireActivity().hideKeyBoard()
         setHasOptionsMenu(true)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         binding.fab.setOnClickListener(this)
-
         mainNoteClick.isChecking.observe(viewLifecycleOwner) {
-            binding.bottomNavigation.menu.clear()
             if (it) {
+                binding.bottomBar.menu.clear()
                 binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-                binding.bottomNavigation.inflateMenu(R.menu.bottom_menu_remove)
+                binding.bottomBar.inflateMenu(R.menu.bottom_menu_remove)
                 binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
             } else {
+                binding.bottomBar.menu.clear()
                 binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-                binding.bottomNavigation.inflateMenu(R.menu.bottom_menu)
+                binding.bottomBar.inflateMenu(R.menu.bottom_appbar)
                 binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
                 onMenuItemClick()
             }
@@ -110,43 +170,33 @@ class MainFragment : BaseFragment(), View.OnClickListener {
         })
 
     private fun onMenuItemClick() {
-        val itemLayout = binding.bottomNavigation.menu.findItem(R.id.action_change_layout)
-        val itemTheme = binding.bottomNavigation.menu.findItem(R.id.action_search)
-
-        itemTheme.setOnMenuItemClickListener {
-            it.actionView.transitionName = getString(R.string.search_transition_name)
-            val directions = MainFragmentDirections.actionNavHomeToNavSearch()
-            val extras = FragmentNavigatorExtras(it.actionView to it.actionView.transitionName)
-            findNavController().navigate(directions, extras)
-            false
-        }
-
-        itemLayout.setOnMenuItemClickListener {
-            if (recycler.layoutManager == linearLayoutManager) {
-                recycler.layoutManager = gridLayoutManager
-                it.icon = getDrawableIcon(R.drawable.ic_baseline_view_module_24)
-                it.title = getString(R.string.label_grid)
-            } else {
-                recycler.layoutManager = linearLayoutManager
-                it.icon = getDrawableIcon(R.drawable.ic_baseline_view_stream_24)
-                it.title = getString(R.string.label_linear)
-            }
-            false
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_menu, menu)
-        val searchView: SearchView =
-            menu.findItem(R.id.toolbar_main_menu_search).actionView as SearchView
-        searchView.setOnQueryTextListener(
-            OnQueryTextListener(searchView) { newText ->
-                noteViewModel.allNotes.observe(viewLifecycleOwner) { list ->
-                    adapter.setNotes(
-                        list.filter { it.checkTitleContentContains(newText) }
-                    )
+        binding.bottomBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.appbar_search -> {
+                    binding.bottomBar.transitionName = getString(R.string.search_transition_name)
+                    val directions = MainFragmentDirections.actionNavHomeToNavSearch()
+                    val extras =
+                        FragmentNavigatorExtras(binding.bottomBar to binding.bottomBar.transitionName)
+                    findNavController().navigate(directions, extras)
+                    false
                 }
-            })
+                R.id.appbar_more -> {
+                    if (recycler.layoutManager == linearLayoutManager) {
+                        recycler.layoutManager = gridLayoutManager
+                        it.icon = getDrawableIcon(R.drawable.ic_baseline_view_module_24)
+                        it.title = getString(R.string.label_grid)
+                    } else {
+                        recycler.layoutManager = linearLayoutManager
+                        it.icon = getDrawableIcon(R.drawable.ic_baseline_view_stream_24)
+                        it.title = getString(R.string.label_linear)
+                    }
+                    false
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

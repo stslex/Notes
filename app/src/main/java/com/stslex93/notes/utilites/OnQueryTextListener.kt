@@ -1,6 +1,7 @@
 package com.stslex93.notes.utilites
 
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
+
 
 class OnQueryTextListener(
     private val searchView: SearchView,

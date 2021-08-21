@@ -18,6 +18,7 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
         <item name="android:colorPrimary">@color/deep_purple_300</item>
+        <item name="navigationViewStyle">@style/Widget.App.NavigationView</item>
     </style>
 
     <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
@@ -36,5 +37,22 @@
         <item name="android:statusBarColor">@color/primary</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
         <item name="android:colorPrimary">@color/primary</item>
+    </style>
+
+    <style name="Widget.App.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.NavigationView</item><!--
+        <item name="itemIconTint">@color/navigation_item_color</item>
+        <item name="itemTextColor">@color/navigation_item_color</item>
+        <item name="itemShapeFillColor">@color/navigation_item_background_color</item>-->
+    </style>
+
+    <style name="ThemeOverlay.App.NavigationView" parent=""><!--
+        <item name="colorPrimary">@color/shrine_pink_100</item>
+        <item name="colorSurface">@color/shrine_pink_50</item>
+        <item name="colorOnSurface">@color/shrine_pink_900</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.App.Subtitle2</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.App.Body2</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>-->
     </style>
 </resources>
