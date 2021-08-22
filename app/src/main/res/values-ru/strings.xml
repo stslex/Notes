@@ -23,6 +23,7 @@
     <string name="label_folders">Папки</string>
     <string name="label_help">Помощь</string>
     <string name="label_button_login">Войти</string>
+    <string name="label_home">Главный экран</string>
 
     <!--Format-->
     <string name="date_format">dd.MM.yyyy</string>
@@ -35,5 +36,7 @@
     <string name="content_description_search">поиск</string>
     <string name="more">больше</string>
     <string name="content_description_more">"показать больше "</string>
+    <string name="description_home">Вернуться на главный экран</string>
+    <string name="description_return">Назад</string>
 
 </resources>

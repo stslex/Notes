@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
 import com.stslex93.notes.R
@@ -77,6 +78,8 @@ class EditFragment : BaseFragment() {
                 SimpleDateFormat(getString(R.string.time_format)).format(System.currentTimeMillis())
             }"
         }
+
+        binding.editFragmentReturn.setOnClickListener { findNavController().popBackStack() }
 
     }
 

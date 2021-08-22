@@ -75,4 +75,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/edit_fragment_return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/primary_padding"
+        android:contentDescription="@string/description_return"
+        android:src="@drawable/ic_baseline_reply_24" />
+
 </com.google.android.material.card.MaterialCardView>

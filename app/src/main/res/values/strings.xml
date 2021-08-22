@@ -23,6 +23,7 @@
     <string name="label_folders">Folders</string>
     <string name="label_help">Help</string>
     <string name="label_button_login">Login</string>
+    <string name="label_home">Home</string>
 
     <!--Format-->
     <string name="date_format">dd.MM.yyyy</string>
@@ -35,5 +36,7 @@
     <string name="content_description_search">search for the item</string>
     <string name="more">more</string>
     <string name="content_description_more">"show more "</string>
+    <string name="description_home">return home</string>
+    <string name="description_return">return</string>
 
 </resources>
