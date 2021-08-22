@@ -10,17 +10,22 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/appbar_change_layout_manager"
-        android:contentDescription="@string/label_grid"
-        android:icon="@drawable/ic_baseline_view_module_24"
-        android:title="@string/label_grid"
-        app:showAsAction="collapseActionView" />
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:title="@string/more"
+        app:showAsAction="ifRoom">
+        <menu app:showAsAction="ifRoom">
+            <item
+                android:id="@+id/appbar_change_layout_manager"
+                android:contentDescription="@string/label_grid"
+                android:icon="@drawable/ic_baseline_view_module_24"
+                android:title="@string/label_grid" />
 
-    <item
-        android:id="@+id/appbar_change_style"
-        android:contentDescription="@string/style"
-        android:icon="@drawable/ic_baseline_style_24"
-        android:title="@string/style"
-        app:showAsAction="withText" />
+            <item
+                android:id="@+id/appbar_change_style"
+                android:contentDescription="@string/style"
+                android:icon="@drawable/ic_baseline_style_24"
+                android:title="@string/style" />
+        </menu>
+    </item>
 
 </menu>
