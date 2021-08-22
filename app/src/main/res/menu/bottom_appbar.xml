@@ -10,9 +10,17 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/appbar_more"
-        android:contentDescription="@string/content_description_more"
-        android:title="@string/more"
-        app:showAsAction="never" />
+        android:id="@+id/appbar_change_layout_manager"
+        android:contentDescription="@string/label_grid"
+        android:icon="@drawable/ic_baseline_view_module_24"
+        android:title="@string/label_grid"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/appbar_change_style"
+        android:contentDescription="@string/style"
+        android:icon="@drawable/ic_baseline_style_24"
+        android:title="@string/style"
+        app:showAsAction="withText" />
 
 </menu>

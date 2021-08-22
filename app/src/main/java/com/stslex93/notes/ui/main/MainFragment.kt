@@ -180,7 +180,7 @@ class MainFragment : BaseFragment(), View.OnClickListener {
                     findNavController().navigate(directions, extras)
                     false
                 }
-                R.id.appbar_more -> {
+                R.id.appbar_change_layout_manager -> {
                     if (recycler.layoutManager == linearLayoutManager) {
                         recycler.layoutManager = gridLayoutManager
                         it.icon = getDrawableIcon(R.drawable.ic_baseline_view_module_24)

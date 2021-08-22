@@ -31,5 +31,8 @@
     <string name="content_description_search">search for the item</string>
     <string name="more">more</string>
     <string name="content_description_more">"show more "</string>
+    <string name="label_settings">Settings</string>
+    <string name="label_folders">Folders</string>
+    <string name="label_help">Help</string>
 
 </resources>

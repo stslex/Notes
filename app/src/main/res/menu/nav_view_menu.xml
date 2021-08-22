@@ -4,19 +4,19 @@
     <item
         android:id="@+id/nav_settings"
         android:contentDescription="@string/content_description_search"
-        android:icon="@drawable/ic_baseline_style_24"
-        android:title="settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/label_settings"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_folders"
         android:contentDescription="@string/content_description_search"
-        android:icon="@drawable/ic_baseline_reply_24"
-        android:title="folders"
+        android:icon="@drawable/ic_baseline_folder_24"
+        android:title="@string/label_folders"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_help"
         android:contentDescription="@string/content_description_search"
-        android:icon="@drawable/ic_baseline_view_module_24"
-        android:title="help"
+        android:icon="@drawable/ic_baseline_help_24"
+        android:title="@string/label_help"
         app:showAsAction="ifRoom" />
 </menu>
