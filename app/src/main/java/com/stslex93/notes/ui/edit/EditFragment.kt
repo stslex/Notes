@@ -14,7 +14,7 @@ import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.FragmentEditBinding
 import com.stslex93.notes.ui.NoteViewModel
 import com.stslex93.notes.utilites.BaseFragment
-import com.stslex93.notes.utilites.hideKeyBoard
+import com.stslex93.notes.utilites.hideKeyboard
 import com.stslex93.notes.utilites.observeOnce
 import java.text.SimpleDateFormat
 
@@ -45,7 +45,7 @@ class EditFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditBinding.inflate(inflater, container, false)
-        requireActivity().hideKeyBoard()
+        requireActivity().hideKeyboard()
         return binding.root
     }
 
@@ -59,7 +59,7 @@ class EditFragment : BaseFragment() {
             SimpleDateFormat(getString(R.string.date_format)).format(System.currentTimeMillis())
         if (flagEdit) {
             binding.editCardView.transitionName = id
-            viewModel.note(id).observeOnce(viewLifecycleOwner) { note ->
+            viewModel.getNoteById(id).observeOnce(viewLifecycleOwner) { note ->
                 editTitle = note.title
                 editContent = note.content
                 binding.editInputTitle.editText?.setText(editTitle)

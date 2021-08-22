@@ -34,8 +34,7 @@
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_nav_search_to_nav_edit"
-            app:destination="@id/nav_edit"
-            app:popUpTo="@id/nav_home" />
+            app:destination="@id/nav_edit" />
     </fragment>
 
 </navigation>

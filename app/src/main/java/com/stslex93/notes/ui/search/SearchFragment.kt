@@ -1,10 +1,12 @@
 package com.stslex93.notes.ui.search
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -31,7 +33,7 @@ class SearchFragment : BaseFragment() {
     private lateinit var gridLayoutManager: StaggeredGridLayoutManager
     private val noteViewModel: NoteViewModel by viewModels { viewModelFactory.get() }
 
-
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = MaterialContainerTransform().apply {
@@ -52,25 +54,26 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        initSearchView()
+        binding.searchView.apply {
+            setOnQueryTextListener(listener)
+        }
+        binding.searchFragmentReturn.setOnClickListener { findNavController().popBackStack() }
     }
 
-    private fun initSearchView() {
-        val searchView = binding.searchView
-        searchView.setOnQueryTextListener(
-            OnQueryTextListener(searchView) { newText ->
-                noteViewModel.allNotes.observe(viewLifecycleOwner) { list ->
-                    adapter.setNotes(
-                        list.filter { it.checkTitleContentContains(newText) }
-                    )
-                }
-            })
-    }
+    private val SearchView.listener: OnQueryTextListener
+        get() = OnQueryTextListener(this) { newText ->
+            noteViewModel.allNotes.observe(viewLifecycleOwner) { list ->
+                adapter.setNotes(
+                    list.filter { it.checkTitleContentContains(newText) }
+                )
+            }
+        }
 
     private fun initRecyclerView() {
         recycler = binding.searchFragmentRecyclerView
         adapter = MainAdapter(clickListener)
-        gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        gridLayoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         noteViewModel.allNotes.observe(viewLifecycleOwner) {
             adapter.setNotes(it)
         }
@@ -97,7 +100,6 @@ class SearchFragment : BaseFragment() {
         val extras = FragmentNavigatorExtras(this to this.transitionName)
         findNavController().navigate(direction, extras)
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -15,8 +15,7 @@
         android:theme="@style/PrimaryTheme.Custom">
         <activity
             android:name="com.stslex93.notes.MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="stateHidden">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

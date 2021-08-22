@@ -12,7 +12,7 @@ import javax.inject.Inject
 class NoteViewModel @Inject constructor(private val repository: NoteRepository) : ViewModel() {
 
     val allNotes: LiveData<List<Note>> = repository.getAll().asLiveData()
-    fun note(id: String): LiveData<Note> = repository.getNote(id = id).asLiveData()
+    fun getNoteById(id: String): LiveData<Note> = repository.getNote(id = id).asLiveData()
     fun getNotesByIds(ids: List<String>) = repository.getNotesById(ids = ids).asLiveData()
 
     fun deleteNotesByIds(ids: List<String>) = viewModelScope.launch {

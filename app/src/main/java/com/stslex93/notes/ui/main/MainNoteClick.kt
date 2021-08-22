@@ -4,21 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.card.MaterialCardView
 
-open class MainNoteClick {
+class MainNoteClick {
 
     private val _checkNotesId = mutableListOf<String>()
-    val checkNotesId: List<String> get() = _checkNotesId
-
     private val _checkCards = mutableListOf<MaterialCardView>()
-
     private val _isChecking: MutableLiveData<Boolean> = MutableLiveData(false)
+    val checkNotesId: List<String> get() = _checkNotesId
     val isChecking: LiveData<Boolean> get() = _isChecking
 
-    fun checkCardClick(card: MaterialCardView) {
-        if (card.isChecked) {
-            card.cardCheckRemove()
+    fun MaterialCardView.checkCardClick() {
+        if (isChecked) {
+            cardCheckRemove()
         } else {
-            card.cardCheckAdd()
+            cardCheckAdd()
         }
     }
 
@@ -47,5 +45,4 @@ open class MainNoteClick {
         _checkCards.forEach { it.isChecked = false }
         _isChecking.value = false
     }
-
 }

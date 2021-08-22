@@ -23,7 +23,7 @@ val Context.appComponent: AppComponent
 fun Fragment.getDrawableIcon(id: Int) =
     ResourcesCompat.getDrawable(resources, id, resources.newTheme())
 
-fun FragmentActivity.hideKeyBoard() {
+fun FragmentActivity.hideKeyboard() {
     val imm: InputMethodManager =
         this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(this.window.decorView.windowToken, 0)

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
@@ -109,7 +110,7 @@ class MainFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun initFields() {
-        requireActivity().hideKeyBoard()
+        requireActivity().hideKeyboard()
         setHasOptionsMenu(true)
         binding.fab.setOnClickListener(this)
         mainNoteClick.isChecking.observe(viewLifecycleOwner) {
@@ -119,11 +120,13 @@ class MainFragment : BaseFragment(), View.OnClickListener {
                 binding.bottomBar.inflateMenu(R.menu.bottom_menu_remove)
                 binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_remove_24))
             } else {
-                binding.bottomBar.menu.clear()
-                binding.bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-                binding.bottomBar.inflateMenu(R.menu.bottom_appbar)
                 binding.fab.setImageDrawable(getDrawableIcon(R.drawable.ic_baseline_add_24))
-                onMenuItemClick()
+                binding.bottomBar.apply {
+                    menu.clear()
+                    fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+                    inflateMenu(R.menu.bottom_appbar)
+                    setOnMenuItemClickListener(menuItemClickListener)
+                }
             }
         }
     }
@@ -145,11 +148,10 @@ class MainFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun View.navigation(id: String, edit: Boolean) {
-        val direction =
-            MainFragmentDirections.actionNavHomeToNavEdit(
-                id,
-                edit
-            )
+        val direction = MainFragmentDirections.actionNavHomeToNavEdit(
+            id,
+            edit
+        )
         if (this is MaterialCardView) this.isTransitionGroup = true
         val extras = FragmentNavigatorExtras(this to this.transitionName)
         findNavController().navigate(direction, extras)
@@ -159,24 +161,24 @@ class MainFragment : BaseFragment(), View.OnClickListener {
         { card ->
             mainNoteClick.isChecking.observeOnce(viewLifecycleOwner) {
                 if (it) {
-                    mainNoteClick.checkCardClick(card = card)
+                    mainNoteClick.apply { card.checkCardClick() }
                 } else {
                     card.navigation(id = card.transitionName, edit = true)
                 }
             }
 
         }, { card ->
-            mainNoteClick.checkCardClick(card = card)
+            mainNoteClick.apply { card.checkCardClick() }
         })
 
-    private fun onMenuItemClick() {
-        binding.bottomBar.setOnMenuItemClickListener {
+    private val BottomAppBar.menuItemClickListener: Toolbar.OnMenuItemClickListener
+        get() = Toolbar.OnMenuItemClickListener {
             when (it.itemId) {
                 R.id.appbar_search -> {
-                    binding.bottomBar.transitionName = getString(R.string.search_transition_name)
+                    transitionName = getString(R.string.search_transition_name)
                     val directions = MainFragmentDirections.actionNavHomeToNavSearch()
                     val extras =
-                        FragmentNavigatorExtras(binding.bottomBar to binding.bottomBar.transitionName)
+                        FragmentNavigatorExtras(this to transitionName)
                     findNavController().navigate(directions, extras)
                     false
                 }
@@ -197,7 +199,6 @@ class MainFragment : BaseFragment(), View.OnClickListener {
                 }
             }
         }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
