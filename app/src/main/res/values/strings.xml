@@ -19,6 +19,10 @@
     <string name="label_toolbar_search">search</string>
     <string name="label_edit">Edit</string>
     <string name="label_search">Search</string>
+    <string name="label_settings">Settings</string>
+    <string name="label_folders">Folders</string>
+    <string name="label_help">Help</string>
+    <string name="label_button_login">Login</string>
 
     <!--Format-->
     <string name="date_format">dd.MM.yyyy</string>
@@ -31,8 +35,5 @@
     <string name="content_description_search">search for the item</string>
     <string name="more">more</string>
     <string name="content_description_more">"show more "</string>
-    <string name="label_settings">Settings</string>
-    <string name="label_folders">Folders</string>
-    <string name="label_help">Help</string>
 
 </resources>
