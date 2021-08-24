@@ -46,6 +46,8 @@
 You can use [Github release version](https://github.com/Slex93/Notes/releases) </br>
 You can use [Play market version](https://play.google.com/store/apps/details?id=com.stslex93.notes)
 
+Now it's also available beta version!!!
+
 ## Screenshots
 
 <img src="./screenshots/screenshot1.jpg" width="200" > <img src="./screenshots/screenshot2.jpg" width="200" > </br>
