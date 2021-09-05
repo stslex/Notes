@@ -2,6 +2,7 @@ package com.stslex93.notes.ui.main
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.core.graphics.red
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +31,8 @@ import com.stslex93.notes.ui.NoteViewModel
 import com.stslex93.notes.ui.main.adapter.MainAdapter
 import com.stslex93.notes.utilites.*
 import com.stslex93.notes.utilites.clicker.ItemClickListener
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainFragment : BaseFragment(), View.OnClickListener {
 
@@ -54,6 +58,7 @@ class MainFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initBottomNavigation()
         initFields()
+        getNotes()
         initRecyclerView()
     }
 
@@ -136,14 +141,31 @@ class MainFragment : BaseFragment(), View.OnClickListener {
         adapter = MainAdapter(clickListener)
         gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         linearLayoutManager = LinearLayoutManager(requireContext())
-        noteViewModel.allNotes.observe(viewLifecycleOwner) {
-            adapter.setNotes(it)
-        }
         recycler.adapter = adapter
         recycler.layoutManager = gridLayoutManager
         postponeEnterTransition()
         recycler.doOnPreDraw {
             startPostponedEnterTransition()
+        }
+    }
+
+    private fun getNotes() = viewLifecycleOwner.lifecycleScope.launch {
+        noteViewModel.allNotes().collect {
+            when (it) {
+                is Response.Success -> {
+                    adapter.setNotes(it.data)
+                }
+                is Response.Failure -> {
+                    Log.e(
+                        "MainScreen GetAllNotes",
+                        it.exception.message,
+                        it.exception.cause
+                    )
+                }
+                is Response.Loading -> {
+
+                }
+            }
         }
     }
 
@@ -203,7 +225,6 @@ class MainFragment : BaseFragment(), View.OnClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        noteViewModel.allNotes.removeObservers(viewLifecycleOwner)
         mainNoteClick.apply {
             isChecking.removeObservers(viewLifecycleOwner)
             clearCheck()

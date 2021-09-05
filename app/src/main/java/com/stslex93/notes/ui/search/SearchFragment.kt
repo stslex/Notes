@@ -3,12 +3,14 @@ package com.stslex93.notes.ui.search
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -16,12 +18,16 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.transition.MaterialContainerTransform
 import com.stslex93.notes.R
+import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.FragmentSearchBinding
 import com.stslex93.notes.ui.NoteViewModel
 import com.stslex93.notes.ui.main.adapter.MainAdapter
 import com.stslex93.notes.utilites.BaseFragment
 import com.stslex93.notes.utilites.OnQueryTextListener
+import com.stslex93.notes.utilites.Response
 import com.stslex93.notes.utilites.clicker.ItemClickListener
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class SearchFragment : BaseFragment() {
 
@@ -62,9 +68,11 @@ class SearchFragment : BaseFragment() {
 
     private val SearchView.listener: OnQueryTextListener
         get() = OnQueryTextListener(this) { newText ->
-            noteViewModel.allNotes.observe(viewLifecycleOwner) { list ->
+            getNotes {
                 adapter.setNotes(
-                    list.filter { it.checkTitleContentContains(newText) }
+                    it.filter { note ->
+                        note.checkTitleContentContains(newText)
+                    }
                 )
             }
         }
@@ -74,7 +82,7 @@ class SearchFragment : BaseFragment() {
         adapter = MainAdapter(clickListener)
         gridLayoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        noteViewModel.allNotes.observe(viewLifecycleOwner) {
+        getNotes {
             adapter.setNotes(it)
         }
         recycler.adapter = adapter
@@ -84,6 +92,27 @@ class SearchFragment : BaseFragment() {
             startPostponedEnterTransition()
         }
     }
+
+    private inline fun getNotes(crossinline success: (List<Note>) -> Unit) =
+        viewLifecycleOwner.lifecycleScope.launch {
+            noteViewModel.allNotes().collect {
+                when (it) {
+                    is Response.Success -> {
+                        success(it.data)
+                    }
+                    is Response.Failure -> {
+                        Log.e(
+                            "MainScreen GetAllNotes",
+                            it.exception.message,
+                            it.exception.cause
+                        )
+                    }
+                    is Response.Loading -> {
+
+                    }
+                }
+            }
+        }
 
     private val clickListener = ItemClickListener(
         { card ->

@@ -10,7 +10,6 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AppModule::class,
-        DataSourceModule::class,
         RepositoryModule::class,
         ViewModelModule::class,
         ViewModelFactoryModule::class,
