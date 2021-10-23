@@ -10,15 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
-import com.stslex93.notes.NoteApplication
-import com.stslex93.notes.di.component.AppComponent
 import java.util.*
-
-val Context.appComponent: AppComponent
-    get() = when (this) {
-        is NoteApplication -> appComponent
-        else -> this.applicationContext.appComponent
-    }
 
 fun Fragment.getDrawableIcon(id: Int) =
     ResourcesCompat.getDrawable(resources, id, resources.newTheme())

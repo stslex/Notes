@@ -1,4 +1,4 @@
-package com.stslex93.notes.data.db
+package com.stslex93.notes.data.database
 
 import androidx.room.*
 import com.stslex93.notes.data.entity.Note

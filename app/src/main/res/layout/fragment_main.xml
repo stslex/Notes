@@ -36,7 +36,6 @@
             app:headerLayout="@layout/nav_view_head"
             app:layout_behavior="@string/bottom_sheet_behavior"
             app:menu="@menu/nav_view_menu" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar

@@ -7,8 +7,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
-@Module
+@Module(includes = [ViewModelFactoryModule::class])
 interface ViewModelModule {
+
     @IntoMap
     @Binds
     @ViewModelKey(NoteViewModel::class)
