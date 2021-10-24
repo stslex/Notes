@@ -1,7 +1,7 @@
 package com.stslex93.notes.data.repository
 
 import androidx.annotation.WorkerThread
-import com.stslex93.notes.data.db.NoteDao
+import com.stslex93.notes.data.database.NoteDao
 import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.utilites.Response
 import kotlinx.coroutines.Dispatchers
