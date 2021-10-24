@@ -1,8 +1,8 @@
 package com.stslex93.notes.di.component
 
-import android.app.Application
 import android.content.Context
 import com.stslex93.notes.di.module.AppModule
+import com.stslex93.notes.ui.main.MainFragment
 import com.stslex93.notes.utilites.BaseFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -22,4 +22,5 @@ interface AppComponent {
     }
 
     fun inject(fragment: BaseFragment)
+    fun inject(fragment: MainFragment)
 }

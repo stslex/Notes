@@ -1,7 +1,7 @@
 package com.stslex93.notes.data.repository
 
 import com.stslex93.notes.core.Resource
-import com.stslex93.notes.data.db.NoteDao
+import com.stslex93.notes.data.database.NoteDao
 import com.stslex93.notes.data.entity.Note
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

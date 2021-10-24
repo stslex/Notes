@@ -7,8 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -21,9 +19,8 @@ import com.stslex93.notes.R
 import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.FragmentSearchBinding
 import com.stslex93.notes.ui.NoteViewModel
-import com.stslex93.notes.ui.main.adapter.MainAdapter
+import com.stslex93.notes.ui.main.MainAdapter
 import com.stslex93.notes.utilites.BaseFragment
-import com.stslex93.notes.utilites.OnQueryTextListener
 import com.stslex93.notes.utilites.Response
 import com.stslex93.notes.utilites.clicker.ItemClickListener
 import kotlinx.coroutines.flow.collect
@@ -59,39 +56,39 @@ class SearchFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
+        //initRecyclerView()
         binding.searchView.apply {
-            setOnQueryTextListener(listener)
+            //setOnQueryTextListener(listener)
         }
         binding.searchFragmentReturn.setOnClickListener { findNavController().popBackStack() }
     }
 
-    private val SearchView.listener: OnQueryTextListener
-        get() = OnQueryTextListener(this) { newText ->
-            getNotes {
-                adapter.setNotes(
-                    it.filter { note ->
-                        note.checkTitleContentContains(newText)
-                    }
-                )
-            }
-        }
+//    private val SearchView.listener: OnQueryTextListener
+//        get() = OnQueryTextListener(this) { newText ->
+//            getNotes {
+//                adapter.setNotes(
+//                    it.filter { note ->
+//                        note.checkTitleContentContains(newText)
+//                    }
+//                )
+//            }
+//        }
 
-    private fun initRecyclerView() {
-        recycler = binding.searchFragmentRecyclerView
-        adapter = MainAdapter(clickListener)
-        gridLayoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        getNotes {
-            adapter.setNotes(it)
-        }
-        recycler.adapter = adapter
-        recycler.layoutManager = gridLayoutManager
-        postponeEnterTransition()
-        recycler.doOnPreDraw {
-            startPostponedEnterTransition()
-        }
-    }
+//    private fun initRecyclerView() {
+//        recycler = binding.searchFragmentRecyclerView
+//        adapter = MainAdapter(clickListener)
+//        gridLayoutManager =
+//            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+//        getNotes {
+//            adapter.setNotes(it)
+//        }
+//        recycler.adapter = adapter
+//        recycler.layoutManager = gridLayoutManager
+//        postponeEnterTransition()
+//        recycler.doOnPreDraw {
+//            startPostponedEnterTransition()
+//        }
+//    }
 
     private inline fun getNotes(crossinline success: (List<Note>) -> Unit) =
         viewLifecycleOwner.lifecycleScope.launch {

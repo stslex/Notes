@@ -54,11 +54,11 @@ class EditFragment : BaseFragment() {
         val args: EditFragmentArgs by navArgs()
         id = args.id
         flagEdit = args.edit
+        binding.editCardView.transitionName = id
 
         val datestamp =
             SimpleDateFormat(getString(R.string.date_format)).format(System.currentTimeMillis())
         if (flagEdit) {
-            binding.editCardView.transitionName = id
             viewModel.getNoteById(id).observeOnce(viewLifecycleOwner) { note ->
                 editTitle = note.title
                 editContent = note.content
@@ -73,7 +73,7 @@ class EditFragment : BaseFragment() {
 
             }
         } else {
-            binding.editCardView.transitionName = getString(R.string.default_transition_name)
+            // binding.editCardView.transitionName = getString(R.string.default_transition_name)
             binding.editTime.text = "${getString(R.string.label_edit)}  ${
                 SimpleDateFormat(getString(R.string.time_format)).format(System.currentTimeMillis())
             }"
@@ -103,14 +103,8 @@ class EditFragment : BaseFragment() {
             timestamp = timestamp
         )
 
-        if (flagEdit
-            && (editTitle != title || editContent != content)
-        ) {
-            viewModel.update(note)
-        } else if (!flagEdit && (title.isNotEmpty() || content.isNotEmpty())) {
-            viewModel.insert(note)
-        }
-
+        if (flagEdit && (editTitle != title || editContent != content)) viewModel.update(note)
+        else if (!flagEdit && (title.isNotEmpty() || content.isNotEmpty())) viewModel.insert(note)
     }
 
     override fun onDestroyView() {

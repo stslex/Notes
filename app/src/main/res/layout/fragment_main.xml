@@ -14,10 +14,11 @@
         android:layout_marginBottom="?actionBarSize">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_fragment_recycler_view"
+            android:id="@+id/recyclerView"
             style="@style/RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/item_recycler_main" />
 
         <FrameLayout
@@ -52,6 +53,13 @@
         app:menu="@menu/bottom_appbar"
         app:navigationIcon="@drawable/ic_baseline_menu_24" />
 
+    <ProgressBar
+        android:id="@+id/SHOW_PROGRESS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         style="@style/Widget.Design.FloatingActionButton"
@@ -59,7 +67,6 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_create_note"
         android:src="@drawable/ic_baseline_add_24"
-        android:transitionName="@string/default_transition_name"
         app:layout_anchor="@id/bottom_bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
