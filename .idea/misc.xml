@@ -13,6 +13,8 @@
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.46927083333333336" />
         <entry key="app/src/main/res/drawable/ic_launcher_test_foreground.xml" value="0.269954245043213" />
         <entry key="app/src/main/res/drawable/ic_test_laincher.xml" value="0.26927083333333335" />
+        <entry key="app/src/main/res/drawable/splash_screen_light.xml" value="0.38796296296296295" />
+        <entry key="app/src/main/res/drawable/splash_screen_night.xml" value="0.38796296296296295" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/fragment_content.xml" value="0.2265193370165746" />
         <entry key="app/src/main/res/layout/fragment_edit.xml" value="0.3333333333333333" />
@@ -22,6 +24,8 @@
         <entry key="app/src/main/res/layout/item_recycler_main.xml" value="6.666666666666667" />
         <entry key="app/src/main/res/layout/nav_head.xml" value="0.21421396283274735" />
         <entry key="app/src/main/res/layout/nav_view_head.xml" value="0.30932971014492755" />
+        <entry key="app/src/main/res/layout/splash_screen_light.xml" value="0.2265193370165746" />
+        <entry key="app/src/main/res/layout/splash_screen_night.xml" value="0.2265193370165746" />
         <entry key="app/src/main/res/menu/appbar_menu.xml" value="0.43365531265887136" />
         <entry key="app/src/main/res/menu/bottom_appbar.xml" value="0.45856634468734114" />
         <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.45856634468734114" />

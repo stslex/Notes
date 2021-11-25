@@ -90,9 +90,9 @@ class MainFragment : Fragment() {
     @SuppressLint("ResourceType")
     private fun itemsSelectedCollect(items: List<NoteUI>) {
         if (items.isEmpty())
-            binding.fab.hide()
-        else
             binding.fab.show()
+        else
+            binding.fab.hide()
     }
 
     private fun initNavigationView() = with(binding) {

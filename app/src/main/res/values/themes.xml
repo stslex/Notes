@@ -25,4 +25,9 @@
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
         <item name="android:colorPrimary">@color/primary</item>
     </style>
+
+    <style name="SplashScreen" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowBackground">@drawable/splash_screen_light</item>
+    </style>
 </resources>
