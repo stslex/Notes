@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -54,7 +55,7 @@ class EditFragment : BaseFragment() {
         val args: EditFragmentArgs by navArgs()
         id = args.id
         flagEdit = args.edit
-        binding.editCardView.transitionName = id
+        binding.editCardView.transitionName = args.transitionName
 
         val datestamp =
             SimpleDateFormat(getString(R.string.date_format)).format(System.currentTimeMillis())
@@ -67,13 +68,10 @@ class EditFragment : BaseFragment() {
                 if (datestamp == note.datestamp) {
                     binding.editTime.text = "${getString(R.string.label_edit)}  ${note.timestamp}"
                 } else {
-                    binding.editTime.text =
-                        "${getString(R.string.label_edit)} ${note.datestamp}"
+                    binding.editTime.text = "${getString(R.string.label_edit)} ${note.datestamp}"
                 }
-
             }
         } else {
-            // binding.editCardView.transitionName = getString(R.string.default_transition_name)
             binding.editTime.text = "${getString(R.string.label_edit)}  ${
                 SimpleDateFormat(getString(R.string.time_format)).format(System.currentTimeMillis())
             }"
@@ -86,6 +84,12 @@ class EditFragment : BaseFragment() {
     override fun onStop() {
         super.onStop()
         saveData()
+        binding.editFragmentReturn.hide()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.editFragmentReturn.apply { if (isGone) show() }
     }
 
     private fun saveData() {
@@ -102,7 +106,6 @@ class EditFragment : BaseFragment() {
             datestamp = datestamp,
             timestamp = timestamp
         )
-
         if (flagEdit && (editTitle != title || editContent != content)) viewModel.update(note)
         else if (!flagEdit && (title.isNotEmpty() || content.isNotEmpty())) viewModel.insert(note)
     }
@@ -111,5 +114,4 @@ class EditFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

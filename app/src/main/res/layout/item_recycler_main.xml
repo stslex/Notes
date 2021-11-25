@@ -2,13 +2,11 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemCardView"
+    style="@style/Widget.Material3.CardView.Filled"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/primary_padding"
-    android:checkable="true"
-    android:clickable="true"
-    android:elevation="@dimen/primary_padding"
-    android:focusable="true">
+    android:checkable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +16,7 @@
 
         <TextView
             android:id="@+id/titleTextView"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
+            style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -27,16 +25,12 @@
 
         <TextView
             android:id="@+id/contentTextView"
-            style="@style/TextAppearance.AppCompat.Body1"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_small"
             android:layout_marginTop="@dimen/primary_padding"
             android:ellipsize="end"
             android:maxLines="10"
             tools:text="Content" />
-
     </LinearLayout>
-
-
 </com.google.android.material.card.MaterialCardView>

@@ -7,7 +7,8 @@ import dagger.Module
         RepositoryModule::class,
         ViewModelModule::class,
         DataBaseModule::class,
-        MapperModule::class
+        MapperModule::class,
+        UtilsModule::class
     ]
 )
 class AppModule

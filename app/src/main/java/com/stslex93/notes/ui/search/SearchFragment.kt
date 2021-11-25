@@ -120,7 +120,8 @@ class SearchFragment : BaseFragment() {
         val direction =
             SearchFragmentDirections.actionNavSearchToNavEdit(
                 id,
-                edit
+                edit,
+                id
             )
         if (this is MaterialCardView) this.isTransitionGroup = true
         val extras = FragmentNavigatorExtras(this to this.transitionName)

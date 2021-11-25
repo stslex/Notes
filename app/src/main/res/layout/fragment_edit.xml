@@ -1,86 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/edit_card_view"
+    style="@style/Widget.Support.CoordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     tools:context=".ui.edit.EditFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/edit_card_view"
+        style="@style/Widget.Material3.CardView.Filled"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:padding="@dimen/primary_padding">
+        android:layout_marginBottom="?actionBarSize">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_input_title"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/primary_padding">
 
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/TextAppearance.AppCompat.Headline"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_input_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/title_hint"
-                android:maxLength="30"
-                android:maxLines="1" />
+                android:layout_height="wrap_content">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/title_hint"
+                    android:maxLength="30"
+                    android:maxLines="1" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_input_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/primary_padding"
-            android:layout_marginBottom="@dimen/primary_padding"
-            app:layout_constraintBottom_toTopOf="@+id/materialCardView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_input_title">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/TextAppearance.AppCompat.Body1"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_input_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="start|top"
-                android:hint="@string/content_hint" />
+                android:layout_marginTop="@dimen/primary_padding">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start|top"
+                    android:hint="@string/content_hint" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView"
-            android:layout_width="match_parent"
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottom_bar"
+        style="@style/Widget.Material3.BottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:transitionName="@string/search_transition_name"
+        app:fabAlignmentMode="end"
+        app:fabAnimationMode="scale"
+        app:hideOnScroll="true"
+        app:layout_scrollFlags="scroll|enterAlways">
+
+        <TextView
+            android:id="@+id/editTime"
+            style="@style/TextAppearance.Material3.BodySmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/primary_padding"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/edit_input_content"
-            app:layout_constraintStart_toStartOf="@+id/edit_input_content">
-
-            <TextView
-                android:id="@+id/editTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/primary_padding"
-                tools:text="@string/label_edit" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_gravity="center"
+            tools:text="@string/label_edit" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/edit_fragment_return"
+        style="@style/ThemeOverlay.Material3.FloatingActionButton.Surface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/primary_padding"
         android:contentDescription="@string/description_return"
-        android:src="@drawable/ic_baseline_reply_24" />
-
-</com.google.android.material.card.MaterialCardView>
+        android:src="@drawable/ic_baseline_reply_24"
+        android:visibility="gone"
+        app:layout_anchor="@id/bottom_bar" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

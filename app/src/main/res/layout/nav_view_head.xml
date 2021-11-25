@@ -7,6 +7,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/nav_head_card"
+        style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/primary_padding"
@@ -23,7 +24,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/nav_head_login"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/primary_padding"

@@ -13,11 +13,13 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NoteViewModel @Inject constructor(private val repository: NoteRepository) : ViewModel() {
+class NoteViewModel @Inject constructor(
+    private val repository: NoteRepository
+) : ViewModel() {
 
     suspend fun allNotes(): StateFlow<Response<List<Note>>> = repository.getAll().stateIn(
         scope = viewModelScope,
-        started = SharingStarted.Lazily,
+        started = SharingStarted.WhileSubscribed(),
         initialValue = Response.Loading
     )
 

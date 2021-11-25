@@ -1,24 +1,25 @@
 package com.stslex93.notes.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.stslex93.notes.R
 import com.stslex93.notes.appComponent
 import com.stslex93.notes.core.Resource
-import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.databinding.FragmentMainBinding
-import com.stslex93.notes.ui.core.ClickListener
-import com.stslex93.notes.ui.core.LongClickListener
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
@@ -34,33 +35,34 @@ class MainFragment : Fragment() {
     @Inject
     lateinit var navigationViewBinder: BottomNavigationViewBinder.Factory
 
+    @Inject
+    lateinit var noteClicker: OnNoteClickListener
+
+    @Inject
+    lateinit var noteLongClickListener: OnNoteLongClickListener
+
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     private val adapter: MainAdapter by lazy {
-        MainAdapter(OnClick(), OnLongClick())
+        MainAdapter(noteClicker, noteLongClickListener)
     }
 
-    @ExperimentalCoroutinesApi
-    private val getNotes: Job by lazy {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.getAllNotes().collect {
-                when (it) {
-                    is Resource.Success -> setNotes(it.data)
-                    is Resource.Failure -> progress()
-                    is Resource.Loading -> progress()
-                }
-            }
-        }
-    }
-
-    private fun setNotes(notes: List<NoteUI>) {
-        progress()
-        adapter.setNotes(notes)
+    private val selectedItems: SharedFlow<List<NoteUI>> by lazy {
+        noteLongClickListener.itemsSelected
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().appComponent.inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment
+            duration = resources.getInteger(R.integer.transition_duration).toLong()
+            scrimColor = Color.TRANSPARENT
+        }
     }
 
     override fun onCreateView(
@@ -74,58 +76,71 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding) {
-            navigationViewBinder.create(
-                navigationView = bottomNavView,
-                bottomAppBar = bottomBar,
-                scrim = scrim,
-                fab = fab
-            ).bind()
-            recyclerView.adapter = adapter
-            fab.setOnClickListener(fabClickListener)
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.getAllNotes().collect(::collector)
+        }
+        initNavigationView()
+        initRecyclerView()
+        binding.fab.setOnClickListener(noteClicker::createNewNote)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            selectedItems.collect(::itemsSelectedCollect)
         }
     }
 
-    private inner class OnClick : ClickListener<NoteUI> {
+    @SuppressLint("ResourceType")
+    private fun itemsSelectedCollect(items: List<NoteUI>) {
+        if (items.isEmpty())
+            binding.fab.hide()
+        else
+            binding.fab.show()
+    }
 
-        override fun onClick(item: NoteUI) {
-            item.click { it.navigateToEdit(EDIT) }
+    private fun initNavigationView() = with(binding) {
+        navigationViewBinder.create(
+            navigationView = bottomNavView,
+            bottomAppBar = bottomBar,
+            scrim = scrim,
+            fab = fab
+        ).bind()
+    }
+
+    private fun initRecyclerView() = with(binding.recyclerView) {
+        adapter = this@MainFragment.adapter
+        val orientation = StaggeredGridLayoutManager.VERTICAL
+        layoutManager = StaggeredGridLayoutManager(2, orientation)
+        postponeEnterTransition()
+        doOnPreDraw { startPostponedEnterTransition() }
+    }
+
+    private suspend fun collector(resource: Resource<List<NoteUI>>): Unit =
+        withContext(Dispatchers.Main) {
+            when (resource) {
+                is Resource.Success -> setNotes(resource.data)
+                is Resource.Failure -> hideProgress()
+                is Resource.Loading -> showProgress()
+            }
+        }
+
+    private fun setNotes(notes: List<NoteUI>) {
+        hideProgress()
+        adapter.setItems(notes)
+    }
+
+    private fun showProgress() {
+        binding.SHOWPROGRESS.apply {
+            visibility = View.VISIBLE
         }
     }
 
-    private class OnLongClick : LongClickListener<NoteUI> {
-
-        override fun click(item: NoteUI) {
-
+    private fun hideProgress() {
+        binding.SHOWPROGRESS.apply {
+            visibility = View.GONE
         }
-    }
-
-    private val fabClickListener: View.OnClickListener
-        get() = View.OnClickListener {
-            val note = Note(title = "", content = "", datestamp = "", timestamp = "")
-            it.transitionName = note.id.toString()
-            it.navigateToEdit(NOT_EDIT)
-        }
-
-    private fun View.navigateToEdit(edit: Boolean) {
-        val directions = MainFragmentDirections.actionNavHomeToNavEdit(transitionName, edit)
-        val extras = FragmentNavigatorExtras(this to transitionName)
-        findNavController().navigate(directions, extras)
-    }
-
-    private fun progress() = with(binding.SHOWPROGRESS) {
-        visibility = if (visibility == View.VISIBLE) View.INVISIBLE
-        else View.VISIBLE
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        private const val EDIT: Boolean = true
-        private const val NOT_EDIT: Boolean = false
     }
 }
 

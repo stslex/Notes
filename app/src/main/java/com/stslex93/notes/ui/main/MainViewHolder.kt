@@ -1,14 +1,12 @@
 package com.stslex93.notes.ui.main
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.stslex93.notes.databinding.ItemRecyclerMainBinding
 import com.stslex93.notes.ui.core.ClickListener
 import com.stslex93.notes.ui.core.LongClickListener
 
-abstract class MainViewHolder(view: View) :
-    RecyclerView.ViewHolder(view) {
+abstract class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     abstract fun bind(item: NoteUI)
 
@@ -18,23 +16,25 @@ abstract class MainViewHolder(view: View) :
         private val longClickListener: LongClickListener<NoteUI>
     ) : MainViewHolder(binding.root) {
 
-        override fun bind(item: NoteUI) {
-            with(binding) {
-                Log.i("TAG", item.toString())
-                item.bind(
-                    titleTextView = titleTextView,
-                    contentTextView = contentTextView,
-                    itemCardView = itemCardView
-                )
-                itemCardView.setOnClickListener {
-                    clickListener.onClick(item)
-                }
-                itemCardView.setOnLongClickListener {
-                    longClickListener.click(item)
-                    true
-                }
-            }
+        override fun bind(item: NoteUI): Unit = with(item) {
+            binding.itemCardView.isChecked = isChecked()
+            binding.itemCardView.setOnClickListener(itemClickListener)
+            binding.itemCardView.setOnLongClickListener(itemLongCLickListener)
+            item.bindItem()
         }
-    }
 
+        private fun NoteUI.bindItem(): Unit = with(binding) {
+            bind(titleTextView, contentTextView, itemCardView)
+        }
+
+        private val NoteUI.itemClickListener: View.OnClickListener
+            get() = View.OnClickListener { clickListener.onClick(this) }
+
+        private val NoteUI.itemLongCLickListener: View.OnLongClickListener
+            get() = View.OnLongClickListener {
+                binding.itemCardView.isChecked = !isChecked()
+                longClickListener.click(this)
+                true
+            }
+    }
 }

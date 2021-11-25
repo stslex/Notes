@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Material3.CardView.Filled"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionName="@string/search_transition_name"
@@ -14,13 +15,12 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_fragment_recycler_view"
-            style="@style/RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/primary_padding"
@@ -29,6 +29,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/search_fragment_return"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Surface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

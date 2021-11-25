@@ -14,7 +14,9 @@ class MainAdapter(
     private val longClickListener: LongClickListener<NoteUI>
 ) : RecyclerView.Adapter<MainViewHolder>() {
 
-    private var listOfNotes = mutableListOf<NoteUI>()
+    private val _items: MutableList<NoteUI> = mutableListOf()
+    private val items: List<NoteUI> get() = _items
+    private var allSelected: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -23,18 +25,31 @@ class MainAdapter(
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind(listOfNotes[position])
+        holder.bind(items[position])
     }
 
-    override fun getItemCount(): Int = listOfNotes.size
+    override fun getItemCount(): Int = items.size
 
-    fun setNotes(newNotesList: List<NoteUI>) {
-        val diffUtil = NotesDiffUtilCallback(oldList = listOfNotes, newList = newNotesList)
-        val calculate = DiffUtil.calculateDiff(diffUtil)
-        Log.i("TAG", newNotesList.toString())
-        listOfNotes.clear()
-        listOfNotes.addAll(newNotesList)
-        calculate.dispatchUpdatesTo(this)
+    fun selectAll(): List<NoteUI> {
+        allSelected = !allSelected
+        _items.map(::changeItemChecked)
+        notifyItemRangeChanged(0, items.size)
+        return if (allSelected) items else emptyList()
+    }
+
+    private fun changeItemChecked(item: NoteUI) = item.apply { setChecked(allSelected) }
+
+    fun clearSelection() {
+        allSelected = false
+        notifyItemRangeChanged(0, items.size)
+    }
+
+    fun setItems(newItems: List<NoteUI>) {
+        val diffUtil = NotesDiffUtilCallback(items, newItems)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        _items.clear()
+        _items.addAll(newItems)
+        diffResult.dispatchUpdatesTo(this)
     }
 }
 

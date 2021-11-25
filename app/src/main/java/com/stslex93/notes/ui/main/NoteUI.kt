@@ -14,16 +14,24 @@ interface NoteUI {
     fun click(function: (MaterialCardView) -> Unit)
     fun longClick()
 
-    fun getId(): Int
+    fun getId(): String
     fun getContent(): String
+    fun isChecked(): Boolean
+    fun setChecked(isChecked: Boolean)
 
     data class Base(
-        private val id: Int,
+        private val id: String,
         private val title: String,
         private val content: String,
         private val datestamp: String,
-        private val timestamp: String
+        private val timestamp: String,
+        private var isChecked: Boolean = false
     ) : NoteUI {
+
+        override fun isChecked(): Boolean = isChecked
+        override fun setChecked(isChecked: Boolean) {
+            this.isChecked = isChecked
+        }
 
         private var _cardView: MaterialCardView? = null
         private val cardView: MaterialCardView get() = checkNotNull(_cardView)
@@ -45,7 +53,7 @@ interface NoteUI {
 
         }
 
-        override fun getId(): Int = id
+        override fun getId(): String = id
         override fun getContent(): String = content
     }
 }

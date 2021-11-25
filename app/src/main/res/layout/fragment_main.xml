@@ -15,7 +15,6 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            style="@style/RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -29,6 +28,7 @@
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/bottom_nav_view"
+            style="@style/Widget.Material3.NavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/primary_padding"
@@ -41,7 +41,7 @@
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_bar"
-        style="@style/Widget.MaterialComponents.BottomAppBar"
+        style="@style/Widget.Material3.BottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -62,11 +62,12 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        style="@style/Widget.Design.FloatingActionButton"
+        style="@style/ThemeOverlay.Material3.FloatingActionButton.Surface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_create_note"
         android:src="@drawable/ic_baseline_add_24"
+        android:transitionName="@string/label_edit"
         app:layout_anchor="@id/bottom_bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
