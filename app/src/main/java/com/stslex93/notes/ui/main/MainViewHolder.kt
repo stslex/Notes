@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.stslex93.notes.databinding.ItemRecyclerMainBinding
 import com.stslex93.notes.ui.core.ClickListener
 import com.stslex93.notes.ui.core.LongClickListener
+import com.stslex93.notes.ui.model.NoteUI
 
 abstract class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

@@ -1,6 +1,7 @@
 package com.stslex93.notes.ui.main
 
 import com.stslex93.notes.ui.core.LongClickListener
+import com.stslex93.notes.ui.model.NoteUI
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

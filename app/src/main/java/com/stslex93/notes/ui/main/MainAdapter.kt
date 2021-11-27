@@ -1,6 +1,5 @@
 package com.stslex93.notes.ui.main
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.stslex93.notes.databinding.ItemRecyclerMainBinding
 import com.stslex93.notes.ui.core.ClickListener
 import com.stslex93.notes.ui.core.LongClickListener
+import com.stslex93.notes.ui.model.NoteUI
 
 class MainAdapter(
     private val clickListener: ClickListener<NoteUI>,

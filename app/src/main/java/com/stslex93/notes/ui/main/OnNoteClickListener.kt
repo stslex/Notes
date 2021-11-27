@@ -5,6 +5,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.stslex93.notes.data.entity.Note
 import com.stslex93.notes.ui.core.ClickListener
+import com.stslex93.notes.ui.model.NoteUI
 import javax.inject.Inject
 
 interface OnNoteClickListener : ClickListener<NoteUI> {

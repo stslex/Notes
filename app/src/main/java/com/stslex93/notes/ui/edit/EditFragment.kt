@@ -1,5 +1,6 @@
 package com.stslex93.notes.ui.edit
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,35 +8,42 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
 import com.stslex93.notes.R
-import com.stslex93.notes.data.entity.Note
+import com.stslex93.notes.core.Resource
 import com.stslex93.notes.databinding.FragmentEditBinding
-import com.stslex93.notes.ui.NoteViewModel
+import com.stslex93.notes.ui.model.NoteUI
 import com.stslex93.notes.utilites.BaseFragment
 import com.stslex93.notes.utilites.hideKeyboard
-import com.stslex93.notes.utilites.observeOnce
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
+import java.util.*
 
+@ExperimentalCoroutinesApi
 class EditFragment : BaseFragment() {
 
     private var _binding: FragmentEditBinding? = null
     private val binding get() = _binding!!
 
-    private var flagEdit = false
-    private lateinit var id: String
+    private val args: EditFragmentArgs by navArgs()
+
     private lateinit var editTitle: String
     private lateinit var editContent: String
 
-    private val viewModel: NoteViewModel by viewModels { viewModelFactory.get() }
+    private val viewModel: EditNoteViewModel by viewModels { viewModelFactory.get() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
-            duration = getString(R.integer.transition_duration).toLong()
+            duration = resources.getInteger(R.integer.transition_duration).toLong()
             scrimColor = Color.TRANSPARENT
         }
     }
@@ -52,33 +60,42 @@ class EditFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args: EditFragmentArgs by navArgs()
-        id = args.id
-        flagEdit = args.edit
         binding.editCardView.transitionName = args.transitionName
-
-        val datestamp =
-            SimpleDateFormat(getString(R.string.date_format)).format(System.currentTimeMillis())
-        if (flagEdit) {
-            viewModel.getNoteById(id).observeOnce(viewLifecycleOwner) { note ->
-                editTitle = note.title
-                editContent = note.content
-                binding.editInputTitle.editText?.setText(editTitle)
-                binding.editInputContent.editText?.setText(editContent)
-                if (datestamp == note.datestamp) {
-                    binding.editTime.text = "${getString(R.string.label_edit)}  ${note.timestamp}"
-                } else {
-                    binding.editTime.text = "${getString(R.string.label_edit)} ${note.datestamp}"
-                }
-            }
-        } else {
-            binding.editTime.text = "${getString(R.string.label_edit)}  ${
-                SimpleDateFormat(getString(R.string.time_format)).format(System.currentTimeMillis())
-            }"
-        }
-
+        if (args.edit) getNoteJob.start()
+        else setCurrentTime()
         binding.editFragmentReturn.setOnClickListener { findNavController().popBackStack() }
+    }
 
+    @SuppressLint("SetTextI18n")
+    private fun setCurrentTime() {
+        val timeFormat = getString(R.string.time_format)
+        val currentTimeInMs = System.currentTimeMillis()
+        val locale = Locale.getDefault()
+        val currentTime = SimpleDateFormat(timeFormat, locale).format(currentTimeInMs)
+        val labelEdit = getString(R.string.label_edit)
+        binding.editTime.text = "$labelEdit: $currentTime"
+    }
+
+    private val getNoteJob by lazy {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.getNoteById(args.id).collect(::collector)
+        }
+    }
+
+    private suspend fun collector(resource: Resource<NoteUI>) {
+        when (resource) {
+            is Resource.Success -> resource.result()
+            is Resource.Failure -> {}
+            is Resource.Loading -> {}
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private suspend fun Resource.Success<NoteUI>.result() = withContext(Dispatchers.Main) {
+        with(binding) {
+            data.bindEditNote(editInputTitle, editInputContent)
+            data.setLastEditTime(editTime, getString(R.string.label_edit))
+        }
     }
 
     override fun onStop() {
@@ -95,23 +112,28 @@ class EditFragment : BaseFragment() {
     private fun saveData() {
         val title = binding.editInputTitle.editText?.text.toString()
         val content = binding.editInputContent.editText?.text.toString()
-        val datestamp =
-            SimpleDateFormat(getString(R.string.date_format)).format(System.currentTimeMillis())
-        val timestamp =
-            SimpleDateFormat(getString(R.string.time_format)).format(System.currentTimeMillis())
-        val note = Note(
-            id.toInt(),
+        val dateFormat = getString(R.string.date_format)
+        val timeFormat = getString(R.string.time_format)
+        val locale = Locale.getDefault()
+        val datestamp = SimpleDateFormat(dateFormat, locale).format(System.currentTimeMillis())
+        val timestamp = SimpleDateFormat(timeFormat, locale).format(System.currentTimeMillis())
+        val note = NoteUI.Base(
+            id = args.id,
             title = title,
             content = content,
             datestamp = datestamp,
             timestamp = timestamp
         )
-        if (flagEdit && (editTitle != title || editContent != content)) viewModel.update(note)
-        else if (!flagEdit && (title.isNotEmpty() || content.isNotEmpty())) viewModel.insert(note)
+        if (args.edit) {
+            viewModel.updateNote(note)
+        } else if (!args.edit && (title.isNotEmpty() || content.isNotEmpty())) {
+            viewModel.insertNote(note)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        getNoteJob.cancel()
     }
 }

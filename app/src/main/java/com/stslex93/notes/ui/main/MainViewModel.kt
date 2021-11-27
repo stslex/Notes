@@ -5,8 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.stslex93.notes.core.Resource
 import com.stslex93.notes.data.model.NoteListDataUIMapper
 import com.stslex93.notes.data.repository.MainScreenRepository
+import com.stslex93.notes.ui.model.NoteUI
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -22,4 +25,8 @@ class MainViewModel @Inject constructor(
             started = SharingStarted.Lazily,
             initialValue = Resource.Loading
         )
+
+    fun deleteAll() = viewModelScope.launch(Dispatchers.IO){
+        repository.deleteAll()
+    }
 }

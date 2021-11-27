@@ -15,6 +15,7 @@ interface MainScreenRepository {
 
     @ExperimentalCoroutinesApi
     suspend fun getAllNotes(): Flow<Resource<List<NoteData>>>
+    suspend fun deleteAll()
 
     class Base @Inject constructor(
         private val dao: NoteDao,
@@ -29,6 +30,10 @@ interface MainScreenRepository {
             }
         } catch (exception: Exception) {
             flowOf(Resource.Failure(exception = exception))
+        }
+
+        override suspend fun deleteAll() {
+            dao.deleteAll()
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.stslex93.notes.ui.main
 
 import androidx.recyclerview.widget.DiffUtil
-import com.stslex93.notes.ui.main.NoteUI
+import com.stslex93.notes.ui.model.NoteUI
 
 class NotesDiffUtilCallback(
     private val oldList: List<NoteUI>,

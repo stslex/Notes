@@ -18,6 +18,7 @@ import com.stslex93.notes.R
 import com.stslex93.notes.appComponent
 import com.stslex93.notes.core.Resource
 import com.stslex93.notes.databinding.FragmentMainBinding
+import com.stslex93.notes.ui.model.NoteUI
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
@@ -89,10 +90,8 @@ class MainFragment : Fragment() {
 
     @SuppressLint("ResourceType")
     private fun itemsSelectedCollect(items: List<NoteUI>) {
-        if (items.isEmpty())
-            binding.fab.show()
-        else
-            binding.fab.hide()
+        if (items.isEmpty()) binding.fab.show()
+        else binding.fab.hide()
     }
 
     private fun initNavigationView() = with(binding) {

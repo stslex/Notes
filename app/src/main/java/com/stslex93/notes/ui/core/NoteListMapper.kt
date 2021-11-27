@@ -3,7 +3,7 @@ package com.stslex93.notes.ui.core
 import com.stslex93.notes.core.Mapper
 import com.stslex93.notes.core.Resource
 import com.stslex93.notes.data.entity.Note
-import com.stslex93.notes.ui.main.NoteUI
+import com.stslex93.notes.ui.model.NoteUI
 import javax.inject.Inject
 
 interface NoteListMapper : Mapper.DataToUI<List<Note>, Resource<List<NoteUI>>> {
