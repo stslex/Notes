@@ -1,4 +1,7 @@
-# <code><img width="10%" src="./note_icon.png"></code> Notes 
+<h1 align="center">Notes</h1>
+<h2 align="center">
+  <code><img width="10%"  src="./note_icon.png"></code>
+</h2>
 
 ## Table of Contents
 
