@@ -1,4 +1,4 @@
-# <code><img width="5%" src="https://github.com/Slex93/Notes/blob/master/ic_launcher_test.png"></code> Notes 
+# <code><img width="10%" src="./note_icon.png"></code> Notes 
 
 ## Table of Contents
 
