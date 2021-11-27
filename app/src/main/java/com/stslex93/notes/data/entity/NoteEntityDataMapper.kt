@@ -13,7 +13,6 @@ interface NoteEntityDataMapper : Mapper.Data<Note, NoteData> {
                 id = id,
                 title = title,
                 content = content,
-                datestamp = datestamp,
                 timestamp = timestamp
             )
         }

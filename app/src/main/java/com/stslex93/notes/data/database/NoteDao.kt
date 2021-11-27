@@ -11,13 +11,13 @@ interface NoteDao {
     fun getAll(): Flow<List<Note>>
 
     @Query("SELECT * FROM note_table WHERE id=:id")
-    fun getNote(id: String): Flow<Note>
+    fun getNote(id: Int): Flow<Note>
 
     @Query("SELECT * FROM note_table WHERE id IN (:ids)")
     fun getNotesById(ids: List<String>): Flow<List<Note>>
 
     @Query("DELETE FROM note_table WHERE id IN (:ids) ")
-    suspend fun deleteNotesById(ids: List<String>)
+    suspend fun deleteNotesById(ids: List<Int>)
 
     @Insert
     suspend fun insert(note: Note)

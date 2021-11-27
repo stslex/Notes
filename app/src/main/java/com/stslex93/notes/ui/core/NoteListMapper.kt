@@ -14,10 +14,9 @@ interface NoteListMapper : Mapper.DataToUI<List<Note>, Resource<List<NoteUI>>> {
         override fun map(data: List<Note>): Resource<List<NoteUI>> = Resource.Success(
             data.map {
                 NoteUI.Base(
-                    id = it.id.toString(),
+                    id = it.id,
                     title = it.title,
                     content = it.content,
-                    datestamp = it.datestamp,
                     timestamp = it.timestamp
                 )
             }

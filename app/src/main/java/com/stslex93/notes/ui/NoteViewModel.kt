@@ -23,10 +23,10 @@ class NoteViewModel @Inject constructor(
         initialValue = Response.Loading
     )
 
-    fun getNoteById(id: String): LiveData<Note> = repository.getNote(id = id).asLiveData()
+    fun getNoteById(id: Int): LiveData<Note> = repository.getNote(id = id).asLiveData()
     fun getNotesByIds(ids: List<String>) = repository.getNotesById(ids = ids).asLiveData()
 
-    fun deleteNotesByIds(ids: List<String>) = viewModelScope.launch {
+    fun deleteNotesByIds(ids: List<Int>) = viewModelScope.launch {
         repository.deleteNotesById(ids = ids)
     }
 

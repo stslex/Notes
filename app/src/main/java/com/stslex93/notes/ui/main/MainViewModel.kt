@@ -29,4 +29,8 @@ class MainViewModel @Inject constructor(
     fun deleteAll() = viewModelScope.launch(Dispatchers.IO){
         repository.deleteAll()
     }
+
+    fun deleteNotesByIds(ids: List<Int>) = viewModelScope.launch(Dispatchers.IO){
+        repository.deleteNotesByIds(ids)
+    }
 }

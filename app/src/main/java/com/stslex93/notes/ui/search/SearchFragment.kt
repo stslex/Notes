@@ -117,12 +117,7 @@ class SearchFragment : BaseFragment() {
         }, {})
 
     private fun View.navigation(id: String, edit: Boolean) {
-        val direction =
-            SearchFragmentDirections.actionNavSearchToNavEdit(
-                id,
-                edit,
-                id
-            )
+        val direction = SearchFragmentDirections.actionNavSearchToNavEdit(id.toInt(), edit, id)
         if (this is MaterialCardView) this.isTransitionGroup = true
         val extras = FragmentNavigatorExtras(this to this.transitionName)
         findNavController().navigate(direction, extras)

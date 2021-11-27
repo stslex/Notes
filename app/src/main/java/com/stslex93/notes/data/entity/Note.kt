@@ -6,7 +6,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.stslex93.notes.core.Mapper
 import com.stslex93.notes.data.model.NoteData
-import com.stslex93.notes.utilites.lowerContains
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -16,8 +15,7 @@ data class Note(
     @ColumnInfo(name = "id") val id: Int = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "content") val content: String,
-    @ColumnInfo(name = "datestamp") val datestamp: String,
-    @ColumnInfo(name = "timestamp") val timestamp: String,
+    @ColumnInfo(name = "timestamp") val timestamp: Long,
 ) : Parcelable {
 
     fun map(mapper: Mapper.Data<Note, NoteData>) = mapper.map(this)

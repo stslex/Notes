@@ -14,7 +14,7 @@ import javax.inject.Inject
 interface EditNoteRepository {
 
     @ExperimentalCoroutinesApi
-    suspend fun getNoteById(id: String): Flow<Resource<NoteData>>
+    suspend fun getNoteById(id: Int): Flow<Resource<NoteData>>
     suspend fun insertNote(note: NoteData)
     suspend fun updateNote(note: NoteData)
 
@@ -25,7 +25,7 @@ interface EditNoteRepository {
     ) : EditNoteRepository {
 
         @ExperimentalCoroutinesApi
-        override suspend fun getNoteById(id: String): Flow<Resource<NoteData>> = flow {
+        override suspend fun getNoteById(id: Int): Flow<Resource<NoteData>> = flow {
             try {
                 dao.getNote(id).collect {
                     emit(Resource.Success(it.map(mapper)))

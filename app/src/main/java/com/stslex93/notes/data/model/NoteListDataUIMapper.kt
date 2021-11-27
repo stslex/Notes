@@ -21,7 +21,6 @@ interface NoteListDataUIMapper : Mapper.DataToUI<List<NoteData>, Resource<List<N
                         id = id(),
                         title = title(),
                         content = content(),
-                        datestamp = datestamp(),
                         timestamp = timestamp()
                     )
                 }

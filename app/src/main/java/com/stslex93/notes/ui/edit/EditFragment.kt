@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.stslex93.notes.R
 import com.stslex93.notes.core.Resource
@@ -33,9 +33,6 @@ class EditFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private val args: EditFragmentArgs by navArgs()
-
-    private lateinit var editTitle: String
-    private lateinit var editContent: String
 
     private val viewModel: EditNoteViewModel by viewModels { viewModelFactory.get() }
 
@@ -100,35 +97,37 @@ class EditFragment : BaseFragment() {
 
     override fun onStop() {
         super.onStop()
-        saveData()
-        binding.editFragmentReturn.hide()
+        if (title.isNotEmpty() || content.isNotEmpty()) {
+            if (args.edit) viewModel.updateNote(noteFromThisPage)
+            else viewModel.insertNote(noteFromThisPage)
+        } else showNoteEmptySnackBar()
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.editFragmentReturn.apply { if (isGone) show() }
-    }
-
-    private fun saveData() {
-        val title = binding.editInputTitle.editText?.text.toString()
-        val content = binding.editInputContent.editText?.text.toString()
-        val dateFormat = getString(R.string.date_format)
-        val timeFormat = getString(R.string.time_format)
-        val locale = Locale.getDefault()
-        val datestamp = SimpleDateFormat(dateFormat, locale).format(System.currentTimeMillis())
-        val timestamp = SimpleDateFormat(timeFormat, locale).format(System.currentTimeMillis())
-        val note = NoteUI.Base(
+    private val noteFromThisPage by lazy {
+        NoteUI.Base(
             id = args.id,
             title = title,
             content = content,
-            datestamp = datestamp,
-            timestamp = timestamp
+            timestamp = System.currentTimeMillis()
         )
-        if (args.edit) {
-            viewModel.updateNote(note)
-        } else if (!args.edit && (title.isNotEmpty() || content.isNotEmpty())) {
-            viewModel.insertNote(note)
-        }
+    }
+
+    private val title: String by lazy {
+        binding.editInputTitle.editText?.text.toString()
+    }
+
+    private val content: String by lazy {
+        binding.editInputContent.editText?.text.toString()
+    }
+
+    private fun showNoteEmptySnackBar() {
+        Snackbar.make(requireView(), "Note is empty", Snackbar.LENGTH_SHORT).apply {
+            animationMode = Snackbar.ANIMATION_MODE_SLIDE
+            val theme = resources.newTheme()
+            val color = resources.getColor(R.color.design_default_color_error, theme)
+            setBackgroundTint(color)
+            setAction("Ok") {}
+        }.show()
     }
 
     override fun onDestroyView() {

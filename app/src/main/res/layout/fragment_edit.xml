@@ -51,7 +51,7 @@
         android:id="@+id/bottom_bar"
         style="@style/Widget.Material3.BottomAppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         android:layout_gravity="bottom"
         android:transitionName="@string/search_transition_name"
         app:fabAlignmentMode="end"
@@ -75,6 +75,5 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_return"
         android:src="@drawable/ic_baseline_reply_24"
-        android:visibility="gone"
         app:layout_anchor="@id/bottom_bar" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

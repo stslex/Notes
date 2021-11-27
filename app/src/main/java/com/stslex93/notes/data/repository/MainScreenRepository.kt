@@ -16,6 +16,7 @@ interface MainScreenRepository {
     @ExperimentalCoroutinesApi
     suspend fun getAllNotes(): Flow<Resource<List<NoteData>>>
     suspend fun deleteAll()
+    suspend fun deleteNotesByIds(ids: List<Int>)
 
     class Base @Inject constructor(
         private val dao: NoteDao,
@@ -34,6 +35,10 @@ interface MainScreenRepository {
 
         override suspend fun deleteAll() {
             dao.deleteAll()
+        }
+
+        override suspend fun deleteNotesByIds(ids: List<Int>) {
+            dao.deleteNotesById(ids)
         }
     }
 }

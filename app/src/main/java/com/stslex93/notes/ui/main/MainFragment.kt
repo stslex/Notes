@@ -3,6 +3,7 @@ package com.stslex93.notes.ui.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,17 +31,23 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var navigationViewBinder: BottomNavigationViewBinder.Factory
+    private lateinit var noteClicker: OnNoteClickListener
+    private lateinit var noteLongClickListener: OnNoteLongClickListener
 
     @Inject
-    lateinit var navigationViewBinder: BottomNavigationViewBinder.Factory
-
-    @Inject
-    lateinit var noteClicker: OnNoteClickListener
-
-    @Inject
-    lateinit var noteLongClickListener: OnNoteLongClickListener
+    fun injection(
+        viewModelFactory: ViewModelProvider.Factory,
+        navigationViewBinder: BottomNavigationViewBinder.Factory,
+        noteClicker: OnNoteClickListener,
+        noteLongClickListener: OnNoteLongClickListener
+    ) {
+        this.viewModelFactory = viewModelFactory
+        this.navigationViewBinder = navigationViewBinder
+        this.noteClicker = noteClicker
+        this.noteLongClickListener = noteLongClickListener
+    }
 
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
@@ -80,18 +87,43 @@ class MainFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             viewModel.getAllNotes().collect(::collector)
         }
-        initNavigationView()
         initRecyclerView()
-        binding.fab.setOnClickListener(noteClicker::createNewNote)
+        initNavigationView()
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             selectedItems.collect(::itemsSelectedCollect)
         }
     }
 
+
     @SuppressLint("ResourceType")
     private fun itemsSelectedCollect(items: List<NoteUI>) {
-        if (items.isEmpty()) binding.fab.show()
-        else binding.fab.hide()
+        if (items.isEmpty()) setFabAdd()
+        else setFubDelete()
+    }
+
+    private var deleteJob: Job? = null
+    private fun setFabAdd() {
+        deleteJob?.cancel()
+        val icon: Icon = Icon.createWithResource(requireContext(), R.drawable.ic_baseline_add_24)
+        binding.fab.setImageIcon(icon)
+        binding.fab.setOnClickListener(noteClicker::createNewNote)
+    }
+
+    private fun setFubDelete() {
+        val icon: Icon = Icon.createWithResource(requireContext(), R.drawable.ic_baseline_remove_24)
+        binding.fab.setImageIcon(icon)
+        binding.fab.setOnClickListener(fabDeleteClickListener)
+    }
+
+    private val fabDeleteClickListener = View.OnClickListener {
+        deleteJob?.cancel()
+        deleteJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            noteLongClickListener.itemsSelected.collect { items ->
+                val listOfIds: List<Int> = items.map { it.getId() }
+                viewModel.deleteNotesByIds(ids = listOfIds)
+                noteLongClickListener.deleteAll()
+            }
+        }
     }
 
     private fun initNavigationView() = with(binding) {
@@ -140,6 +172,7 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        deleteJob?.cancel()
     }
 }
 

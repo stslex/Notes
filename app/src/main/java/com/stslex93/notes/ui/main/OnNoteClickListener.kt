@@ -15,15 +15,15 @@ interface OnNoteClickListener : ClickListener<NoteUI> {
     class Base @Inject constructor() : OnNoteClickListener {
 
         override fun onClick(item: NoteUI) {
-            item.click { it.navigateToEdit(EDIT, it.transitionName) }
+            item.click { it.navigateToEdit(EDIT, item.getId()) }
         }
 
         override fun createNewNote(fab: View) {
-            val note = Note(title = "", content = "", datestamp = "", timestamp = "")
-            fab.navigateToEdit(NOT_EDIT, note.id.toString())
+            val note = Note(title = "", content = "", timestamp = System.currentTimeMillis())
+            fab.navigateToEdit(NOT_EDIT, note.id)
         }
 
-        private fun View.navigateToEdit(edit: Boolean, id: String) {
+        private fun View.navigateToEdit(edit: Boolean, id: Int) {
             val directions = MainFragmentDirections.actionNavHomeToNavEdit(id, edit, transitionName)
             val extras = FragmentNavigatorExtras(this to transitionName)
             Navigation.findNavController(this).navigate(directions, extras)

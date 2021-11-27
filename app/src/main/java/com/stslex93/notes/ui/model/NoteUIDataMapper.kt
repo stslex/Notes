@@ -10,10 +10,9 @@ interface NoteUIDataMapper : Mapper.Data<NoteUI, NoteData> {
 
         override fun map(data: NoteUI): NoteData = with(data) {
             NoteData.Base(
-                id = getId().toInt(),
+                id = getId(),
                 title = getTitle(),
                 content = getContent(),
-                datestamp = getDatestamp(),
                 timestamp = getTimestamp()
             )
         }

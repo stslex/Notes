@@ -21,8 +21,7 @@
         android:name="com.stslex93.notes.ui.edit.EditFragment">
         <argument
             android:name="id"
-            android:defaultValue="default"
-            app:argType="string" />
+            app:argType="integer" />
         <argument
             android:name="edit"
             app:argType="boolean" />

@@ -24,12 +24,12 @@ class NoteRepositoryImpl @Inject constructor(private val dao: NoteDao) : NoteRep
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun getNote(id: String): Flow<Note> = dao.getNote(id = id)
+    override fun getNote(id: Int): Flow<Note> = dao.getNote(id = id)
     override fun getNotesById(ids: List<String>): Flow<List<Note>> = dao.getNotesById(ids = ids)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    override suspend fun deleteNotesById(ids: List<String>) = withContext(Dispatchers.IO) {
+    override suspend fun deleteNotesById(ids: List<Int>) = withContext(Dispatchers.IO) {
         dao.deleteNotesById(ids = ids)
     }
 

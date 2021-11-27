@@ -21,21 +21,19 @@ interface NoteUI {
     fun click(function: (MaterialCardView) -> Unit)
     fun longClick()
 
-    fun getId(): String
+    fun getId(): Int
     fun getTitle(): String
     fun getContent(): String
-    fun getDatestamp(): String
-    fun getTimestamp(): String
+    fun getTimestamp(): Long
     fun isChecked(): Boolean
     fun setChecked(isChecked: Boolean)
     fun mapToData(mapper: NoteUIDataMapper): NoteData
 
     data class Base(
-        private val id: String,
+        private val id: Int,
         private val title: String,
         private val content: String,
-        private val datestamp: String,
-        private val timestamp: String,
+        private val timestamp: Long,
         private var isChecked: Boolean = false
     ) : NoteUI {
 
@@ -55,7 +53,7 @@ interface NoteUI {
             titleTextView.text = title
             contentTextView.text = content
             _cardView = itemCardView
-            cardView.transitionName = id
+            cardView.transitionName = id.toString()
         }
 
         override fun bindEditNote(
@@ -68,27 +66,22 @@ interface NoteUI {
 
         @SuppressLint("SetTextI18n")
         override fun setLastEditTime(textView: TextView, labelEdit: String) {
-            val checkDate = SimpleDateFormat(
-                DATE_FORMAT,
-                Locale.getDefault()
-            ).format(System.currentTimeMillis())
-            val time = if (datestamp == checkDate)
-                convert(TIME_FORMAT, timestamp)
-            else datestamp
-            textView.text = "$labelEdit: $time"
+            val currentDate = convert(DATE_FORMAT, System.currentTimeMillis())
+            val date = convert(DATE_FORMAT, timestamp)
+            val time = convert(TIME_FORMAT, timestamp)
+            val resultTime = if (date == currentDate) time else date
+            textView.text = "$labelEdit: $resultTime"
         }
 
-        private fun convert(format: String, time: String): String =
+        private fun convert(format: String, time: Long): String =
             SimpleDateFormat(format, Locale.getDefault()).format(time)
-
 
         override fun click(function: (MaterialCardView) -> Unit) = function(cardView)
         override fun longClick() = Unit
-        override fun getId(): String = id
+        override fun getId(): Int = id
         override fun getTitle(): String = title
         override fun getContent(): String = content
-        override fun getDatestamp(): String = datestamp
-        override fun getTimestamp(): String = timestamp
+        override fun getTimestamp(): Long = timestamp
         override fun mapToData(mapper: NoteUIDataMapper) = mapper.map(this)
 
         companion object {

@@ -20,7 +20,7 @@ class EditNoteViewModel @Inject constructor(
 ) : ViewModel() {
 
     @ExperimentalCoroutinesApi
-    suspend fun getNoteById(id: String): StateFlow<Resource<NoteUI>> = repository.getNoteById(id)
+    suspend fun getNoteById(id: Int): StateFlow<Resource<NoteUI>> = repository.getNoteById(id)
         .flatMapLatest { flowOf(it.map(mapperData)) }
         .stateIn(
             scope = viewModelScope,

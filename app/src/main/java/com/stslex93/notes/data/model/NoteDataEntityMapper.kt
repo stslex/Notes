@@ -10,10 +10,9 @@ interface NoteDataEntityMapper : Mapper.Data<NoteData, Note> {
 
         override fun map(data: NoteData): Note = with(data) {
             Note(
-                id = id().toInt(),
+                id = id(),
                 title = title(),
                 content = content(),
-                datestamp = datestamp(),
                 timestamp = timestamp()
             )
         }

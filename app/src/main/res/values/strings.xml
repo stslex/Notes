@@ -38,5 +38,5 @@
     <string name="content_description_more">"show more "</string>
     <string name="description_home">return home</string>
     <string name="description_return">return</string>
-
+    <string name="description_user_avatar">user_avatar</string>
 </resources>

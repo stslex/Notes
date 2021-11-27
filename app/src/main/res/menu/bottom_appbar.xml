@@ -27,5 +27,4 @@
                 android:title="@string/style" />
         </menu>
     </item>
-
 </menu>
