@@ -45,12 +45,23 @@ class MainAdapter(
     }
 
     fun setItems(newItems: List<NoteUI>) {
-        val diffUtil = NotesDiffUtilCallback(items, newItems)
+        val addedItems = sort(newItems)
+        val diffUtil = NotesDiffUtilCallback(items, addedItems)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         _items.clear()
-        _items.addAll(newItems)
+        _items.addAll(addedItems)
         diffResult.dispatchUpdatesTo(this)
+
     }
+
+    private fun sort(newItems: List<NoteUI>): List<NoteUI> = mutableListOf<NoteUI>().apply {
+        addAll(newItems)
+        sortBy(sortedItems)
+        reverse()
+    }
+
+    private val sortedItems: (NoteUI) -> Long
+        get() = NoteUI::getTimestamp
 }
 
 

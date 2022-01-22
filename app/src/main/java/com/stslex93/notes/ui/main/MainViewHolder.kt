@@ -21,7 +21,7 @@ abstract class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.itemCardView.isChecked = isChecked()
             binding.itemCardView.setOnClickListener(itemClickListener)
             binding.itemCardView.setOnLongClickListener(itemLongCLickListener)
-            item.bindItem()
+            bindItem()
         }
 
         private fun NoteUI.bindItem(): Unit = with(binding) {

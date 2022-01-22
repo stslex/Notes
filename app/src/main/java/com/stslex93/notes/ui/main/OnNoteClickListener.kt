@@ -15,12 +15,15 @@ interface OnNoteClickListener : ClickListener<NoteUI> {
     class Base @Inject constructor() : OnNoteClickListener {
 
         override fun onClick(item: NoteUI) {
-            item.click { it.navigateToEdit(EDIT, item.getId()) }
+            item.click { it.navigateToEdit(NOTE_IS_EDIT, item.getId()) }
         }
 
         override fun createNewNote(fab: View) {
-            val note = Note(title = "", content = "", timestamp = System.currentTimeMillis())
-            fab.navigateToEdit(NOT_EDIT, note.id)
+            fab.navigateToEdit(!NOTE_IS_EDIT, emptyNote.id)
+        }
+
+        private val emptyNote by lazy {
+            Note(title = "", content = "", timestamp = System.currentTimeMillis())
         }
 
         private fun View.navigateToEdit(edit: Boolean, id: Int) {
@@ -31,7 +34,6 @@ interface OnNoteClickListener : ClickListener<NoteUI> {
     }
 
     companion object {
-        private const val EDIT: Boolean = true
-        private const val NOT_EDIT: Boolean = false
+        private const val NOTE_IS_EDIT: Boolean = true
     }
 }

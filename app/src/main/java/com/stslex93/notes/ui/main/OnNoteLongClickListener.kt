@@ -23,6 +23,7 @@ interface OnNoteLongClickListener : LongClickListener<NoteUI> {
             extraBufferCapacity = 0,
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
+        
         override val itemsSelected: SharedFlow<List<NoteUI>>
             get() = _itemsSelected.asSharedFlow()
 
