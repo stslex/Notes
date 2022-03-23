@@ -39,4 +39,5 @@
     <string name="description_home">return home</string>
     <string name="description_return">return</string>
     <string name="description_user_avatar">user_avatar</string>
+    <string name="M_empty_note">Note is empty</string>
 </resources>

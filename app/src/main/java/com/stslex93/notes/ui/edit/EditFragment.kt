@@ -1,40 +1,60 @@
 package com.stslex93.notes.ui.edit
 
-import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.stslex93.notes.R
+import com.stslex93.notes.appComponent
 import com.stslex93.notes.core.Resource
 import com.stslex93.notes.databinding.FragmentEditBinding
 import com.stslex93.notes.ui.model.NoteUI
-import com.stslex93.notes.utilites.BaseFragment
+import com.stslex93.notes.ui.utils.interf.SnackBarUtil
+import com.stslex93.notes.ui.utils.interf.TimeUtil
 import com.stslex93.notes.utilites.hideKeyboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.*
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class EditFragment : BaseFragment() {
+class EditFragment : Fragment() {
 
     private var _binding: FragmentEditBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var timeUtil: TimeUtil
+    private lateinit var snackBarUtil: SnackBarUtil
     private val args: EditFragmentArgs by navArgs()
+    private val viewModel: EditNoteViewModel by viewModels { viewModelFactory }
 
-    private val viewModel: EditNoteViewModel by viewModels { viewModelFactory.get() }
+    @Inject
+    fun injection(
+        viewModelFactory: ViewModelProvider.Factory,
+        timeUtil: TimeUtil,
+        snackBarUtil: SnackBarUtil
+    ) {
+        this.viewModelFactory = viewModelFactory
+        this.timeUtil = timeUtil
+        this.snackBarUtil = snackBarUtil
+    }
+
+    override fun onAttach(context: Context) {
+        requireActivity().appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,19 +79,16 @@ class EditFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.editCardView.transitionName = args.transitionName
         if (args.edit) getNoteJob.start()
-        else setCurrentTime()
-        binding.editFragmentReturn.setOnClickListener { findNavController().popBackStack() }
+        else binding.editTime.text = currentTime
+        binding.editFragmentReturn.setOnClickListener(returnClickListener)
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun setCurrentTime() {
-        val timeFormat = getString(R.string.time_format)
-        val currentTimeInMs = System.currentTimeMillis()
-        val locale = Locale.getDefault()
-        val currentTime = SimpleDateFormat(timeFormat, locale).format(currentTimeInMs)
-        val labelEdit = getString(R.string.label_edit)
-        binding.editTime.text = "$labelEdit: $currentTime"
+    private val returnClickListener = View.OnClickListener {
+        findNavController().popBackStack()
     }
+
+    private val currentTime: String
+        get() = "${getString(R.string.label_edit)}: ${timeUtil.getCurrentTime()}"
 
     private val getNoteJob by lazy {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
@@ -82,12 +99,11 @@ class EditFragment : BaseFragment() {
     private suspend fun collector(resource: Resource<NoteUI>) {
         when (resource) {
             is Resource.Success -> resource.result()
-            is Resource.Failure -> {}
-            is Resource.Loading -> {}
+            is Resource.Failure -> Unit
+            is Resource.Loading -> Unit
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private suspend fun Resource.Success<NoteUI>.result() = withContext(Dispatchers.Main) {
         with(binding) {
             data.bindEditNote(editInputTitle, editInputContent)
@@ -97,38 +113,30 @@ class EditFragment : BaseFragment() {
 
     override fun onStop() {
         super.onStop()
-        if (title.isNotEmpty() || content.isNotEmpty()) {
+        if (isTitleAndContentNotEmpty) {
             if (args.edit) viewModel.updateNote(noteFromThisPage)
             else viewModel.insertNote(noteFromThisPage)
-        } else showNoteEmptySnackBar()
+        } else {
+            snackBarUtil.showErrorMessage(requireView(), getString(R.string.M_empty_note))
+        }
     }
 
-    private val noteFromThisPage by lazy {
-        NoteUI.Base(
+    private val isTitleAndContentNotEmpty
+        get() = title.isNotEmpty() || content.isNotEmpty()
+
+    private val noteFromThisPage
+        get() = NoteUI.Base(
             id = args.id,
             title = title,
             content = content,
             timestamp = System.currentTimeMillis()
         )
-    }
 
-    private val title: String by lazy {
-        binding.editInputTitle.editText?.text.toString()
-    }
+    private val title: String
+        get() = binding.editInputTitle.editText?.text.toString()
 
-    private val content: String by lazy {
-        binding.editInputContent.editText?.text.toString()
-    }
-
-    private fun showNoteEmptySnackBar() {
-        Snackbar.make(requireView(), "Note is empty", Snackbar.LENGTH_SHORT).apply {
-            animationMode = Snackbar.ANIMATION_MODE_SLIDE
-            val theme = resources.newTheme()
-            val color = resources.getColor(R.color.design_default_color_error, theme)
-            setBackgroundTint(color)
-            setAction("Ok") {}
-        }.show()
-    }
+    private val content: String
+        get() = binding.editInputContent.editText?.text.toString()
 
     override fun onDestroyView() {
         super.onDestroyView()

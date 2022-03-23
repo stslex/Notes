@@ -8,7 +8,6 @@ import javax.inject.Inject
 
 interface NoteListMapper : Mapper.DataToUI<List<Note>, Resource<List<NoteUI>>> {
 
-
     class Base @Inject constructor() : NoteListMapper {
 
         override fun map(data: List<Note>): Resource<List<NoteUI>> = Resource.Success(

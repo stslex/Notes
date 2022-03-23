@@ -34,36 +34,34 @@ class BottomNavigationViewBinder @AssistedInject constructor(
         BottomSheetBehavior.from(navigationView)
     }
 
-    private val bottomAppBarClickListener: View.OnClickListener
-        get() = View.OnClickListener {
-            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-                fab.show()
-                scrim.visibility = View.GONE
-            } else {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                fab.hide()
-                scrim.visibility = View.VISIBLE
-            }
+    private val bottomAppBarClickListener: View.OnClickListener = View.OnClickListener {
+        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            fab.show()
+            scrim.visibility = View.GONE
+        } else {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            fab.hide()
+            scrim.visibility = View.VISIBLE
         }
+    }
 
-    private val navigationItemSelectedListener: NavigationView.OnNavigationItemSelectedListener
-        get() = NavigationView.OnNavigationItemSelectedListener { menuItem ->
+    private val navigationItemSelectedListener: NavigationView.OnNavigationItemSelectedListener =
+        NavigationView.OnNavigationItemSelectedListener { menuItem ->
             navigationView.menu.forEach { it.isChecked = false }
             menuItem.isChecked = true
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             true
         }
 
-    private val scrimClickListener: View.OnClickListener
-        get() = View.OnClickListener {
-            fab.show()
-            it.visibility = View.GONE
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        }
+    private val scrimClickListener: View.OnClickListener = View.OnClickListener {
+        fab.show()
+        it.visibility = View.GONE
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+    }
 
-    private val bottomSheetCallBack: BottomSheetBehavior.BottomSheetCallback
-        get() = object : BottomSheetBehavior.BottomSheetCallback() {
+    private val bottomSheetCallBack: BottomSheetBehavior.BottomSheetCallback =
+        object : BottomSheetBehavior.BottomSheetCallback() {
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
