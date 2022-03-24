@@ -5,12 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.stslex93.notes.data.entity.Note
+import com.stslex93.notes.data.entity.NoteEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Note::class], version = 4, exportSchema = false)
+@Database(entities = [NoteEntity::class], version = 4, exportSchema = false)
 abstract class NoteRoomDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao

@@ -1,6 +1,5 @@
-package com.stslex93.notes.ui.utils.real
+package com.stslex93.notes.ui.utils.time
 
-import com.stslex93.notes.ui.utils.interf.TimeUtil
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject

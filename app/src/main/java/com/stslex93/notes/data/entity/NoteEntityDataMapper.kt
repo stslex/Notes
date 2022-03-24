@@ -4,11 +4,11 @@ import com.stslex93.notes.core.Mapper
 import com.stslex93.notes.data.model.NoteData
 import javax.inject.Inject
 
-interface NoteEntityDataMapper : Mapper.Data<Note, NoteData> {
+interface NoteEntityDataMapper : Mapper.Data<NoteEntity, NoteData> {
 
     class Base @Inject constructor() : NoteEntityDataMapper {
 
-        override fun map(data: Note): NoteData = with(data) {
+        override fun map(data: NoteEntity): NoteData = with(data) {
             NoteData.Base(
                 id = id,
                 title = title,

@@ -1,4 +1,4 @@
-package com.stslex93.notes.ui.utils.interf
+package com.stslex93.notes.ui.utils.snackbar
 
 import android.view.View
 

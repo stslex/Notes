@@ -19,6 +19,9 @@ import com.stslex93.notes.R
 import com.stslex93.notes.appComponent
 import com.stslex93.notes.core.Resource
 import com.stslex93.notes.databinding.FragmentMainBinding
+import com.stslex93.notes.ui.main.adapter.MainAdapter
+import com.stslex93.notes.ui.main.utils.OnNoteClickListener
+import com.stslex93.notes.ui.main.utils.OnNoteLongClickListener
 import com.stslex93.notes.ui.model.NoteUI
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.SharedFlow

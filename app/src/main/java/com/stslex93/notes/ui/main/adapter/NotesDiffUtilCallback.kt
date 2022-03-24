@@ -1,4 +1,4 @@
-package com.stslex93.notes.ui.main
+package com.stslex93.notes.ui.main.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.stslex93.notes.ui.model.NoteUI

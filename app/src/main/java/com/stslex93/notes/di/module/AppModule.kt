@@ -8,7 +8,8 @@ import dagger.Module
         ViewModelModule::class,
         DataBaseModule::class,
         MapperModule::class,
-        UtilsModule::class
+        UtilsModule::class,
+        InteractorModule::class
     ]
 )
 class AppModule

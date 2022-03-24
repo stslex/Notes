@@ -1,4 +1,4 @@
-package com.stslex93.notes.ui
+package com.stslex93.notes.ui.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

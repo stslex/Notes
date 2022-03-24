@@ -1,4 +1,4 @@
-package com.stslex93.notes.ui.main
+package com.stslex93.notes.ui.main.utils
 
 import com.stslex93.notes.ui.core.LongClickListener
 import com.stslex93.notes.ui.model.NoteUI

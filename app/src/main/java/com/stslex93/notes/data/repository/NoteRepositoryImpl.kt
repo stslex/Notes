@@ -1,31 +1,45 @@
 package com.stslex93.notes.data.repository
 
 import androidx.annotation.WorkerThread
+import com.stslex93.notes.core.Resource
 import com.stslex93.notes.data.database.NoteDao
-import com.stslex93.notes.data.entity.Note
-import com.stslex93.notes.utilites.Response
+import com.stslex93.notes.data.entity.NoteEntityDataMapper
+import com.stslex93.notes.data.model.NoteData
+import com.stslex93.notes.data.model.NoteDataEntityMapper
+import com.stslex93.notes.domain.repository.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class NoteRepositoryImpl @Inject constructor(private val dao: NoteDao) : NoteRepository {
+class NoteRepositoryImpl @Inject constructor(
+    private val dao: NoteDao,
+    private val mapperToData: NoteEntityDataMapper,
+    private val mapperDataToEntity: NoteDataEntityMapper
+) : NoteRepository {
 
-    override suspend fun getAll(): Flow<Response<List<Note>>> = flow {
+    override suspend fun getAll(): Flow<Resource<List<NoteData>>> = dao.getAll().map {
         try {
-            dao.getAll().collect {
-                emit(Response.Success(it))
-            }
-        } catch (e: Exception) {
-            emit(Response.Failure(e))
+            Resource.Success(it.map(mapperToData::map))
+        } catch (exception: Exception) {
+            Resource.Failure(exception)
         }
-    }.flowOn(Dispatchers.IO)
+    }
 
-    override fun getNote(id: Int): Flow<Note> = dao.getNote(id = id)
-    override fun getNotesById(ids: List<String>): Flow<List<Note>> = dao.getNotesById(ids = ids)
+    override fun getNote(id: Int): Flow<Resource<NoteData>> = dao.getNote(id = id).map {
+        try {
+            Resource.Success(mapperToData.map(it))
+        } catch (exception: Exception) {
+            Resource.Failure(exception)
+        }
+    }
+
+
+    override fun getNotesById(ids: List<String>): Flow<List<NoteData>> =
+        dao.getNotesById(ids = ids).map { list ->
+            list.map { mapperToData.map(it) }
+        }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -33,15 +47,15 @@ class NoteRepositoryImpl @Inject constructor(private val dao: NoteDao) : NoteRep
         dao.deleteNotesById(ids = ids)
     }
 
-    override suspend fun insert(note: Note) = withContext(Dispatchers.IO) {
-        dao.insert(note = note)
+    override suspend fun insert(note: NoteData) = withContext(Dispatchers.IO) {
+        dao.insert(note = mapperDataToEntity.map(note))
     }
 
-    override suspend fun insertAll(notes: List<Note>) = withContext(Dispatchers.IO) {
-        dao.insertAll(notes = notes)
+    override suspend fun insertAll(notes: List<NoteData>) = withContext(Dispatchers.IO) {
+        dao.insertAll(notes = notes.map { mapperDataToEntity.map(it) })
     }
 
-    override suspend fun update(note: Note) = withContext(Dispatchers.IO) {
-        dao.update(note = note)
+    override suspend fun update(note: NoteData) = withContext(Dispatchers.IO) {
+        dao.update(note = mapperDataToEntity.map(note))
     }
 }

@@ -18,9 +18,8 @@ import com.stslex93.notes.appComponent
 import com.stslex93.notes.core.Resource
 import com.stslex93.notes.databinding.FragmentEditBinding
 import com.stslex93.notes.ui.model.NoteUI
-import com.stslex93.notes.ui.utils.interf.SnackBarUtil
-import com.stslex93.notes.ui.utils.interf.TimeUtil
-import com.stslex93.notes.utilites.hideKeyboard
+import com.stslex93.notes.ui.utils.snackbar.SnackBarUtil
+import com.stslex93.notes.ui.utils.time.TimeUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -71,7 +70,6 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditBinding.inflate(inflater, container, false)
-        requireActivity().hideKeyboard()
         return binding.root
     }
 

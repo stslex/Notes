@@ -1,6 +1,6 @@
 package com.stslex93.notes.data.model
 
-import com.stslex93.notes.data.entity.Note
+import com.stslex93.notes.data.entity.NoteEntity
 
 interface NoteData {
 
@@ -8,7 +8,7 @@ interface NoteData {
     fun title(): String
     fun content(): String
     fun timestamp(): Long
-    fun mapToEntity(mapper: NoteDataEntityMapper): Note
+    fun mapToEntity(mapper: NoteDataEntityMapper): NoteEntity
 
     data class Base(
         private val id: Int = 0,
@@ -21,6 +21,6 @@ interface NoteData {
         override fun title(): String = title
         override fun content(): String = content
         override fun timestamp(): Long = timestamp
-        override fun mapToEntity(mapper: NoteDataEntityMapper): Note = mapper.map(this)
+        override fun mapToEntity(mapper: NoteDataEntityMapper): NoteEntity = mapper.map(this)
     }
 }

@@ -1,11 +1,11 @@
 package com.stslex93.notes.di.module
 
-import com.stslex93.notes.ui.main.OnNoteClickListener
-import com.stslex93.notes.ui.main.OnNoteLongClickListener
-import com.stslex93.notes.ui.utils.interf.SnackBarUtil
-import com.stslex93.notes.ui.utils.interf.TimeUtil
-import com.stslex93.notes.ui.utils.real.SnackBarUtilImpl
-import com.stslex93.notes.ui.utils.real.TimeUtilImpl
+import com.stslex93.notes.ui.main.utils.OnNoteClickListener
+import com.stslex93.notes.ui.main.utils.OnNoteLongClickListener
+import com.stslex93.notes.ui.utils.snackbar.SnackBarUtil
+import com.stslex93.notes.ui.utils.snackbar.SnackBarUtilImpl
+import com.stslex93.notes.ui.utils.time.TimeUtil
+import com.stslex93.notes.ui.utils.time.TimeUtilImpl
 import dagger.Binds
 import dagger.Module
 

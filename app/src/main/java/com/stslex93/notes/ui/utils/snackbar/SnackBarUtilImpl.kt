@@ -1,9 +1,8 @@
-package com.stslex93.notes.ui.utils.real
+package com.stslex93.notes.ui.utils.snackbar
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import com.stslex93.notes.R
-import com.stslex93.notes.ui.utils.interf.SnackBarUtil
 import javax.inject.Inject
 
 class SnackBarUtilImpl @Inject constructor() : SnackBarUtil {

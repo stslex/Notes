@@ -1,10 +1,11 @@
-package com.stslex93.notes.ui.main
+package com.stslex93.notes.ui.main.utils
 
 import android.view.View
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import com.stslex93.notes.data.entity.Note
+import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.ui.core.ClickListener
+import com.stslex93.notes.ui.main.MainFragmentDirections
 import com.stslex93.notes.ui.model.NoteUI
 import javax.inject.Inject
 
@@ -14,16 +15,16 @@ interface OnNoteClickListener : ClickListener<NoteUI> {
 
     class Base @Inject constructor() : OnNoteClickListener {
 
+        private val emptyNote by lazy {
+            NoteEntity(title = "", content = "", timestamp = System.currentTimeMillis())
+        }
+
         override fun onClick(item: NoteUI) {
             item.click { it.navigateToEdit(NOTE_IS_EDIT, item.getId()) }
         }
 
         override fun createNewNote(fab: View) {
             fab.navigateToEdit(!NOTE_IS_EDIT, emptyNote.id)
-        }
-
-        private val emptyNote by lazy {
-            Note(title = "", content = "", timestamp = System.currentTimeMillis())
         }
 
         private fun View.navigateToEdit(edit: Boolean, id: Int) {

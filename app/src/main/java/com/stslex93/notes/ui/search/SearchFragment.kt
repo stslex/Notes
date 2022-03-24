@@ -8,14 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialContainerTransform
 import com.stslex93.notes.R
 import com.stslex93.notes.appComponent
 import com.stslex93.notes.databinding.FragmentSearchBinding
-import com.stslex93.notes.ui.NoteViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
@@ -26,7 +24,6 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val noteViewModel: NoteViewModel by viewModels { viewModelFactory }
 
     @Inject
     fun injection(viewModelFactory: ViewModelProvider.Factory) {
