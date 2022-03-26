@@ -15,9 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.stslex.core.Resource
 import com.stslex.notes.R
 import com.stslex.notes.appComponent
-import com.stslex.notes.core.Resource
 import com.stslex.notes.databinding.FragmentMainBinding
 import com.stslex.notes.ui.main.adapter.MainAdapter
 import com.stslex.notes.ui.main.utils.OnNoteClickListener

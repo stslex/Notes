@@ -2,7 +2,7 @@ package com.stslex.notes.ui.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.stslex.notes.core.Resource
+import com.stslex.core.Resource
 import com.stslex.notes.data.model.NoteDataUIMapper
 import com.stslex.notes.domain.interactor.interf.NoteGetSingleInteractor
 import com.stslex.notes.domain.interactor.interf.NoteInsertSingleInteractor

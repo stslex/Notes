@@ -39,4 +39,6 @@
     <string name="description_home">Вернуться на главный экран</string>
     <string name="description_return">Назад</string>
     <string name="description_user_avatar">фото пользователя</string>
+
+    <string name="M_empty_note">Заметка пуста</string>
 </resources>

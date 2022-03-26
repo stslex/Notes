@@ -1,7 +1,7 @@
 package com.stslex.notes.data.repository
 
 import androidx.annotation.WorkerThread
-import com.stslex.notes.core.Resource
+import com.stslex.core.Resource
 import com.stslex.notes.data.database.NoteDao
 import com.stslex.notes.data.entity.NoteEntityDataMapper
 import com.stslex.notes.data.model.NoteData

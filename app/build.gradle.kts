@@ -42,6 +42,8 @@ android {
 }
 
 dependencies {
+    implementation(project(mapOf("path" to ":core")))
+
     /*Paging*/
     val pagingVersion = "3.1.1"
     implementation("androidx.paging:paging-runtime:$pagingVersion")

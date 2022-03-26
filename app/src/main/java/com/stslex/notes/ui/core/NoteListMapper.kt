@@ -1,7 +1,7 @@
 package com.stslex.notes.ui.core
 
-import com.stslex.notes.core.Mapper
-import com.stslex.notes.core.Resource
+import com.stslex.core.Mapper
+import com.stslex.core.Resource
 import com.stslex.notes.data.entity.NoteEntity
 import com.stslex.notes.ui.model.NoteUI
 import javax.inject.Inject
