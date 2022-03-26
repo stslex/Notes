@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.stslex93.notes.ui.main.MainFragment"
+        android:name="com.stslex.notes.ui.main.MainFragment"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_nav_home_to_nav_edit"
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_edit"
-        android:name="com.stslex93.notes.ui.edit.EditFragment">
+        android:name="com.stslex.notes.ui.edit.EditFragment">
         <argument
             android:name="id"
             app:argType="integer" />
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_search"
-        android:name="com.stslex93.notes.ui.search.SearchFragment"
+        android:name="com.stslex.notes.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
         <action

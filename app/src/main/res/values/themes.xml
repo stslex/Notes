@@ -16,13 +16,13 @@
 
     <style name="PrimaryTheme.Custom">
         <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:colorPrimary">@color/deep_purple_300</item>
     </style>
 
     <style name="PrimaryTheme.New">
         <item name="android:statusBarColor">@color/primary</item>
-        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:colorPrimary">@color/primary</item>
     </style>
 

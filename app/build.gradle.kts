@@ -10,7 +10,7 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        applicationId = "com.stslex93.notes"
+        applicationId = "com.stslex.notes"
         minSdk = 24
         targetSdk = 32
         versionCode = 2
