@@ -13,9 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
+import com.stslex.core.Resource
 import com.stslex.notes.R
 import com.stslex.notes.appComponent
-import com.stslex.notes.core.Resource
 import com.stslex.notes.databinding.FragmentEditBinding
 import com.stslex.notes.ui.model.NoteUI
 import com.stslex.notes.ui.utils.snackbar.SnackBarUtil

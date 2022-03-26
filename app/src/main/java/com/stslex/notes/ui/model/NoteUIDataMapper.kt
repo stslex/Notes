@@ -1,6 +1,6 @@
 package com.stslex.notes.ui.model
 
-import com.stslex.notes.core.Mapper
+import com.stslex.core.Mapper
 import com.stslex.notes.data.model.NoteData
 import javax.inject.Inject
 

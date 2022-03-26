@@ -1,6 +1,6 @@
 package com.stslex.notes.domain.interactor.impl
 
-import com.stslex.notes.core.Resource
+import com.stslex.core.Resource
 import com.stslex.notes.data.model.NoteData
 import com.stslex.notes.domain.interactor.interf.NoteGetAllInteractor
 import com.stslex.notes.domain.repository.NoteRepository

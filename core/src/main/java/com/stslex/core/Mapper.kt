@@ -1,4 +1,4 @@
-package com.stslex.notes.core
+package com.stslex.core
 
 interface Mapper {
 

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.stslex.notes.core.Mapper
+import com.stslex.core.Mapper
 import com.stslex.notes.data.model.NoteData
 import kotlinx.parcelize.Parcelize
 
