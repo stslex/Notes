@@ -1,11 +1,11 @@
 package com.stslex.notes.ui.main.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.stslex.notes.ui.model.NoteUI
+import com.stslex.notes.ui.model.NoteUIModel
 
 class NotesDiffUtilCallback(
-    private val oldList: List<NoteUI>,
-    private val newList: List<NoteUI>
+    private val oldList: List<NoteUIModel>,
+    private val newList: List<NoteUIModel>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size
@@ -16,5 +16,5 @@ class NotesDiffUtilCallback(
         oldList[oldItemPosition] == newList[newItemPosition]
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        oldList[oldItemPosition].getId() == newList[newItemPosition].getId()
+        oldList[oldItemPosition].id() == newList[newItemPosition].id()
 }

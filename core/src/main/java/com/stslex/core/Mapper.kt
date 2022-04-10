@@ -6,9 +6,11 @@ interface Mapper {
         fun map(data: D): U
     }
 
-    interface DataToUI<D, U> : Data<D, U> {
-
+    interface DataToDomain<D, U> : Data<D, U> {
         fun map(exception: Exception): U
+    }
+
+    interface DataToUI<D, U> : DataToDomain<D, U> {
         fun map(): U
     }
 }

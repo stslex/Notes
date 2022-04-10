@@ -5,29 +5,29 @@ import com.stslex.notes.databinding.ItemRecyclerMainBinding
 import com.stslex.notes.ui.core.AbstractViewHolder
 import com.stslex.notes.ui.core.ClickListener
 import com.stslex.notes.ui.core.LongClickListener
-import com.stslex.notes.ui.model.NoteUI
+import com.stslex.notes.ui.model.NoteUIModel
 
 class MainViewHolder(
     private val binding: ItemRecyclerMainBinding,
-    private val clickListener: ClickListener<NoteUI>,
-    private val longClickListener: LongClickListener<NoteUI>
-) : AbstractViewHolder<NoteUI>(binding) {
+    private val clickListener: ClickListener<NoteUIModel>,
+    private val longClickListener: LongClickListener<NoteUIModel>
+) : AbstractViewHolder<NoteUIModel>(binding) {
 
-    override fun bind(item: NoteUI): Unit = with(item) {
+    override fun bind(item: NoteUIModel): Unit = with(item) {
         binding.itemCardView.isChecked = isChecked()
         binding.itemCardView.setOnClickListener(itemClickListener)
         binding.itemCardView.setOnLongClickListener(itemLongCLickListener)
         bindItem()
     }
 
-    private fun NoteUI.bindItem(): Unit = with(binding) {
+    private fun NoteUIModel.bindItem(): Unit = with(binding) {
         bind(titleTextView, contentTextView, itemCardView)
     }
 
-    private val NoteUI.itemClickListener: View.OnClickListener
+    private val NoteUIModel.itemClickListener: View.OnClickListener
         get() = View.OnClickListener { clickListener.onClick(this) }
 
-    private val NoteUI.itemLongCLickListener: View.OnLongClickListener
+    private val NoteUIModel.itemLongCLickListener: View.OnLongClickListener
         get() = View.OnLongClickListener {
             binding.itemCardView.isChecked = !isChecked()
             longClickListener.click(this)

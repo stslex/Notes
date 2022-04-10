@@ -8,5 +8,7 @@ class NoteDeleteByIdsInteractorImpl @Inject constructor(
     private val repository: NoteRepository
 ) : NoteDeleteByIdsInteractor {
 
-    override suspend fun invoke(idList: List<Int>) = repository.deleteNotesById(idList)
+    override suspend fun invoke(idList: List<Int>) {
+        repository.deleteNotesById(idList)
+    }
 }

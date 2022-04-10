@@ -4,11 +4,10 @@ import android.annotation.SuppressLint
 import android.widget.TextView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.TextInputLayout
-import com.stslex.notes.data.model.NoteData
 import java.text.SimpleDateFormat
 import java.util.*
 
-interface NoteUI {
+interface NoteUIModel {
 
     fun bind(
         titleTextView: TextView,
@@ -21,13 +20,12 @@ interface NoteUI {
     fun click(function: (MaterialCardView) -> Unit)
     fun longClick()
 
-    fun getId(): Int
-    fun getTitle(): String
-    fun getContent(): String
-    fun getTimestamp(): Long
+    fun id(): Int
+    fun title(): String
+    fun content(): String
+    fun timestamp(): Long
     fun isChecked(): Boolean
     fun setChecked(isChecked: Boolean)
-    fun mapToData(mapper: NoteUIDataMapper): NoteData
 
     data class Base(
         private val id: Int,
@@ -35,7 +33,7 @@ interface NoteUI {
         private val content: String,
         private val timestamp: Long,
         private var isChecked: Boolean = false
-    ) : NoteUI {
+    ) : NoteUIModel {
 
         override fun isChecked(): Boolean = isChecked
         override fun setChecked(isChecked: Boolean) {
@@ -78,11 +76,10 @@ interface NoteUI {
 
         override fun click(function: (MaterialCardView) -> Unit) = function(cardView)
         override fun longClick() = Unit
-        override fun getId(): Int = id
-        override fun getTitle(): String = title
-        override fun getContent(): String = content
-        override fun getTimestamp(): Long = timestamp
-        override fun mapToData(mapper: NoteUIDataMapper) = mapper.map(this)
+        override fun id(): Int = id
+        override fun title(): String = title
+        override fun content(): String = content
+        override fun timestamp(): Long = timestamp
 
         companion object {
             private const val DATE_FORMAT = "dd.MM.yyyy"

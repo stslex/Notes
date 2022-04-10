@@ -8,29 +8,32 @@ import com.stslex.notes.databinding.ItemRecyclerMainBinding
 import com.stslex.notes.ui.core.AbstractViewHolder
 import com.stslex.notes.ui.core.ClickListener
 import com.stslex.notes.ui.core.LongClickListener
-import com.stslex.notes.ui.model.NoteUI
+import com.stslex.notes.ui.model.NoteUIModel
 
 class MainAdapter(
-    private val clickListener: ClickListener<NoteUI>,
-    private val longClickListener: LongClickListener<NoteUI>
-) : RecyclerView.Adapter<AbstractViewHolder<NoteUI>>() {
+    private val clickListener: ClickListener<NoteUIModel>,
+    private val longClickListener: LongClickListener<NoteUIModel>
+) : RecyclerView.Adapter<AbstractViewHolder<NoteUIModel>>() {
 
-    private val _items: MutableList<NoteUI> = mutableListOf()
-    private val items: List<NoteUI> get() = _items
+    private val _items: MutableList<NoteUIModel> = mutableListOf()
+    private val items: List<NoteUIModel> get() = _items
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AbstractViewHolder<NoteUI> {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): AbstractViewHolder<NoteUIModel> {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemRecyclerMainBinding.inflate(inflater, parent, false)
         return MainViewHolder(binding, clickListener, longClickListener)
     }
 
-    override fun onBindViewHolder(holder: AbstractViewHolder<NoteUI>, position: Int) {
+    override fun onBindViewHolder(holder: AbstractViewHolder<NoteUIModel>, position: Int) {
         holder.bind(items[position])
     }
 
     override fun getItemCount(): Int = items.size
 
-    fun setItems(newItems: List<NoteUI>) {
+    fun setItems(newItems: List<NoteUIModel>) {
         val addedItems = sort(newItems)
         val diffUtil = NotesDiffUtilCallback(items, addedItems)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
@@ -40,14 +43,15 @@ class MainAdapter(
 
     }
 
-    private fun sort(newItems: List<NoteUI>): List<NoteUI> = mutableListOf<NoteUI>().apply {
-        addAll(newItems)
-        sortBy(sortedItems)
-        reverse()
-    }
+    private fun sort(newItems: List<NoteUIModel>): List<NoteUIModel> =
+        mutableListOf<NoteUIModel>().apply {
+            addAll(newItems)
+            sortBy(sortedItems)
+            reverse()
+        }
 
-    private val sortedItems: (NoteUI) -> Long
-        get() = NoteUI::getTimestamp
+    private val sortedItems: (NoteUIModel) -> Long
+        get() = NoteUIModel::timestamp
 }
 
 

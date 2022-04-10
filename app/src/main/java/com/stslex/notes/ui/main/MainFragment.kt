@@ -22,7 +22,7 @@ import com.stslex.notes.databinding.FragmentMainBinding
 import com.stslex.notes.ui.main.adapter.MainAdapter
 import com.stslex.notes.ui.main.utils.OnNoteClickListener
 import com.stslex.notes.ui.main.utils.OnNoteLongClickListener
-import com.stslex.notes.ui.model.NoteUI
+import com.stslex.notes.ui.model.NoteUIModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
@@ -32,7 +32,8 @@ import javax.inject.Inject
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentMainBinding
+        get() = checkNotNull(_binding)
 
     private lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var navigationViewBinder: BottomNavigationViewBinder.Factory
@@ -58,7 +59,7 @@ class MainFragment : Fragment() {
         MainAdapter(noteClicker, noteLongClickListener)
     }
 
-    private val selectedItems: SharedFlow<List<NoteUI>> by lazy {
+    private val selectedItems: SharedFlow<List<NoteUIModel>> by lazy {
         noteLongClickListener.itemsSelected
     }
 
@@ -97,9 +98,8 @@ class MainFragment : Fragment() {
         }
     }
 
-
     @SuppressLint("ResourceType")
-    private fun itemsSelectedCollect(items: List<NoteUI>) {
+    private fun itemsSelectedCollect(items: List<NoteUIModel>) {
         if (items.isEmpty()) setFabAdd()
         else setFubDelete()
     }
@@ -122,7 +122,7 @@ class MainFragment : Fragment() {
         deleteJob?.cancel()
         deleteJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             noteLongClickListener.itemsSelected.collect { items ->
-                val listOfIds: List<Int> = items.map { it.getId() }
+                val listOfIds: List<Int> = items.map { it.id() }
                 viewModel.deleteNotesByIds(ids = listOfIds)
                 noteLongClickListener.deleteAll()
             }
@@ -146,7 +146,7 @@ class MainFragment : Fragment() {
         doOnPreDraw { startPostponedEnterTransition() }
     }
 
-    private suspend fun collector(resource: Resource<List<NoteUI>>): Unit =
+    private suspend fun collector(resource: Resource<List<NoteUIModel>>): Unit =
         withContext(Dispatchers.Main) {
             when (resource) {
                 is Resource.Success -> setNotes(resource.data)
@@ -155,7 +155,7 @@ class MainFragment : Fragment() {
             }
         }
 
-    private fun setNotes(notes: List<NoteUI>) {
+    private fun setNotes(notes: List<NoteUIModel>) {
         hideProgress()
         adapter.setItems(notes)
     }

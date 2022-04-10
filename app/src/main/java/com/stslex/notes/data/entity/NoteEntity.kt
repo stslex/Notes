@@ -4,8 +4,6 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.stslex.core.Mapper
-import com.stslex.notes.data.model.NoteData
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -24,6 +22,4 @@ data class NoteEntity(
 
     @ColumnInfo(name = "timestamp")
     val timestamp: Long
-) : Parcelable {
-    fun map(mapper: Mapper.Data<NoteEntity, NoteData>) = mapper.map(this)
-}
+) : Parcelable

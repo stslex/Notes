@@ -17,7 +17,7 @@ import com.stslex.core.Resource
 import com.stslex.notes.R
 import com.stslex.notes.appComponent
 import com.stslex.notes.databinding.FragmentEditBinding
-import com.stslex.notes.ui.model.NoteUI
+import com.stslex.notes.ui.model.NoteUIModel
 import com.stslex.notes.ui.utils.snackbar.SnackBarUtil
 import com.stslex.notes.ui.utils.time.TimeUtil
 import kotlinx.coroutines.Dispatchers
@@ -94,7 +94,7 @@ class EditFragment : Fragment() {
         }
     }
 
-    private suspend fun collector(resource: Resource<NoteUI>) {
+    private suspend fun collector(resource: Resource<NoteUIModel>) {
         when (resource) {
             is Resource.Success -> resource.result()
             is Resource.Failure -> Unit
@@ -102,7 +102,7 @@ class EditFragment : Fragment() {
         }
     }
 
-    private suspend fun Resource.Success<NoteUI>.result() = withContext(Dispatchers.Main) {
+    private suspend fun Resource.Success<NoteUIModel>.result() = withContext(Dispatchers.Main) {
         with(binding) {
             data.bindEditNote(editInputTitle, editInputContent)
             data.setLastEditTime(editTime, getString(R.string.label_edit))
@@ -123,7 +123,7 @@ class EditFragment : Fragment() {
         get() = title.isNotEmpty() || content.isNotEmpty()
 
     private val noteFromThisPage
-        get() = NoteUI.Base(
+        get() = NoteUIModel.Base(
             id = args.id,
             title = title,
             content = content,

@@ -6,10 +6,10 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.stslex.notes.data.entity.NoteEntity
 import com.stslex.notes.ui.core.ClickListener
 import com.stslex.notes.ui.main.MainFragmentDirections
-import com.stslex.notes.ui.model.NoteUI
+import com.stslex.notes.ui.model.NoteUIModel
 import javax.inject.Inject
 
-interface OnNoteClickListener : ClickListener<NoteUI> {
+interface OnNoteClickListener : ClickListener<NoteUIModel> {
 
     fun createNewNote(fab: View)
 
@@ -19,8 +19,8 @@ interface OnNoteClickListener : ClickListener<NoteUI> {
             NoteEntity(title = "", content = "", timestamp = System.currentTimeMillis())
         }
 
-        override fun onClick(item: NoteUI) {
-            item.click { it.navigateToEdit(NOTE_IS_EDIT, item.getId()) }
+        override fun onClick(item: NoteUIModel) {
+            item.click { it.navigateToEdit(NOTE_IS_EDIT, item.id()) }
         }
 
         override fun createNewNote(fab: View) {
