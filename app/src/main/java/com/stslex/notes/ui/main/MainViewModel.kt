@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.stslex.notes.domain.interactor.interf.NoteDeleteByIdsInteractor
 import com.stslex.notes.domain.interactor.interf.NoteGetAllWithQueryInteractor
-import com.stslex.notes.domain.interactor.interf.NoteInsertSingleInteractor
+import com.stslex.notes.domain.interactor.interf.NoteInsertAllInteractor
 import com.stslex.notes.ui.mapper.NotePagingDomainUIMapper
 import com.stslex.notes.ui.mapper.NoteUIDomainMapper
 import com.stslex.notes.ui.model.NoteUIModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val noteGetAllInteractor: NoteGetAllWithQueryInteractor,
     private val noteDeleteByIdsInteractor: NoteDeleteByIdsInteractor,
-    private val noteInsertInteractor: NoteInsertSingleInteractor,
+    private val insertAllInteractor: NoteInsertAllInteractor,
     private val pagingMapper: NotePagingDomainUIMapper,
     private val mapperUIDomain: NoteUIDomainMapper
 ) : ViewModel() {
@@ -45,9 +45,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun insertNote(note: NoteUIModel) {
+    fun insertAll(notes: List<NoteUIModel>) {
         viewModelScope.launch(Dispatchers.IO) {
-            noteInsertInteractor.invoke(mapperUIDomain.map(data = note))
+            insertAllInteractor.invoke(notes.map(mapperUIDomain::map))
         }
     }
 }

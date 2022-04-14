@@ -37,4 +37,8 @@ class NoteRepositoryImpl @Inject constructor(
     override suspend fun insert(note: NoteDataModel) {
         dao.insert(note = mapperDataToEntity.map(note))
     }
+
+    override suspend fun insertAll(notes: List<NoteDataModel>) {
+        dao.insertAll(notes.map(mapperDataToEntity::map))
+    }
 }

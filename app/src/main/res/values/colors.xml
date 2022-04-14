@@ -19,4 +19,6 @@
     <color name="deep_purple_300">#9575CD</color>
 
     <color name="transparent">#00FFFFFF</color>
+
+    <color name="success">#66BB6A</color>
 </resources>

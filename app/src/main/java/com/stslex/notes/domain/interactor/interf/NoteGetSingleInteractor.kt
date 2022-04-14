@@ -5,7 +5,7 @@ import com.stslex.notes.domain.model.NoteDomainModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
-interface NoteGetSingleInteractor {
+fun interface NoteGetSingleInteractor {
 
     @ExperimentalCoroutinesApi
     fun invoke(id: Int): Flow<Resource<NoteDomainModel>>

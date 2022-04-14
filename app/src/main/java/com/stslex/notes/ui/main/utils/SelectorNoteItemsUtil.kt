@@ -31,6 +31,9 @@ interface SelectorNoteItemsUtil : SelectItemsUtil<NoteUIModel> {
         override val itemsSelected: SharedFlow<List<NoteUIModel>>
             get() = _itemsSelected
 
+        private val _lastSelectedItems: MutableList<NoteUIModel> = mutableListOf()
+        override val lastSelectedItems: List<NoteUIModel>
+            get() = _lastSelectedItems
 
         override fun deleteAll() {
             listOfItems.forEach {
@@ -44,7 +47,10 @@ interface SelectorNoteItemsUtil : SelectItemsUtil<NoteUIModel> {
         override fun select(item: NoteUIModel) {
             item.setChecked(!item.isChecked())
             if (item.isChecked()) listOfItems.add(item) else listOfItems.remove(item)
+            _lastSelectedItems.clear()
+            _lastSelectedItems.addAll(listOfItems)
             _isSelectionStart = listOfItems.isNotEmpty()
+            _itemsSelected.tryEmit(listOfItems)
         }
     }
 }

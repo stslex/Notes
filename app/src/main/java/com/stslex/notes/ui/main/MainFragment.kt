@@ -147,14 +147,16 @@ class MainFragment : Fragment() {
 
     private fun showSuccess() {
         val theme = resources.newTheme()
-        val color = resources.getColor(R.color.design_default_color_error, theme)
-        Snackbar.make(requireView(), "Notes Deleted", Snackbar.LENGTH_SHORT)
-            .apply {
-                animationMode = Snackbar.ANIMATION_MODE_SLIDE
-                setBackgroundTint(color)
-                setAction("Cancel") {
-                }
-            }.show()
+        val color = resources.getColor(R.color.success, theme)
+        Snackbar.make(requireView(), "Notes Deleted", Snackbar.LENGTH_SHORT).apply {
+            animationMode = Snackbar.ANIMATION_MODE_SLIDE
+            setBackgroundTint(color)
+            setActionTextColor(Color.BLACK)
+            setTextColor(Color.BLACK)
+            setAction("CANCEL") {
+                viewModel.insertAll(itemsSelector.lastSelectedItems)
+            }
+        }.show()
     }
 
     override fun onDestroyView() {
