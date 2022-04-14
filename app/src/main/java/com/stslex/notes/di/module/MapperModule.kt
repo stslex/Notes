@@ -2,8 +2,7 @@ package com.stslex.notes.di.module
 
 import com.stslex.notes.data.mapper.NoteDataEntityMapper
 import com.stslex.notes.data.mapper.NoteEntityDataMapper
-import com.stslex.notes.data.mapper.NoteListDataEntityMapper
-import com.stslex.notes.data.mapper.NoteListEntityDataMapper
+import com.stslex.notes.data.mapper.NotePagingEntityDataMapper
 import com.stslex.notes.domain.mappers.*
 import com.stslex.notes.ui.mapper.*
 import dagger.Binds
@@ -16,15 +15,9 @@ interface MapperModule {
     @Binds
     fun bindsNoteEntityDataMapper(mapper: NoteEntityDataMapper.Base): NoteEntityDataMapper
 
-    @Binds
-    fun bindsNoteListEntityDataMapper(mapper: NoteListEntityDataMapper.Base): NoteListEntityDataMapper
-
     /*Data Entity*/
     @Binds
     fun bindsNoteDataEntityMapper(mapper: NoteDataEntityMapper.Base): NoteDataEntityMapper
-
-    @Binds
-    fun bindsNoteListDataEntityMapper(mapper: NoteListDataEntityMapper.Base): NoteListDataEntityMapper
 
     /*Data Domain*/
     @Binds
@@ -59,4 +52,14 @@ interface MapperModule {
 
     @Binds
     fun bindsNoteListUIDomainMapper(mapper: NoteListUIDomainMapper.Base): NoteListUIDomainMapper
+
+    /*PagingData*/
+    @Binds
+    fun bindsNotePagingEntityDataMapper(mapper: NotePagingEntityDataMapper.Base): NotePagingEntityDataMapper
+
+    @Binds
+    fun bindsNotePagingDataDomainMapper(mapper: NotePagingDataDomainMapper.Base): NotePagingDataDomainMapper
+
+    @Binds
+    fun bindsNotePagingDomainUIMapper(mapper: NotePagingDomainUIMapper.Base): NotePagingDomainUIMapper
 }

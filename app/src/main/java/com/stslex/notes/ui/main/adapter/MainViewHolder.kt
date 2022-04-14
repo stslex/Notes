@@ -29,7 +29,6 @@ class MainViewHolder(
 
     private val NoteUIModel.itemLongCLickListener: View.OnLongClickListener
         get() = View.OnLongClickListener {
-            binding.itemCardView.isChecked = !isChecked()
             longClickListener.click(this)
             true
         }

@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.stslex.core.Resource
 import com.stslex.notes.domain.interactor.interf.NoteGetSingleInteractor
 import com.stslex.notes.domain.interactor.interf.NoteInsertSingleInteractor
-import com.stslex.notes.domain.interactor.interf.NoteUpdateSingleInteractor
 import com.stslex.notes.ui.mapper.NoteDomainUIMapper
 import com.stslex.notes.ui.mapper.NoteUIDomainMapper
 import com.stslex.notes.ui.model.NoteUIModel
@@ -17,8 +16,7 @@ import javax.inject.Inject
 
 class EditNoteViewModel @Inject constructor(
     private val noteGetSingleInteractor: NoteGetSingleInteractor,
-    private val noteInsertSingleInteractor: NoteInsertSingleInteractor,
-    private val noteUpdateSingleInteractor: NoteUpdateSingleInteractor,
+    private val noteInsertInteractor: NoteInsertSingleInteractor,
     private val mapperDomainUI: NoteDomainUIMapper,
     private val mapperUIDomain: NoteUIDomainMapper
 ) : ViewModel() {
@@ -34,10 +32,6 @@ class EditNoteViewModel @Inject constructor(
         )
 
     fun insertNote(note: NoteUIModel) = viewModelScope.launch(Dispatchers.IO) {
-        noteInsertSingleInteractor.invoke(mapperUIDomain.map(data = note))
-    }
-
-    fun updateNote(note: NoteUIModel) = viewModelScope.launch(Dispatchers.IO) {
-        noteUpdateSingleInteractor.invoke(mapperUIDomain.map(data = note))
+        noteInsertInteractor.invoke(mapperUIDomain.map(data = note))
     }
 }

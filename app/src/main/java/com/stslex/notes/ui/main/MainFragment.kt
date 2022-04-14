@@ -8,24 +8,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.platform.MaterialContainerTransform
-import com.stslex.core.Resource
 import com.stslex.notes.R
 import com.stslex.notes.appComponent
 import com.stslex.notes.databinding.FragmentMainBinding
 import com.stslex.notes.ui.main.adapter.MainAdapter
+import com.stslex.notes.ui.main.utils.NotesDiffItemCallback
 import com.stslex.notes.ui.main.utils.OnNoteClickListener
 import com.stslex.notes.ui.main.utils.OnNoteLongClickListener
+import com.stslex.notes.ui.main.utils.SelectorNoteItemsUtil
 import com.stslex.notes.ui.model.NoteUIModel
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -36,31 +40,27 @@ class MainFragment : Fragment() {
         get() = checkNotNull(_binding)
 
     private lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var navigationViewBinder: BottomNavigationViewBinder.Factory
     private lateinit var noteClicker: OnNoteClickListener
     private lateinit var noteLongClickListener: OnNoteLongClickListener
+    private lateinit var itemsSelector: SelectorNoteItemsUtil
 
     @Inject
     fun injection(
         viewModelFactory: ViewModelProvider.Factory,
-        navigationViewBinder: BottomNavigationViewBinder.Factory,
-        noteClicker: OnNoteClickListener,
-        noteLongClickListener: OnNoteLongClickListener
+        noteClicker: OnNoteClickListener.Factory,
+        noteLongClickListener: OnNoteLongClickListener.Factory,
+        itemsSelector: SelectorNoteItemsUtil
     ) {
         this.viewModelFactory = viewModelFactory
-        this.navigationViewBinder = navigationViewBinder
-        this.noteClicker = noteClicker
-        this.noteLongClickListener = noteLongClickListener
+        this.itemsSelector = itemsSelector
+        this.noteClicker = noteClicker.create(itemsSelector)
+        this.noteLongClickListener = noteLongClickListener.create(itemsSelector)
     }
 
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     private val adapter: MainAdapter by lazy {
-        MainAdapter(noteClicker, noteLongClickListener)
-    }
-
-    private val selectedItems: SharedFlow<List<NoteUIModel>> by lazy {
-        noteLongClickListener.itemsSelected
+        MainAdapter(noteClicker, noteLongClickListener, NotesDiffItemCallback())
     }
 
     override fun onAttach(context: Context) {
@@ -89,14 +89,29 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.getAllNotes().collect(::collector)
+            viewModel.notes.collect(adapter::submitData)
         }
-        initRecyclerView()
-        initNavigationView()
+        binding.searchView.setOnQueryTextListener(queryTextListener)
+        binding.recyclerView.adapter = adapter
+        postponeEnterTransition()
+        binding.recyclerView.doOnPreDraw { startPostponedEnterTransition() }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            selectedItems.collect(::itemsSelectedCollect)
+            itemsSelector.itemsSelected.collect(::itemsSelectedCollect)
         }
     }
+
+    private val queryTextListener: SearchView.OnQueryTextListener
+        get() = object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                viewModel.setQuery(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                viewModel.setQuery(newText)
+                return false
+            }
+        }
 
     @SuppressLint("ResourceType")
     private fun itemsSelectedCollect(items: List<NoteUIModel>) {
@@ -121,59 +136,30 @@ class MainFragment : Fragment() {
     private val fabDeleteClickListener = View.OnClickListener {
         deleteJob?.cancel()
         deleteJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            noteLongClickListener.itemsSelected.collect { items ->
+            itemsSelector.itemsSelected.collect { items ->
                 val listOfIds: List<Int> = items.map { it.id() }
                 viewModel.deleteNotesByIds(ids = listOfIds)
-                noteLongClickListener.deleteAll()
+                itemsSelector.deleteAll()
             }
         }
+        showSuccess()
     }
 
-    private fun initNavigationView() = with(binding) {
-        navigationViewBinder.create(
-            navigationView = bottomNavView,
-            bottomAppBar = bottomBar,
-            scrim = scrim,
-            fab = fab
-        ).bind()
-    }
-
-    private fun initRecyclerView() = with(binding.recyclerView) {
-        adapter = this@MainFragment.adapter
-        val orientation = StaggeredGridLayoutManager.VERTICAL
-        layoutManager = StaggeredGridLayoutManager(2, orientation)
-        postponeEnterTransition()
-        doOnPreDraw { startPostponedEnterTransition() }
-    }
-
-    private suspend fun collector(resource: Resource<List<NoteUIModel>>): Unit =
-        withContext(Dispatchers.Main) {
-            when (resource) {
-                is Resource.Success -> setNotes(resource.data)
-                is Resource.Failure -> hideProgress()
-                is Resource.Loading -> showProgress()
-            }
-        }
-
-    private fun setNotes(notes: List<NoteUIModel>) {
-        hideProgress()
-        adapter.setItems(notes)
-    }
-
-    private fun showProgress() {
-        binding.SHOWPROGRESS.apply {
-            visibility = View.VISIBLE
-        }
-    }
-
-    private fun hideProgress() {
-        binding.SHOWPROGRESS.apply {
-            visibility = View.GONE
-        }
+    private fun showSuccess() {
+        val theme = resources.newTheme()
+        val color = resources.getColor(R.color.design_default_color_error, theme)
+        Snackbar.make(requireView(), "Notes Deleted", Snackbar.LENGTH_SHORT)
+            .apply {
+                animationMode = Snackbar.ANIMATION_MODE_SLIDE
+                setBackgroundTint(color)
+                setAction("Cancel") {
+                }
+            }.show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        itemsSelector.deleteAll()
         _binding = null
         deleteJob?.cancel()
     }

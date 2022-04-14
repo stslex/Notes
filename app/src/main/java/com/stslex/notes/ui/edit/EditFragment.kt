@@ -111,16 +111,8 @@ class EditFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        if (isTitleAndContentNotEmpty) {
-            if (args.edit) viewModel.updateNote(noteFromThisPage)
-            else viewModel.insertNote(noteFromThisPage)
-        } else {
-            snackBarUtil.showErrorMessage(requireView(), getString(R.string.M_empty_note))
-        }
+        if (title.isNotEmpty() || content.isNotEmpty()) viewModel.insertNote(noteFromThisPage)
     }
-
-    private val isTitleAndContentNotEmpty
-        get() = title.isNotEmpty() || content.isNotEmpty()
 
     private val noteFromThisPage
         get() = NoteUIModel.Base(

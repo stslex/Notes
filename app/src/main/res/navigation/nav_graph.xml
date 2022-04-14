@@ -12,10 +12,8 @@
         <action
             android:id="@+id/action_nav_home_to_nav_edit"
             app:destination="@id/nav_edit" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_search"
-            app:destination="@id/nav_search" />
     </fragment>
+
     <fragment
         android:id="@+id/nav_edit"
         android:name="com.stslex.notes.ui.edit.EditFragment">
@@ -29,14 +27,4 @@
             android:name="transitionName"
             app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_search"
-        android:name="com.stslex.notes.ui.search.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search">
-        <action
-            android:id="@+id/action_nav_search_to_nav_edit"
-            app:destination="@id/nav_edit" />
-    </fragment>
-
 </navigation>

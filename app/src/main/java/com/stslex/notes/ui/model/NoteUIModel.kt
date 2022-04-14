@@ -18,7 +18,6 @@ interface NoteUIModel {
     fun bindEditNote(titleTextView: TextInputLayout, contentTextView: TextInputLayout)
     fun setLastEditTime(textView: TextView, labelEdit: String)
     fun click(function: (MaterialCardView) -> Unit)
-    fun longClick()
 
     fun id(): Int
     fun title(): String
@@ -37,6 +36,7 @@ interface NoteUIModel {
 
         override fun isChecked(): Boolean = isChecked
         override fun setChecked(isChecked: Boolean) {
+            cardView.isChecked = isChecked
             this.isChecked = isChecked
         }
 
@@ -75,7 +75,6 @@ interface NoteUIModel {
             SimpleDateFormat(format, Locale.getDefault()).format(time)
 
         override fun click(function: (MaterialCardView) -> Unit) = function(cardView)
-        override fun longClick() = Unit
         override fun id(): Int = id
         override fun title(): String = title
         override fun content(): String = content

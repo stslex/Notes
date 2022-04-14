@@ -1,71 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
     tools:context=".ui.main.MainFragment">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        style="@style/Widget.AppCompat.SearchView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="?actionBarSize">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/item_recycler_main" />
-
-        <FrameLayout
-            android:id="@+id/scrim"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/bottom_nav_view"
-            style="@style/Widget.Material3.NavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:behavior_hideable="true"
-            app:headerLayout="@layout/nav_view_head"
-            app:layout_behavior="@string/bottom_sheet_behavior"
-            app:menu="@menu/nav_view_menu" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottom_bar"
-        style="@style/Widget.Material3.BottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_gravity="bottom"
-        android:transitionName="@string/search_transition_name"
-        app:fabAlignmentMode="end"
-        app:fabAnimationMode="scale"
-        app:hideOnScroll="true"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:menu="@menu/bottom_appbar"
-        app:navigationIcon="@drawable/ic_baseline_menu_24" />
-
-    <ProgressBar
-        android:id="@+id/SHOW_PROGRESS"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:spanCount="2"
+        tools:listitem="@layout/item_recycler_main" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         style="@style/ThemeOverlay.Material3.FloatingActionButton.Surface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/primary_padding"
         android:contentDescription="@string/description_create_note"
         android:src="@drawable/ic_baseline_add_24"
         android:transitionName="@string/label_edit"
-        app:layout_anchor="@id/bottom_bar" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

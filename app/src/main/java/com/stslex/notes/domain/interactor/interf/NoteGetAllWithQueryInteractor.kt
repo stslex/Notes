@@ -1,12 +1,14 @@
 package com.stslex.notes.domain.interactor.interf
 
-import com.stslex.core.Resource
+import androidx.paging.PagingData
 import com.stslex.notes.domain.model.NoteDomainModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
-interface NoteGetAllInteractor {
+interface NoteGetAllWithQueryInteractor {
 
     @ExperimentalCoroutinesApi
-    fun invoke(): Flow<Resource<List<NoteDomainModel>>>
+    fun invoke(): Flow<PagingData<NoteDomainModel>>
+
+    fun setQuery(query: String)
 }

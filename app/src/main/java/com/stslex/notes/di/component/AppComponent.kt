@@ -4,7 +4,6 @@ import android.content.Context
 import com.stslex.notes.di.module.AppModule
 import com.stslex.notes.ui.edit.EditFragment
 import com.stslex.notes.ui.main.MainFragment
-import com.stslex.notes.ui.search.SearchFragment
 import dagger.BindsInstance
 import dagger.Component
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,6 +24,5 @@ interface AppComponent {
     }
 
     fun inject(fragment: EditFragment)
-    fun inject(fragment: SearchFragment)
     fun inject(fragment: MainFragment)
 }

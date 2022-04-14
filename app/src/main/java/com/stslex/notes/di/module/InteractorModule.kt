@@ -1,7 +1,13 @@
 package com.stslex.notes.di.module
 
-import com.stslex.notes.domain.interactor.impl.*
-import com.stslex.notes.domain.interactor.interf.*
+import com.stslex.notes.domain.interactor.impl.NoteDeleteByIdsInteractorImpl
+import com.stslex.notes.domain.interactor.impl.NoteGetAllWithQueryInteractorImpl
+import com.stslex.notes.domain.interactor.impl.NoteGetSingleInteractorImpl
+import com.stslex.notes.domain.interactor.impl.NoteInsertSingleInteractorImpl
+import com.stslex.notes.domain.interactor.interf.NoteDeleteByIdsInteractor
+import com.stslex.notes.domain.interactor.interf.NoteGetAllWithQueryInteractor
+import com.stslex.notes.domain.interactor.interf.NoteGetSingleInteractor
+import com.stslex.notes.domain.interactor.interf.NoteInsertSingleInteractor
 import dagger.Binds
 import dagger.Module
 
@@ -15,14 +21,8 @@ interface InteractorModule {
     fun bindsNoteGetSingleInteractor(interactor: NoteGetSingleInteractorImpl): NoteGetSingleInteractor
 
     @Binds
-    fun bindsNoteInsertAllInteractor(interactor: NoteInsertAllInteractorImpl): NoteInsertAllInteractor
-
-    @Binds
     fun bindsNoteInsertSingleInteractor(interactor: NoteInsertSingleInteractorImpl): NoteInsertSingleInteractor
 
     @Binds
-    fun bindsNotesGetAllInteractor(interactor: NotesGetAllInteractorImpl): NoteGetAllInteractor
-
-    @Binds
-    fun bindsNoteUpdateSingleInteractor(interactor: NoteUpdateSingleInteractorImpl): NoteUpdateSingleInteractor
+    fun bindsNotesGetAllInteractor(interactor: NoteGetAllWithQueryInteractorImpl): NoteGetAllWithQueryInteractor
 }
