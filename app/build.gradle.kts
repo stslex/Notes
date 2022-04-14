@@ -10,11 +10,11 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        applicationId = "com.stslex.notes"
+        applicationId = "com.stslex93.notes"
         minSdk = 24
         targetSdk = 32
-        versionCode = 2
-        versionName = "1.01"
+        versionCode = 5
+        versionName = "1.05"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
