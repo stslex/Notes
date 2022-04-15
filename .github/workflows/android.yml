@@ -17,11 +17,13 @@ jobs:
     
     - name: set up local.properties
       env: 
-        SDK_DIR: ${{secrets.SDK_DIR}}
+        LOCAL_PROPERTIES: ${{secrets.LOCAL_PROPERTIES}}
       shell: bash
       run: |
-        run: echo sdk.dir="$SDK_DIR" > ./local.properties
+        run: echo LOCAL_PROPERTIES="$LOCAL_PROPERTIES" > ./local.properties
+        cat "Local properies::start::"
         cat ~/local.properties
+        cat "Local properies::end::"
         ls -al
         
     - name: set up JDK 11
