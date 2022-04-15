@@ -20,7 +20,7 @@ jobs:
         SDK_DIR: ${{secrets.SDK_DIR}}
       shell: bash
       run: |
-        run: echo sdk.dir="SDK_DIR" > ./local.properties
+        run: echo sdk.dir="$SDK_DIR" > ./local.properties
         cat ~/local.properties
         ls -al
         
