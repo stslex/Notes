@@ -17,10 +17,10 @@ jobs:
     
     - name: set up local.properties
       env: 
-        LOCAL_PROPERTIES: ${{secrets.LOCAL_PROPERTIES}}
+        SDK_DIR: ${{secrets.SDK_DIR}}
       shell: bash
       run: |
-        run: echo LOCAL_PROPERTIES > ./local.properties
+        run: echo sdk.dir="SDK_DIR" > ./local.properties
         cat ~/local.properties
         ls -al
         
