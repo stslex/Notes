@@ -21,9 +21,7 @@ jobs:
       shell: bash
       run: |
         echo "$LOCAL_PROPERTIES" > ~/local.properties
-        cat "Local properies::start::"
         cat ~/local.properties
-        cat "Local properies::end::"
         ls -al
         
     - name: set up JDK 11
