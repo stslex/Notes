@@ -15,13 +15,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: set up local.properties
+    - name: set up local properties
       env: 
         LOCAL_PROPERTIES: ${{secrets.LOCAL_PROPERTIES}}
       shell: bash
       run: |
         run: 
-        echo "$LOCAL_PROPERTIES" > ./local.properties
+        echo "$LOCAL_PROPERTIES" > ~/local.properties
         cat "Local properies::start::"
         cat ~/local.properties
         cat "Local properies::end::"
