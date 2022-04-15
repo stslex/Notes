@@ -20,7 +20,7 @@ jobs:
         LOCAL_PROPERTIES: ${{secrets.LOCAL_PROPERTIES}}
       shell: bash
       run: |
-        echo "$LOCAL_PROPERTIES" > ~/local.properties
+        run: echo "$LOCAL_PROPERTIES" > ./local.properties
         cat ~/local.properties
         ls -al
         
