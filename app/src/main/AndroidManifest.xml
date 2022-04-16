@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.stslex93.notes"
     android:installLocation="auto"
-    android:versionCode="5"
-    android:versionName="1.05">
+    android:versionCode="6"
+    android:versionName="1.06">
 
     <application
         android:name="com.stslex93.notes.NoteApplication"

@@ -120,6 +120,7 @@ class MainFragment : Fragment() {
     }
 
     private var deleteJob: Job? = null
+
     private fun setFabAdd() {
         deleteJob?.cancel()
         val icon: Icon = Icon.createWithResource(requireContext(), R.drawable.ic_baseline_add_24)
@@ -139,7 +140,9 @@ class MainFragment : Fragment() {
             itemsSelector.itemsSelected.collect { items ->
                 val listOfIds: List<Int> = items.map { it.id() }
                 viewModel.deleteNotesByIds(ids = listOfIds)
-                itemsSelector.deleteAll()
+                launch(Dispatchers.Main) {
+                    itemsSelector.deleteAll()
+                }
             }
         }
         showSuccess()
