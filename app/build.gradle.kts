@@ -49,12 +49,12 @@ dependencies {
     implementation("androidx.paging:paging-runtime:$pagingVersion")
 
     /*Dagger 2*/
-    val daggerVersion = "2.39.1"
+    val daggerVersion = "2.41"
     implementation("com.google.dagger:dagger:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 
     /*Navigation*/
-    val navigationVersion = "2.4.1"
+    val navigationVersion = "2.4.2"
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
 
@@ -68,7 +68,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
 
     /*Coroutines*/
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1-native-mt")
 
     /*Room*/
     val roomVersion = "2.4.2"
