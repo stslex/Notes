@@ -20,15 +20,11 @@ import com.stslex93.notes.R
 import com.stslex93.notes.appComponent
 import com.stslex93.notes.databinding.FragmentMainBinding
 import com.stslex93.notes.ui.main.adapter.MainAdapter
-import com.stslex93.notes.ui.main.utils.NotesDiffItemCallback
-import com.stslex93.notes.ui.main.utils.OnNoteClickListener
-import com.stslex93.notes.ui.main.utils.OnNoteLongClickListener
-import com.stslex93.notes.ui.main.utils.SelectorNoteItemsUtil
+import com.stslex93.notes.ui.main.utils.*
 import com.stslex93.notes.ui.model.NoteUIModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,24 +39,34 @@ class MainFragment : Fragment() {
     private lateinit var noteClicker: OnNoteClickListener
     private lateinit var noteLongClickListener: OnNoteLongClickListener
     private lateinit var itemsSelector: SelectorNoteItemsUtil
+    private lateinit var queryTextListenerFactory: QueryTextListener.Factory
 
     @Inject
     fun injection(
         viewModelFactory: ViewModelProvider.Factory,
         noteClicker: OnNoteClickListener.Factory,
         noteLongClickListener: OnNoteLongClickListener.Factory,
-        itemsSelector: SelectorNoteItemsUtil
+        itemsSelector: SelectorNoteItemsUtil,
+        queryTextListenerFactory: QueryTextListener.Factory
     ) {
         this.viewModelFactory = viewModelFactory
         this.itemsSelector = itemsSelector
         this.noteClicker = noteClicker.create(itemsSelector)
         this.noteLongClickListener = noteLongClickListener.create(itemsSelector)
+        this.queryTextListenerFactory = queryTextListenerFactory
     }
 
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     private val adapter: MainAdapter by lazy {
         MainAdapter(noteClicker, noteLongClickListener, NotesDiffItemCallback())
+    }
+
+    private val queryTextListener: SearchView.OnQueryTextListener by lazy {
+        queryTextListenerFactory.create {
+            itemsSelector.deleteAll()
+            viewModel.setQuery(it)
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -100,29 +106,16 @@ class MainFragment : Fragment() {
         }
     }
 
-    private val queryTextListener: SearchView.OnQueryTextListener
-        get() = object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.setQuery(query)
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                viewModel.setQuery(newText)
-                return false
-            }
-        }
-
     @SuppressLint("ResourceType")
     private fun itemsSelectedCollect(items: List<NoteUIModel>) {
         if (items.isEmpty()) setFabAdd()
         else setFubDelete()
     }
 
-    private var deleteJob: Job? = null
+    private var deleteJob: Job = Job()
 
     private fun setFabAdd() {
-        deleteJob?.cancel()
+        deleteJob.cancel()
         val icon: Icon = Icon.createWithResource(requireContext(), R.drawable.ic_baseline_add_24)
         binding.fab.setImageIcon(icon)
         binding.fab.setOnClickListener(noteClicker::createNewNote)
@@ -135,7 +128,7 @@ class MainFragment : Fragment() {
     }
 
     private val fabDeleteClickListener = View.OnClickListener {
-        deleteJob?.cancel()
+        deleteJob.cancel()
         deleteJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             itemsSelector.itemsSelected.collect { items ->
                 val listOfIds: List<Int> = items.map { it.id() }
@@ -165,8 +158,8 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         itemsSelector.deleteAll()
+        deleteJob.cancel()
         _binding = null
-        deleteJob?.cancel()
     }
 }
 
