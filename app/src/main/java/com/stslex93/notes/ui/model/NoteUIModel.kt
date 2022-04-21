@@ -36,7 +36,6 @@ interface NoteUIModel {
 
         override fun isChecked(): Boolean = isChecked
         override fun setChecked(isChecked: Boolean) {
-            cardView.isChecked = isChecked
             this.isChecked = isChecked
         }
 

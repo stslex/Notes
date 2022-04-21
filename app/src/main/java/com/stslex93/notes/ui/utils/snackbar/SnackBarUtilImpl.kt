@@ -1,5 +1,6 @@
 package com.stslex93.notes.ui.utils.snackbar
 
+import android.graphics.Color
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import com.stslex93.notes.R
@@ -16,5 +17,19 @@ class SnackBarUtilImpl @Inject constructor() : SnackBarUtil {
                 setBackgroundTint(color)
                 setAction("Ok") {}
             }.show()
+    }
+
+    override fun showSuccess(view: View, action: () -> Unit) {
+        val theme = view.resources.newTheme()
+        val color = view.resources.getColor(R.color.success, theme)
+        Snackbar.make(view, "Notes Deleted", Snackbar.LENGTH_SHORT).apply {
+            animationMode = Snackbar.ANIMATION_MODE_SLIDE
+            setBackgroundTint(color)
+            setActionTextColor(Color.BLACK)
+            setTextColor(Color.BLACK)
+            setAction("CANCEL") {
+                action()
+            }
+        }.show()
     }
 }
