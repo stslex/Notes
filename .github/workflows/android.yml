@@ -21,11 +21,15 @@ jobs:
         distribution: 'temurin'
         java-version: 11
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v2
+    - name: set up local properties
+      env: 
+        LOCAL_PROPERTIES: ${{secrets.LOCAL_PROPERTIES}}
+      shell: bash
+      run: |
+        echo "$LOCAL_PROPERTIES" > /home/stslex/actions-runner/_work/Notes/Notes/local.properties
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       
     - name: Build SampleApplication
-      run: ./gradlew --no-daemon build
+      run: ./gradlew --no-daemon build --full-stacktrace
