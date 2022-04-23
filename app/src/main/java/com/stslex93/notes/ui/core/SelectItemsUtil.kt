@@ -6,6 +6,6 @@ interface SelectItemsUtil<T> {
     val isSelectionStart: Boolean
     val itemsSelected: SharedFlow<List<T>>
     val lastSelectedItems: List<T>
-    fun deleteAll()
+    suspend fun deleteAll()
     fun select(item: T)
 }

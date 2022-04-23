@@ -25,6 +25,7 @@ interface NoteUIModel {
     fun timestamp(): Long
     fun isChecked(): Boolean
     fun setChecked(isChecked: Boolean)
+    suspend fun updateViewCheck()
 
     data class Base(
         private val id: Int,
@@ -37,6 +38,10 @@ interface NoteUIModel {
         override fun isChecked(): Boolean = isChecked
         override fun setChecked(isChecked: Boolean) {
             this.isChecked = isChecked
+        }
+
+        override suspend fun updateViewCheck() {
+            cardView.isChecked = isChecked
         }
 
         private var _cardView: MaterialCardView? = null

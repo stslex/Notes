@@ -35,9 +35,10 @@ interface SelectorNoteItemsUtil : SelectItemsUtil<NoteUIModel> {
         override val lastSelectedItems: List<NoteUIModel>
             get() = _lastSelectedItems
 
-        override fun deleteAll() {
+        override suspend fun deleteAll() {
             listOfItems.forEach {
                 it.setChecked(false)
+                it.updateViewCheck()
             }
             listOfItems.clear()
             _isSelectionStart = false

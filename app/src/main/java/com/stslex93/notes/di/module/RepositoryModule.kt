@@ -1,8 +1,9 @@
 package com.stslex93.notes.di.module
 
 import com.stslex93.notes.data.repository.NoteRepositoryImpl
-import com.stslex93.notes.data.repository.SearchNoteRepository
+import com.stslex93.notes.data.repository.SearchNoteRepositoryImpl
 import com.stslex93.notes.domain.repository.NoteRepository
+import com.stslex93.notes.domain.repository.SearchNoteRepository
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -16,5 +17,5 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindsSearchNoteRepository(repository: SearchNoteRepository.Base): SearchNoteRepository
+    fun bindsSearchNoteRepository(repository: SearchNoteRepositoryImpl): SearchNoteRepository
 }

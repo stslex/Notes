@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.stslex93.notes.R
 import com.stslex93.notes.appComponent
@@ -65,7 +64,7 @@ class MainFragment : Fragment() {
 
     private val queryTextListener: SearchView.OnQueryTextListener by lazy {
         queryTextListenerFactory.create {
-            itemsSelector.deleteAll()
+            clearAllSelectedItems()
             viewModel.setQuery(it)
         }
     }
@@ -129,27 +128,36 @@ class MainFragment : Fragment() {
     }
 
     private val fabDeleteClickListener: View.OnClickListener = View.OnClickListener {
-        deleteJob.invokeOnCompletion {
-            deleteJob = viewLifecycleOwner.lifecycleScope.launch(
-                context = Dispatchers.IO,
-                block = deleteBlock()
-            )
-            snackBarUtil.showSuccess(requireView()) {
-                viewModel.insertAll(itemsSelector.lastSelectedItems)
-            }
+        deleteJob.invokeOnCompletion(::successDelete)
+    }
+
+    private fun successDelete(throwable: Throwable?) {
+        throwable?.fillInStackTrace()
+        deleteJob = viewLifecycleOwner.lifecycleScope.launch(
+            context = Dispatchers.IO,
+            block = deleteBlock()
+        )
+        snackBarUtil.showSuccess(requireView()) {
+            viewModel.insertAll(itemsSelector.lastSelectedItems)
         }
     }
 
     private fun deleteBlock(): suspend CoroutineScope.() -> Unit = {
         itemsSelector.itemsSelected.collect { items ->
             viewModel.deleteNotesByIds(items)
+            clearAllSelectedItems()
+        }
+    }
+
+    private fun clearAllSelectedItems() {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             itemsSelector.deleteAll()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        itemsSelector.deleteAll()
+        clearAllSelectedItems()
         deleteJob.cancel()
         _binding = null
     }
