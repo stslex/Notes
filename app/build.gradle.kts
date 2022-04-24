@@ -4,22 +4,39 @@ plugins {
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp") version "1.6.21-1.0.5"
 }
+
+
 
 android {
     compileSdk = 32
 
     defaultConfig {
         applicationId = "com.stslex93.notes"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 32
         versionCode = 7
         versionName = "1.07"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf("room.schemaLocation" to "$projectDir/schemas")
+        packagingOptions {
+            with(resources.excludes) {
+                add("kotlin/internal/internal.kotlin_builtins")
+                add("kotlin/reflect/reflect.kotlin_builtins")
+                add("kotlin/kotlin.kotlin_builtins")
+                add("kotlin/coroutines/coroutines.kotlin_builtins")
+                add("kotlin/ranges/ranges.kotlin_builtins")
+                add("kotlin/collections/collections.kotlin_builtins")
+                add("kotlin/annotation/annotation.kotlin_builtins")
             }
+        }
+        kotlin {
+            sourceSets.all {
+                kotlin.srcDir("build/generated/ksp/$name/kotlin")
+            }
+        }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
 
@@ -54,6 +71,12 @@ android {
 dependencies {
     implementation(project(mapOf("path" to ":core")))
 
+    /*KSP*/
+    val kspVersion = "1.6.21-1.0.5"
+    implementation("com.google.devtools.ksp:symbol-processing-api:$kspVersion")
+    implementation("com.google.devtools.ksp:symbol-processing:$kspVersion")
+    implementation("com.google.devtools.ksp:symbol-processing-api:$kspVersion")
+
     /*Paging*/
     val pagingVersion = "3.1.1"
     implementation("androidx.paging:paging-runtime:$pagingVersion")
@@ -81,11 +104,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1-native-mt")
 
     /*Room*/
-    val roomVersion = "2.4.2"
+    val roomVersion = "2.5.0-alpha01"
     implementation("androidx.room:room-ktx:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
-    androidTestImplementation("androidx.room:room-testing:$roomVersion")
     implementation("androidx.room:room-paging:2.5.0-alpha01")
+    ksp("androidx.room:room-compiler:$roomVersion")
+    androidTestImplementation("androidx.room:room-testing:$roomVersion")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.21")
     implementation("androidx.core:core-ktx:1.7.0")
