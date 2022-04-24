@@ -24,9 +24,6 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       
-    - name: "Run UI Tests"
-      uses: vgaidarji/android-github-actions-emulator@v1.0.1
-      
     - name: Unit Test
       run: ./gradlew testDebugUnitTest
       
