@@ -19,6 +19,9 @@ interface NoteDao {
     )
     fun getAll(query: String): PagingSource<Int, NoteEntity>
 
+    @Query("SELECT * FROM note_table")
+    fun getAllNotes(): List<NoteEntity>
+
     @Query("SELECT * FROM note_table WHERE id=:id")
     fun getNote(id: Int): Flow<NoteEntity>
 
