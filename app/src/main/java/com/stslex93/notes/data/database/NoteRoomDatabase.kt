@@ -9,12 +9,22 @@ import com.stslex93.notes.data.entity.NoteEntity
 
 @Database(
     entities = [NoteEntity::class],
-    version = 3,
+    version = 5,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(
-            from = 2,
-            to = 3,
+            from = 3,
+            to = 4,
+            spec = NoteRoomDatabase.NoteAutoMigration::class
+        ),
+        AutoMigration(
+            from = 3,
+            to = 5,
+            spec = NoteRoomDatabase.NoteAutoMigration::class
+        ),
+        AutoMigration(
+            from = 4,
+            to = 5,
             spec = NoteRoomDatabase.NoteAutoMigration::class
         )
     ]
