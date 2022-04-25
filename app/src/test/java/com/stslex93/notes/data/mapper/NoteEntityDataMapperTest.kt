@@ -6,20 +6,20 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class NoteDataEntityMapperTest {
+class NoteEntityDataMapperTest {
 
-    private lateinit var mappper: NoteDataEntityMapper
+    private lateinit var mappper: NoteEntityDataMapper
 
     @Before
     fun beforeTestStart() {
-        mappper = NoteDataEntityMapper.Base()
+        mappper = NoteEntityDataMapper.Base()
     }
 
     @Test
     fun addition_isCorrect() {
-        val expectedNoteEntity = NoteEntity(1, "title", "content", 0)
-        val note: NoteDataModel = NoteDataModel.Base(1, "title", "content", 0)
-        val actualNoteEntity = mappper.map(note)
+        val expectedNoteEntity = NoteDataModel.Base(1, "title", "content", 0)
+        val noteModel = NoteEntity(1, "title", "content", 0)
+        val actualNoteEntity = mappper.map(noteModel)
         Assert.assertEquals(actualNoteEntity, expectedNoteEntity)
     }
 }
