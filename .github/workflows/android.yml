@@ -25,7 +25,7 @@ jobs:
       - name: Setup Android SDK
         uses: amyu/setup-android@v1.1
         with:
-          is-use-cache: false
+          is-use-cache: true
           sdk-version: '32'
           build-tools-version: '32.0.0'
 
