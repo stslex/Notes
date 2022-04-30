@@ -37,17 +37,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-.
 
-  emulator:
-    name: Run Emulator
-    runs-on: macos-12
-    needs: [ prepair ]
-    steps:
-      - name: Unit Test with Android Emulator Runner
-        uses: ReactiveCircus/android-emulator-runner@v2.14.3
-        with:
-          api-level: 29
-          script: ./gradlew connectedCheck
-
   build:
     name: Build Application
     runs-on: ubuntu-latest
