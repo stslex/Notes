@@ -1,3 +1,6 @@
+
+[![Android CI/CD](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml)
+
 # <code><img width="5%"  src="./note_icon.png"></code> Notes 
 
 ## Table of Contents
