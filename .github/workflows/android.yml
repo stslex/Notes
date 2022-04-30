@@ -38,6 +38,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-.
 
+      - name: Unit Test with Android Emulator Runner
+        uses: ReactiveCircus/android-emulator-runner@v2.14.3
+        with:
+          api-level: 29
+          script: ./gradlew connectedCheck
+
       - name: Build application
         run: ./gradlew build koverReport --full-stacktrace
       - name: generate report
