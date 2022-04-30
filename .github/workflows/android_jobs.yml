@@ -75,4 +75,4 @@ jobs:
       - name: Upload coverage reports
         uses: codecov/codecov-action@v2
         with:
-          files: build/reports/kover/project-xml/report.xml
+          files: build/reports/kover/report.xml
