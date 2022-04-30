@@ -1,5 +1,6 @@
 package com.stslex93.notes.data.mapper
 
+import com.stslex93.core.Mapper
 import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.data.model.NoteDataModel
 import org.junit.Assert
@@ -8,11 +9,11 @@ import org.junit.Test
 
 class NoteDataEntityMapperTest {
 
-    private lateinit var mappper: NoteDataEntityMapper
+    private lateinit var mappper: Mapper.Data<NoteDataModel, NoteEntity>
 
     @Before
     fun beforeTestStart() {
-        mappper = NoteDataEntityMapper.Base()
+        mappper = NoteDataEntityMapper()
     }
 
     @Test

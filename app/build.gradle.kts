@@ -7,8 +7,6 @@ plugins {
     id("com.google.devtools.ksp") version "1.6.21-1.0.5"
 }
 
-
-
 android {
     compileSdk = 32
 
@@ -50,8 +48,8 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding = true
+    viewBinding {
+        android.buildFeatures.viewBinding = true
     }
 
     compileOptions {
@@ -94,12 +92,6 @@ dependencies {
     /*Drawer Layout*/
     implementation("androidx.drawerlayout:drawerlayout:1.1.1")
 
-    /*Lifecycle components*/
-    val lifecycleVersion = "2.4.1"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
-
     /*Coroutines*/
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1-native-mt")
 
@@ -118,4 +110,19 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+}
+
+android {
+    testOptions {
+        unitTests.all {
+            if (it.name == "testDebugUnitTest") {
+                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+                    isDisabled = false
+                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
+                    includes = listOf("com.stslex93.*")
+                    excludes = listOf("com.stslex93.notes.*")
+                }
+            }
+        }
+    }
 }

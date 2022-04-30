@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.stslex93.core.Mapper
 import com.stslex93.notes.domain.interactor.interf.NoteDeleteByIdsInteractor
 import com.stslex93.notes.domain.interactor.interf.NoteGetAllWithQueryInteractor
 import com.stslex93.notes.domain.interactor.interf.NoteInsertAllInteractor
-import com.stslex93.notes.ui.mapper.NotePagingDomainUIMapper
-import com.stslex93.notes.ui.mapper.NoteUIDomainMapper
+import com.stslex93.notes.domain.model.NoteDomainModel
 import com.stslex93.notes.ui.model.NoteUIModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,8 +20,8 @@ class MainViewModel @Inject constructor(
     private val noteGetAllInteractor: NoteGetAllWithQueryInteractor,
     private val noteDeleteByIdsInteractor: NoteDeleteByIdsInteractor,
     private val insertAllInteractor: NoteInsertAllInteractor,
-    private val pagingMapper: NotePagingDomainUIMapper,
-    private val mapperUIDomain: NoteUIDomainMapper
+    private val pagingMapper: Mapper.Data<PagingData<NoteDomainModel>, PagingData<NoteUIModel>>,
+    private val mapperUIDomain: Mapper.Data<NoteUIModel, NoteDomainModel>
 ) : ViewModel() {
 
     @ExperimentalCoroutinesApi

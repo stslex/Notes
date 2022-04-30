@@ -1,65 +1,83 @@
 package com.stslex93.notes.di.module
 
+import androidx.paging.PagingData
+import com.stslex93.core.Mapper
+import com.stslex93.core.Resource
+import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.data.mapper.NoteDataEntityMapper
 import com.stslex93.notes.data.mapper.NoteEntityDataMapper
-import com.stslex93.notes.data.mapper.NotePagingEntityDataMapper
-import com.stslex93.notes.domain.mappers.*
-import com.stslex93.notes.ui.mapper.*
-import dagger.Binds
+import com.stslex93.notes.data.mapper.PagingMapper
+import com.stslex93.notes.data.model.NoteDataModel
+import com.stslex93.notes.domain.mappers.NoteDataDomainMapper
+import com.stslex93.notes.domain.mappers.NoteDataDomainPrimaryMapper
+import com.stslex93.notes.domain.mappers.NoteDomainDataMapper
+import com.stslex93.notes.domain.model.NoteDomainModel
+import com.stslex93.notes.ui.mapper.NoteDomainUIMapper
+import com.stslex93.notes.ui.mapper.NoteDomainUIPrimaryMapper
+import com.stslex93.notes.ui.mapper.NoteUIDomainMapper
+import com.stslex93.notes.ui.model.NoteUIModel
 import dagger.Module
+import dagger.Provides
 
 @Module
-interface MapperModule {
+class MapperModule {
 
     /*Entity Data*/
-    @Binds
-    fun bindsNoteEntityDataMapper(mapper: NoteEntityDataMapper.Base): NoteEntityDataMapper
+    @Provides
+    fun providesNoteEntityDataMapper(): Mapper.Data<NoteEntity, NoteDataModel> =
+        NoteEntityDataMapper()
 
     /*Data Entity*/
-    @Binds
-    fun bindsNoteDataEntityMapper(mapper: NoteDataEntityMapper.Base): NoteDataEntityMapper
+    @Provides
+    fun providesNoteDataEntityMapper(): Mapper.Data<NoteDataModel, NoteEntity> =
+        NoteDataEntityMapper()
+
 
     /*Data Domain*/
-    @Binds
-    fun bindsNoteDataDomainPrimaryMapper(mapper: NoteDataDomainPrimaryMapper.Base): NoteDataDomainPrimaryMapper
+    @Provides
+    fun providesNoteDataDomainPrimaryMapper(): Mapper.Data<NoteDataModel, NoteDomainModel> =
+        NoteDataDomainPrimaryMapper()
 
-    @Binds
-    fun bindsNoteDataDomainMapper(mapper: NoteDataDomainMapper.Base): NoteDataDomainMapper
-
-    @Binds
-    fun bindsNoteListDataDomainMapper(mapper: NoteListDataDomainMapper.Base): NoteListDataDomainMapper
+    @Provides
+    fun bindsNoteDataDomainMapper(
+        mapper: Mapper.Data<NoteDataModel, NoteDomainModel>
+    ): Mapper.DataToUI<NoteDataModel, Resource<NoteDomainModel>> = NoteDataDomainMapper(mapper)
 
     /*Domain Data*/
-    @Binds
-    fun bindsNoteDomainDataMapper(mapper: NoteDomainDataMapper.Base): NoteDomainDataMapper
-
-    @Binds
-    fun bindsNoteListDomainDataMapper(mapper: NoteListDomainDataMapper.Base): NoteListDomainDataMapper
+    @Provides
+    fun providesNoteDomainDataMapper(): Mapper.Data<NoteDomainModel, NoteDataModel> =
+        NoteDomainDataMapper()
 
     /*Domain UI*/
-    @Binds
-    fun bindsNoteDomainUIPrimaryMapper(mapper: NoteDomainUIPrimaryMapper.Base): NoteDomainUIPrimaryMapper
+    @Provides
+    fun providesNoteDomainUIPrimaryMapper(): Mapper.Data<NoteDomainModel, NoteUIModel> =
+        NoteDomainUIPrimaryMapper()
 
-    @Binds
-    fun bindsNoteDomainUIMapper(mapper: NoteDomainUIMapper.Base): NoteDomainUIMapper
-
-    @Binds
-    fun bindsNoteListDomainUIMapper(mapper: NoteListDomainUIMapper.Base): NoteListDomainUIMapper
+    @Provides
+    fun providesNoteDomainUIMapper(
+        mapper: Mapper.Data<NoteDomainModel, NoteUIModel>
+    ): Mapper.DataToUI<NoteDomainModel, Resource<NoteUIModel>> = NoteDomainUIMapper(mapper)
 
     /*UI Domain*/
-    @Binds
-    fun bindsNoteUIDomainMapper(mapper: NoteUIDomainMapper.Base): NoteUIDomainMapper
-
-    @Binds
-    fun bindsNoteListUIDomainMapper(mapper: NoteListUIDomainMapper.Base): NoteListUIDomainMapper
+    @Provides
+    fun providesNoteUIDomainMapper(): Mapper.Data<NoteUIModel, NoteDomainModel> =
+        NoteUIDomainMapper()
 
     /*PagingData*/
-    @Binds
-    fun bindsNotePagingEntityDataMapper(mapper: NotePagingEntityDataMapper.Base): NotePagingEntityDataMapper
 
-    @Binds
-    fun bindsNotePagingDataDomainMapper(mapper: NotePagingDataDomainMapper.Base): NotePagingDataDomainMapper
+    @Provides
+    fun providesNotePagingDataEntityMapper(
+        mapper: Mapper.Data<NoteEntity, NoteDataModel>
+    ): Mapper.Data<PagingData<NoteEntity>, PagingData<NoteDataModel>> = PagingMapper(mapper)
 
-    @Binds
-    fun bindsNotePagingDomainUIMapper(mapper: NotePagingDomainUIMapper.Base): NotePagingDomainUIMapper
+    @Provides
+    fun providesNotePagingDataDomainMapper(
+        mapper: Mapper.Data<NoteDataModel, NoteDomainModel>
+    ): Mapper.Data<PagingData<NoteDataModel>, PagingData<NoteDomainModel>> = PagingMapper(mapper)
+
+    @Provides
+    fun providesNotePagingDomainUIMapper(
+        mapper: Mapper.Data<NoteDomainModel, NoteUIModel>
+    ): Mapper.Data<PagingData<NoteDomainModel>, PagingData<NoteUIModel>> = PagingMapper(mapper)
+
 }

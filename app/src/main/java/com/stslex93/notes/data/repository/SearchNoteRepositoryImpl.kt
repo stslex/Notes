@@ -3,9 +3,9 @@ package com.stslex93.notes.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.stslex93.core.Mapper
 import com.stslex93.notes.data.database.NoteDao
 import com.stslex93.notes.data.entity.NoteEntity
-import com.stslex93.notes.data.mapper.NotePagingEntityDataMapper
 import com.stslex93.notes.data.model.NoteDataModel
 import com.stslex93.notes.domain.repository.SearchNoteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class SearchNoteRepositoryImpl @Inject constructor(
     private val noteDao: NoteDao,
-    private val mapper: NotePagingEntityDataMapper,
+    private val mapper: Mapper.Data<PagingData<NoteEntity>, PagingData<NoteDataModel>>,
     private val pagingConfig: PagingConfig
 ) : SearchNoteRepository {
 

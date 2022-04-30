@@ -2,14 +2,17 @@ package com.stslex93.notes.data.repository
 
 import android.content.Context
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.stslex93.core.Mapper
 import com.stslex93.notes.data.database.NoteDao
 import com.stslex93.notes.data.database.NoteRoomDatabase
 import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.data.mapper.NoteEntityDataMapper
-import com.stslex93.notes.data.mapper.NotePagingEntityDataMapper
+import com.stslex93.notes.data.mapper.PagingMapper
+import com.stslex93.notes.data.model.NoteDataModel
 import com.stslex93.notes.domain.repository.SearchNoteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -81,11 +84,14 @@ class SearchNoteRepositoryImplTest {
             val context: Context = ApplicationProvider.getApplicationContext()
             db = Room.databaseBuilder(context, NoteRoomDatabase::class.java, DATABASE_NAME).build()
             dao = db.dao()
-            val noteEntityDataMapper: NoteEntityDataMapper = NoteEntityDataMapper.Base()
-            val notePagingEntityDataMapper: NotePagingEntityDataMapper =
-                NotePagingEntityDataMapper.Base(noteEntityDataMapper)
             val pagingConfig = PagingConfig(10)
             repository = SearchNoteRepositoryImpl(dao, notePagingEntityDataMapper, pagingConfig)
+        }
+
+        private val notePagingEntityDataMapper: Mapper.Data<PagingData<NoteEntity>, PagingData<NoteDataModel>> by lazy {
+            val noteEntityDataMapper: Mapper.Data<NoteEntity, NoteDataModel> =
+                NoteEntityDataMapper()
+            PagingMapper(noteEntityDataMapper)
         }
 
         @AfterClass
