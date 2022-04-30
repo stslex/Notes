@@ -92,12 +92,6 @@ dependencies {
     /*Drawer Layout*/
     implementation("androidx.drawerlayout:drawerlayout:1.1.1")
 
-    /*Lifecycle components*/
-    val lifecycleVersion = "2.4.1"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
-
     /*Coroutines*/
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1-native-mt")
 
