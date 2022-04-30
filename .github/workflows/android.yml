@@ -21,10 +21,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 11
-          
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        
+
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
 
@@ -39,8 +39,19 @@ jobs:
             ${{ runner.os }}-gradle-.
 
       - name: Build application
-        run: ./gradlew build -x koverVerify --full-stacktrace
-        
+        run: ./gradlew build koverReport --full-stacktrace
+      - name: generate report
+        uses: actions/upload-artifact@v2
+        with:
+          name: report
+          path: app/build/reports/coverage/debug
+
+      - name: Download Test Reports Folder
+        uses: actions/download-artifact@v2
+        with:
+          name: report
+          path: app/build/reports/coverage/debug
+
       - name: Upload coverage reports
         uses: codecov/codecov-action@v2
         with:
