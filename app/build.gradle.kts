@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,6 +7,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp") version "1.6.21-1.0.5"
+    jacoco
 }
 
 android {
@@ -46,6 +49,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        getByName("debug") {
+            isTestCoverageEnabled = true
+        }
     }
 
     buildFeatures {
@@ -64,6 +70,50 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    applicationVariants.all(closureOf<com.android.build.gradle.api.ApplicationVariant> {
+        val testTaskName = "test${this@closureOf.name.capitalize()}UnitTest"
+
+        val excludes = listOf(
+            "**/*Activity*.*",
+            "**/*Fragment*.*",
+            "**/R.class",
+            "**/R\$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*"
+        )
+
+        val reportTask =
+            tasks.register("jacoco${testTaskName.capitalize()}Report", JacocoReport::class) {
+                dependsOn(testTaskName)
+
+                reports {
+                    xml.required.set(true)
+                    html.required.set(true)
+                }
+
+                classDirectories.setFrom(
+                    files(
+                        fileTree(this@closureOf.javaCompileProvider.get().destinationDirectory) {
+                            exclude(excludes)
+                        },
+                        fileTree("$buildDir/tmp/kotlin-classes/${this@closureOf.name}") {
+                            exclude(excludes)
+                        }
+                    )
+                )
+
+                sourceDirectories.setFrom(this@closureOf.sourceSets.flatMap { it.javaDirectories })
+                executionData.setFrom(file("$buildDir/jacoco/$testTaskName.exec"))
+            }
+
+        jacocoTestReport.dependsOn(reportTask)
+    })
+}
+
+jacoco{
+    toolVersion = "0.8.7"
+    reportsDirectory.set(file("$buildDir/reports"))
 }
 
 dependencies {
@@ -110,4 +160,13 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+}
+
+val jacocoTestReport = tasks.register("jacocoTestReport")
+
+tasks.withType<Test> {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
+    }
 }
