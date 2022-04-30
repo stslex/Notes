@@ -54,8 +54,8 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding = true
+    viewBinding {
+        android.buildFeatures.viewBinding = true
     }
 
     compileOptions {
@@ -70,50 +70,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-
-    applicationVariants.all(closureOf<com.android.build.gradle.api.ApplicationVariant> {
-        val testTaskName = "test${this@closureOf.name.capitalize()}UnitTest"
-
-        val excludes = listOf(
-            "**/*Activity*.*",
-            "**/*Fragment*.*",
-            "**/R.class",
-            "**/R\$*.class",
-            "**/BuildConfig.*",
-            "**/Manifest*.*"
-        )
-
-        val reportTask =
-            tasks.register("jacoco${testTaskName.capitalize()}Report", JacocoReport::class) {
-                dependsOn(testTaskName)
-
-                reports {
-                    xml.required.set(true)
-                    html.required.set(true)
-                }
-
-                classDirectories.setFrom(
-                    files(
-                        fileTree(this@closureOf.javaCompileProvider.get().destinationDirectory) {
-                            exclude(excludes)
-                        },
-                        fileTree("$buildDir/tmp/kotlin-classes/${this@closureOf.name}") {
-                            exclude(excludes)
-                        }
-                    )
-                )
-
-                sourceDirectories.setFrom(this@closureOf.sourceSets.flatMap { it.javaDirectories })
-                executionData.setFrom(file("$buildDir/jacoco/$testTaskName.exec"))
-            }
-
-        jacocoTestReport.dependsOn(reportTask)
-    })
-}
-
-jacoco{
-    toolVersion = "0.8.7"
-    reportsDirectory.set(file("$buildDir/reports"))
 }
 
 dependencies {
@@ -170,3 +126,47 @@ tasks.withType<Test> {
         excludes = listOf("jdk.internal.*")
     }
 }
+
+jacoco {
+    toolVersion = "0.8.7"
+    reportsDirectory.set(file("$buildDir/reports"))
+}
+
+android.applicationVariants.all(closureOf<com.android.build.gradle.api.ApplicationVariant> {
+    val testTaskName = "test${this@closureOf.name.capitalize()}UnitTest"
+
+    val excludes = listOf(
+        "**/*Activity*.*",
+        "**/*Fragment*.*",
+        "**/R.class",
+        "**/R\$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*"
+    )
+
+    val reportTask =
+        tasks.register("jacoco${testTaskName.capitalize()}Report", JacocoReport::class) {
+            dependsOn(testTaskName)
+
+            reports {
+                xml.required.set(true)
+                html.required.set(true)
+            }
+
+            classDirectories.setFrom(
+                files(
+                    fileTree(this@closureOf.javaCompileProvider.get().destinationDirectory) {
+                        exclude(excludes)
+                    },
+                    fileTree("$buildDir/tmp/kotlin-classes/${this@closureOf.name}") {
+                        exclude(excludes)
+                    }
+                )
+            )
+
+            sourceDirectories.setFrom(this@closureOf.sourceSets.flatMap { it.javaDirectories })
+            executionData.setFrom(file("$buildDir/jacoco/$testTaskName.exec"))
+        }
+
+    jacocoTestReport.dependsOn(reportTask)
+})
