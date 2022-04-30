@@ -1,10 +1,10 @@
 package com.stslex93.notes.data.repository
 
 import androidx.annotation.WorkerThread
+import com.stslex93.core.Mapper
 import com.stslex93.core.Resource
 import com.stslex93.notes.data.database.NoteDao
-import com.stslex93.notes.data.mapper.NoteDataEntityMapper
-import com.stslex93.notes.data.mapper.NoteEntityDataMapper
+import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.data.model.NoteDataModel
 import com.stslex93.notes.domain.repository.NoteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 class NoteRepositoryImpl @Inject constructor(
     private val dao: NoteDao,
-    private val mapperToData: NoteEntityDataMapper,
-    private val mapperDataToEntity: NoteDataEntityMapper
+    private val mapperToData: Mapper.Data<NoteEntity, NoteDataModel>,
+    private val mapperDataToEntity: Mapper.Data<NoteDataModel, NoteEntity>
 ) : NoteRepository {
 
     @ExperimentalCoroutinesApi

@@ -22,7 +22,6 @@ import com.stslex93.notes.ui.utils.snackbar.SnackBarUtil
 import com.stslex93.notes.ui.utils.time.TimeUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -31,7 +30,7 @@ import javax.inject.Inject
 class EditFragment : Fragment() {
 
     private var _binding: FragmentEditBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = checkNotNull(_binding)
 
     private lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var timeUtil: TimeUtil

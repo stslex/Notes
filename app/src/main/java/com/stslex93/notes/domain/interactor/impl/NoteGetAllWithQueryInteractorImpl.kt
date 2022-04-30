@@ -1,8 +1,9 @@
 package com.stslex93.notes.domain.interactor.impl
 
 import androidx.paging.PagingData
+import com.stslex93.core.Mapper
+import com.stslex93.notes.data.model.NoteDataModel
 import com.stslex93.notes.domain.interactor.interf.NoteGetAllWithQueryInteractor
-import com.stslex93.notes.domain.mappers.NotePagingDataDomainMapper
 import com.stslex93.notes.domain.model.NoteDomainModel
 import com.stslex93.notes.domain.repository.SearchNoteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class NoteGetAllWithQueryInteractorImpl @Inject constructor(
     private val repository: SearchNoteRepository,
-    private val mapper: NotePagingDataDomainMapper
+    private val mapper: Mapper.Data<PagingData<NoteDataModel>, PagingData<NoteDomainModel>>
 ) : NoteGetAllWithQueryInteractor {
 
     @ExperimentalCoroutinesApi
