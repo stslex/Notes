@@ -1,5 +1,5 @@
 
-[![Android CI/CD](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml)
+[![Android CI/CD](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml) [![codecov](https://codecov.io/gh/stslex/Notes/branch/master/graph/badge.svg?token=QMKPKI4RH9)](https://codecov.io/gh/stslex/Notes)
 
 # <code><img width="5%"  src="./note_icon.png"></code> Notes 
 
