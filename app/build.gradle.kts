@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,7 +5,6 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp") version "1.6.21-1.0.5"
-    jacoco
 }
 
 android {
@@ -48,9 +45,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-        getByName("debug") {
-            isTestCoverageEnabled = true
         }
     }
 
@@ -118,55 +112,17 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
 
-val jacocoTestReport = tasks.register("jacocoTestReport")
-
-tasks.withType<Test> {
-    configure<JacocoTaskExtension> {
-        isIncludeNoLocationClasses = true
-        excludes = listOf("jdk.internal.*")
+android {
+    testOptions {
+        unitTests.all {
+            if (it.name == "testDebugUnitTest") {
+                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+                    isDisabled = false
+                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
+                    includes = listOf("com.stslex93.*")
+                    excludes = listOf("com.stslex93.notes.*")
+                }
+            }
+        }
     }
 }
-
-jacoco {
-    toolVersion = "0.8.7"
-    reportsDirectory.set(file("$buildDir/reports"))
-}
-
-android.applicationVariants.all(closureOf<com.android.build.gradle.api.ApplicationVariant> {
-    val testTaskName = "test${this@closureOf.name.capitalize()}UnitTest"
-
-    val excludes = listOf(
-        "**/*Activity*.*",
-        "**/*Fragment*.*",
-        "**/R.class",
-        "**/R\$*.class",
-        "**/BuildConfig.*",
-        "**/Manifest*.*"
-    )
-
-    val reportTask =
-        tasks.register("jacoco${testTaskName.capitalize()}Report", JacocoReport::class) {
-            dependsOn(testTaskName)
-
-            reports {
-                xml.required.set(true)
-                html.required.set(true)
-            }
-
-            classDirectories.setFrom(
-                files(
-                    fileTree(this@closureOf.javaCompileProvider.get().destinationDirectory) {
-                        exclude(excludes)
-                    },
-                    fileTree("$buildDir/tmp/kotlin-classes/${this@closureOf.name}") {
-                        exclude(excludes)
-                    }
-                )
-            )
-
-            sourceDirectories.setFrom(this@closureOf.sourceSets.flatMap { it.javaDirectories })
-            executionData.setFrom(file("$buildDir/jacoco/$testTaskName.exec"))
-        }
-
-    jacocoTestReport.dependsOn(reportTask)
-})
