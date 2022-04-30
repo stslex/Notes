@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  prepair:
-    name: Prepair job
+  build:
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -37,29 +37,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-.
 
-  build:
-    name: Build Application
-    runs-on: ubuntu-latest
-    needs: [ prepair ]
-    steps:
       - name: Build application
         run: ./gradlew build koverReport --full-stacktrace
-
-  report:
-    name: Generate Report
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:
-      - name: generate report
-        uses: actions/upload-artifact@v2
-        with:
-          name: report
-          path: app/build/reports/coverage/debug
-      - name: Download Test Reports Folder
-        uses: actions/download-artifact@v2
-        with:
-          name: report
-          path: app/build/reports/coverage/debug
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v2
