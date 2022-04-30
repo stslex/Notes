@@ -36,43 +36,21 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-.
-            
-      - name: Upload artifact for job 2
-        uses: actions/upload-artifact@v3
-        with:
-          name: android_jobs
-          path: android_jobs.txt
 
   build:
     name: Build Application
     runs-on: ubuntu-latest
     needs: prepair
     steps:
-      - name: Download artifact from job 1
-        uses: actions/download-artifact@v3
-        with:
-          name: build-preparations
-          path: android_jobs.txt
-          
       - name: Build application
         run: ./gradlew build koverReport --full-stacktrace
-      - name: Upload artifact for job 3
-        uses: actions/upload-artifact@v3
-        with:
-          name: android_jobs
-          path: android_jobs.txt
 
   report:
     name: Generate Report
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Download artifact from job 2
-        uses: actions/download-artifact@v3
-        with:
-          name: android_jobs
-          path: android_jobs.txt
-          
+
       - name: generate report
         uses: actions/upload-artifact@v2
         with:
