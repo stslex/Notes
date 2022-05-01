@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > Mapper</title>
+  <title>Coverage Report > Object</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,25 +20,16 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.stslex93.core</a>
 </div>
 
-<h1>Coverage Summary for Class: Mapper (com.stslex93.core)</h1>
+<h1>Coverage Summary for Class: Object (com.stslex93.core)</h1>
 
 <table class="coverageStats">
-
 <tr>
   <th class="name">Class</th>
 </tr>
-  <tr>
-    <td class="name">Mapper$Data</td>
-  </tr>
-  <tr>
-    <td class="name">Mapper$DataToDomain</td>
-  </tr>
-  <tr>
-    <td class="name">Mapper$DataToUI</td>
-  </tr>
 <tr>
-  <td class="name"><strong>Total</strong></td>
+  <td class="name">Object</td>
 </tr>
+
 </table>
 
 <br/>
@@ -48,20 +39,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.core
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;interface Mapper {
-<i class="no-highlight">4</i>&nbsp;
-<i class="no-highlight">5</i>&nbsp;    interface Data&lt;D, U&gt; {
-<i class="no-highlight">6</i>&nbsp;        fun map(data: D): U
-<i class="no-highlight">7</i>&nbsp;    }
-<i class="no-highlight">8</i>&nbsp;
-<i class="no-highlight">9</i>&nbsp;    interface DataToDomain&lt;D, U&gt; : Data&lt;D, U&gt; {
-<i class="no-highlight">10</i>&nbsp;        fun map(exception: Exception): U
-<i class="no-highlight">11</i>&nbsp;    }
-<i class="no-highlight">12</i>&nbsp;
-<i class="no-highlight">13</i>&nbsp;    interface DataToUI&lt;D, U&gt; : DataToDomain&lt;D, U&gt; {
-<i class="no-highlight">14</i>&nbsp;        fun map(): U
-<i class="no-highlight">15</i>&nbsp;    }
-<i class="no-highlight">16</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;interface Object&lt;out T&gt; {
+<i class="no-highlight">4</i>&nbsp;    fun &lt;U&gt; map(mapper: Mapper.DataToUI&lt;in T, U&gt;): U
+<i class="no-highlight">5</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -88,7 +68,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-04-30 20:42</div>
+    <div style="float:right;">generated on 2022-05-01 11:16</div>
 </div>
 </body>
 </html>
