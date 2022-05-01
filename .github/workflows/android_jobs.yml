@@ -82,7 +82,7 @@ jobs:
         run: |
           rm -rf docs
           mkdir docs
-          mv -v build/reports/kover/report/html/* docs 
+          mv -v build/reports/kover/html/* docs
 
       - name: Commit files
         run: |
