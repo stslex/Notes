@@ -55,7 +55,8 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit --file = docs
+          git add docs
+          git commit "All commit" -a
 
       - name: Push changd
         uses: ad-m/github-push-action@master
