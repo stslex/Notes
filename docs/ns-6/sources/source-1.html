@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > NoteEntity</title>
+  <title>Coverage Report > NoteDataEntityMapper</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,32 +17,43 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.stslex93.notes.data.entity</a>
+    <a href="../index.html">com.stslex93.notes.data.mapper</a>
 </div>
 
-<h1>Coverage Summary for Class: NoteEntity (com.stslex93.notes.data.entity)</h1>
+<h1>Coverage Summary for Class: NoteDataEntityMapper (com.stslex93.notes.data.mapper)</h1>
 
 <table class="coverageStats">
-
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
 <th class="coverageStat 
 ">
   Method, %
 </th>
 <th class="coverageStat 
 ">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
   Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
 </th>
 </tr>
 <tr>
-  <td class="name">NoteEntity</td>
+  <td class="name">NoteDataEntityMapper</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (5/5)
+    (1/1)
   </span>
 </td>
 <td class="coverageStat">
@@ -50,21 +61,16 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (9/9)
+    (2/2)
   </span>
 </td>
-</tr>
-  <tr>
-    <td class="name">NoteEntity$Creator</td>
-  </tr>
-<tr>
-  <td class="name"><strong>Total</strong></td>
+    <td class="coverageStat"/>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (5/5)
+    (7/7)
   </span>
 </td>
 <td class="coverageStat">
@@ -72,10 +78,11 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (9/9)
+    (18/18)
   </span>
 </td>
 </tr>
+
 </table>
 
 <br/>
@@ -83,31 +90,23 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.data.entity
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.data.mapper
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import android.os.Parcelable
-<i class="no-highlight">4</i>&nbsp;import androidx.room.ColumnInfo
-<i class="no-highlight">5</i>&nbsp;import androidx.room.Entity
-<i class="no-highlight">6</i>&nbsp;import androidx.room.PrimaryKey
-<i class="no-highlight">7</i>&nbsp;import kotlinx.parcelize.Parcelize
+<i class="no-highlight">3</i>&nbsp;import com.stslex93.core.Mapper
+<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.data.entity.NoteEntity
+<i class="no-highlight">5</i>&nbsp;import com.stslex93.notes.data.model.NoteDataModel
+<i class="no-highlight">6</i>&nbsp;
+<b class="fc"><i class="no-highlight">7</i>&nbsp;class NoteDataEntityMapper : Mapper.Data&lt;NoteDataModel, NoteEntity&gt; {</b>
 <i class="no-highlight">8</i>&nbsp;
-<b class="fc"><i class="no-highlight">9</i>&nbsp;@Parcelize</b>
-<i class="no-highlight">10</i>&nbsp;@Entity(tableName = &quot;note_table&quot;)
-<i class="no-highlight">11</i>&nbsp;data class NoteEntity(
-<i class="no-highlight">12</i>&nbsp;
-<b class="fc"><i class="no-highlight">13</i>&nbsp;    @PrimaryKey(autoGenerate = true)</b>
-<i class="no-highlight">14</i>&nbsp;    @ColumnInfo(name = &quot;id&quot;)
-<b class="fc"><i class="no-highlight">15</i>&nbsp;    val id: Int = 0,</b>
-<i class="no-highlight">16</i>&nbsp;
-<b class="fc"><i class="no-highlight">17</i>&nbsp;    @ColumnInfo(name = &quot;title&quot;)</b>
-<b class="fc"><i class="no-highlight">18</i>&nbsp;    val title: String,</b>
-<i class="no-highlight">19</i>&nbsp;
-<b class="fc"><i class="no-highlight">20</i>&nbsp;    @ColumnInfo(name = &quot;content&quot;)</b>
-<b class="fc"><i class="no-highlight">21</i>&nbsp;    val content: String,</b>
-<i class="no-highlight">22</i>&nbsp;
-<b class="fc"><i class="no-highlight">23</i>&nbsp;    @ColumnInfo(name = &quot;timestamp&quot;)</b>
-<b class="fc"><i class="no-highlight">24</i>&nbsp;    val timestamp: Long</b>
-<i class="no-highlight">25</i>&nbsp;) : Parcelable
+<b class="fc"><i class="no-highlight">9</i>&nbsp;    override fun map(data: NoteDataModel): NoteEntity = with(data) {</b>
+<b class="fc"><i class="no-highlight">10</i>&nbsp;        NoteEntity(</b>
+<b class="fc"><i class="no-highlight">11</i>&nbsp;            id = id(),</b>
+<b class="fc"><i class="no-highlight">12</i>&nbsp;            title = title(),</b>
+<b class="fc"><i class="no-highlight">13</i>&nbsp;            content = content(),</b>
+<b class="fc"><i class="no-highlight">14</i>&nbsp;            timestamp = timestamp()</b>
+<i class="no-highlight">15</i>&nbsp;        )
+<i class="no-highlight">16</i>&nbsp;    }
+<i class="no-highlight">17</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -134,7 +133,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-01 11:59</div>
+    <div style="float:right;">generated on 2022-05-01 12:19</div>
 </div>
 </body>
 </html>

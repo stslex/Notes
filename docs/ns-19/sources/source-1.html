@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > TimeUtilImpl</title>
+  <title>Coverage Report > NoteGetAllWithQueryInteractor</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,65 +17,24 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.stslex93.notes.ui.utils.time</a>
+    <a href="../index.html">com.stslex93.notes.domain.interactor.interf</a>
 </div>
 
-<h1>Coverage Summary for Class: TimeUtilImpl (com.stslex93.notes.ui.utils.time)</h1>
+<h1>Coverage Summary for Class: NoteGetAllWithQueryInteractor (com.stslex93.notes.domain.interactor.interf)</h1>
 
 <table class="coverageStats">
-
 <tr>
   <th class="name">Class</th>
 <th class="coverageStat 
 ">
-  Method, %
-</th>
-<th class="coverageStat 
-">
-  Line, %
+  Branch, %
 </th>
 </tr>
 <tr>
-  <td class="name">TimeUtilImpl</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/2)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/4)
-  </span>
-</td>
+  <td class="name">NoteGetAllWithQueryInteractor</td>
+    <td class="coverageStat"/>
 </tr>
-  <tr>
-    <td class="name">TimeUtilImpl$Companion</td>
-  </tr>
-<tr>
-  <td class="name"><strong>Total</strong></td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/2)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/4)
-  </span>
-</td>
-</tr>
+
 </table>
 
 <br/>
@@ -83,24 +42,20 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.ui.utils.time
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.domain.interactor.interf
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import java.text.SimpleDateFormat
-<i class="no-highlight">4</i>&nbsp;import java.util.*
-<i class="no-highlight">5</i>&nbsp;import javax.inject.Inject
-<i class="no-highlight">6</i>&nbsp;
-<b class="nc"><i class="no-highlight">7</i>&nbsp;class TimeUtilImpl @Inject constructor() : TimeUtil {</b>
-<i class="no-highlight">8</i>&nbsp;
-<i class="no-highlight">9</i>&nbsp;    override fun getCurrentTime(): String {
-<b class="nc"><i class="no-highlight">10</i>&nbsp;        val currentTimeInMs = System.currentTimeMillis()</b>
-<b class="nc"><i class="no-highlight">11</i>&nbsp;        val locale = Locale.getDefault()</b>
-<b class="nc"><i class="no-highlight">12</i>&nbsp;        return SimpleDateFormat(TIME_FORMAT, locale).format(currentTimeInMs)</b>
-<i class="no-highlight">13</i>&nbsp;    }
-<i class="no-highlight">14</i>&nbsp;
-<i class="no-highlight">15</i>&nbsp;    companion object {
-<i class="no-highlight">16</i>&nbsp;        private const val TIME_FORMAT = &quot;kk.mm&quot;
-<i class="no-highlight">17</i>&nbsp;    }
-<i class="no-highlight">18</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import androidx.paging.PagingData
+<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.domain.model.NoteDomainModel
+<i class="no-highlight">5</i>&nbsp;import kotlinx.coroutines.ExperimentalCoroutinesApi
+<i class="no-highlight">6</i>&nbsp;import kotlinx.coroutines.flow.Flow
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;interface NoteGetAllWithQueryInteractor {
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;    @ExperimentalCoroutinesApi
+<i class="no-highlight">11</i>&nbsp;    fun invoke(): Flow&lt;PagingData&lt;NoteDomainModel&gt;&gt;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;    fun setQuery(query: String)
+<i class="no-highlight">14</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -127,7 +82,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-01 11:59</div>
+    <div style="float:right;">generated on 2022-05-01 12:19</div>
 </div>
 </body>
 </html>

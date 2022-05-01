@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > NoteDeleteByIdsInteractor</title>
+  <title>Coverage Report > SearchNoteRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,19 +17,28 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.stslex93.notes.domain.interactor.interf</a>
+    <a href="../index.html">com.stslex93.notes.domain.repository</a>
 </div>
 
-<h1>Coverage Summary for Class: NoteDeleteByIdsInteractor (com.stslex93.notes.domain.interactor.interf)</h1>
+<h1>Coverage Summary for Class: SearchNoteRepository (com.stslex93.notes.domain.repository)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
 </tr>
+  <tr>
+    <td class="name">SearchNoteRepository$DefaultImpls</td>
+    <td class="coverageStat"/>
+  </tr>
 <tr>
-  <td class="name">NoteDeleteByIdsInteractor</td>
+  <td class="name"><strong>Total</strong></td>
+    <td class="coverageStat"/>
 </tr>
-
 </table>
 
 <br/>
@@ -37,11 +46,20 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.domain.interactor.interf
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.domain.repository
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;fun interface NoteDeleteByIdsInteractor {
-<i class="no-highlight">4</i>&nbsp;    suspend fun invoke(idList: List&lt;Int&gt;)
-<i class="no-highlight">5</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import androidx.paging.PagingData
+<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.data.model.NoteDataModel
+<i class="no-highlight">5</i>&nbsp;import kotlinx.coroutines.ExperimentalCoroutinesApi
+<i class="no-highlight">6</i>&nbsp;import kotlinx.coroutines.flow.Flow
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;interface SearchNoteRepository {
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;    fun setQuery(query: String)
+<i class="no-highlight">11</i>&nbsp;
+<i class="no-highlight">12</i>&nbsp;    @ExperimentalCoroutinesApi
+<i class="no-highlight">13</i>&nbsp;    val notes: Flow&lt;PagingData&lt;NoteDataModel&gt;&gt;
+<i class="no-highlight">14</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -68,7 +86,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-01 11:59</div>
+    <div style="float:right;">generated on 2022-05-01 12:19</div>
 </div>
 </body>
 </html>
