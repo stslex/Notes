@@ -7,8 +7,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
+
+  unitTests:
+    name: Run Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -38,4 +39,27 @@ jobs:
             ${{ runner.os }}-gradle-.
 
       - name: Build application
-        run: ./gradlew build koverReport --full-stacktrace
+        run: ./gradlew koverReport --full-stacktrace
+
+      - name: Check report files
+        run: |
+          ls build/reports/kover/html
+
+      - name: Create local changes
+        run: |
+          rm -rf docs
+          mkdir docs
+          mv -v build/reports/kover/html/* docs
+
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs
+          git commit -m "Add changes" -a
+
+      - name: Push changd
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PUSH_TOKEN }}
+          branch: ${{ github.ref }}
