@@ -76,12 +76,7 @@ jobs:
 
       - name: Check report files
         run: |
-          ls build
-          ls ~/build
-          ls ~/build/reports
-          ls ~/build/reports/kover
-          ls ~/build/reports/kover/report
-          ls ~/build/reports/kover/report/html
+          ls build/reports/kover/report/html
 
       - name: Create local changes
         run: |
