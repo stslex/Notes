@@ -41,13 +41,13 @@ jobs:
 
       - name: Check report files
         run: |
-          ls build/reports/kover/html
+          ls app/build/reports/kover/project-html
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
-          path: build/reports/kover/html
+          path: app/build/reports/kover/project-html
 
   saveReport:
     name: SaveReport
@@ -58,23 +58,20 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
-      - name: Download report
-        uses: actions/download-artifact@v3
-        with:
-          name: code-coverage-report
-          path: build/reports/kover/html
-
-      - name: Check report files
-        run: |
-          ls
-          ls build/
-          ls build/reports/kover/html
-
       - name: Create local changes
         run: |
           rm -rf docs
           mkdir docs
-          mv -v build/reports/kover/html/* docs
+
+      - name: Download report
+        uses: actions/download-artifact@v3
+        with:
+          name: code-coverage-report
+          path: docs
+
+      - name: Check report files
+        run: |
+          ls docs
 
       - name: Commit files
         run: |

@@ -46,6 +46,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        getByName("debug") {
+            isTestCoverageEnabled = true
+        }
     }
 
     viewBinding {
@@ -112,17 +115,23 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
 
-android {
-    testOptions {
-        unitTests.all {
-            if (it.name == "testDebugUnitTest") {
-                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-                    isDisabled = false
-                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
-                    includes = listOf("com.stslex93.*")
-                    excludes = listOf("com.stslex93.notes.*")
-                }
-            }
-        }
-    }
-}
+//android {
+//    testOptions {
+//        unitTests.all {
+//            if (it.name == "testDebugUnitTest") {
+//                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+//                    isDisabled = false
+//                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
+//                    includes = listOf("com.stslex93.*")
+//                    excludes = listOf(
+//                        "**/*Activity*.*",
+//                        "**/*Fragment*.*",
+//                        "**/R.class",
+//                        "**/R$*.class",
+//                        "**/BuildConfig.*"
+//                    )
+//                }
+//            }
+//        }
+//    }
+//}
