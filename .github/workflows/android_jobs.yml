@@ -117,7 +117,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
-          path: ~/build/reports/kover/report/html
+          path: ~/build/reports/kover/report/html/*
 
   report:
     name: Save Test Report
@@ -132,6 +132,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: code-coverage-report
+          path: ~/build/reports/kover/report/html/*
 
       - name: Create local changes
         run: |
