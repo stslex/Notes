@@ -65,6 +65,8 @@ jobs:
 
       - name: Check report files
         run: |
+          ls
+          ls build/
           ls build/reports/kover/html
 
       - name: Create local changes
