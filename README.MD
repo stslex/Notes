@@ -1,7 +1,7 @@
 
 [![Android CI/CD](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml)
 
-# <code><img width="5%"  src="./note_icon.png"></code> Notes 
+# <code><img width="5%"  src="https://user-images.githubusercontent.com/62352202/166147600-38c2b7e5-31a2-42d3-9e38-fafa03481491.png"></code> Notes
 
 ## Table of Contents
 
@@ -52,6 +52,5 @@ You can use [Play market version](https://play.google.com/store/apps/details?id=
 Now it's also available beta version!!!
 
 ## Screenshots
-
-<img src="./screenshots/screenshot1.jpg" width="200" > <img src="./screenshots/screenshot2.jpg" width="200" > </br>
-<img src="./screenshots/screenshot3.jpg" width="200" > <img src="./screenshots/screenshot4.jpg" width="200" >
+<img src="https://user-images.githubusercontent.com/62352202/166147646-bf75866f-f6ba-4d49-b9f8-bd47374768c5.png" width="200" > <img src="https://user-images.githubusercontent.com/62352202/166147664-05e3fc73-a4b1-48d2-a922-6c5336049d61.png" width="200" > \
+<img src="https://user-images.githubusercontent.com/62352202/166147668-68453773-4e5f-477b-8ccf-7b3807178891.png" width="200" > <img src="https://user-images.githubusercontent.com/62352202/166147680-bd2e3c2c-a23b-4e4f-846d-e7c21379ec65.png" width="200" >
