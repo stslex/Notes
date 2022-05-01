@@ -89,6 +89,11 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: code-coverage-report
+
       - name: Create local changes
         run: |
           rm -rf docs
