@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > SnackBarUtilImpl</title>
+  <title>Coverage Report > TimeUtilImpl</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,37 +17,43 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.stslex93.notes.ui.utils.snackbar</a>
+    <a href="../index.html">com.stslex93.notes.ui.utils.time</a>
 </div>
 
-<h1>Coverage Summary for Class: SnackBarUtilImpl (com.stslex93.notes.ui.utils.snackbar)</h1>
+<h1>Coverage Summary for Class: TimeUtilImpl (com.stslex93.notes.ui.utils.time)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
 </th>
 <th class="coverageStat 
 ">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
   Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
 </th>
 </tr>
 <tr>
-  <td class="name">SnackBarUtilImpl</td>
+  <td class="name">TimeUtilImpl</td>
 <td class="coverageStat">
   <span class="percent">
     0%
   </span>
   <span class="absValue">
-    (0/1)
+    (0/2)
   </span>
 </td>
+    <td class="coverageStat"/>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -61,11 +67,66 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/18)
+    (0/17)
   </span>
 </td>
 </tr>
-
+  <tr>
+    <td class="name">TimeUtilImpl$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -73,41 +134,24 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.ui.utils.snackbar
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.ui.utils.time
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import android.graphics.Color
-<i class="no-highlight">4</i>&nbsp;import android.view.View
-<i class="no-highlight">5</i>&nbsp;import com.google.android.material.snackbar.Snackbar
-<i class="no-highlight">6</i>&nbsp;import com.stslex93.notes.R
-<i class="no-highlight">7</i>&nbsp;import javax.inject.Inject
+<i class="no-highlight">3</i>&nbsp;import java.text.SimpleDateFormat
+<i class="no-highlight">4</i>&nbsp;import java.util.*
+<i class="no-highlight">5</i>&nbsp;import javax.inject.Inject
+<i class="no-highlight">6</i>&nbsp;
+<b class="nc"><i class="no-highlight">7</i>&nbsp;class TimeUtilImpl @Inject constructor() : TimeUtil {</b>
 <i class="no-highlight">8</i>&nbsp;
-<b class="nc"><i class="no-highlight">9</i>&nbsp;class SnackBarUtilImpl @Inject constructor() : SnackBarUtil {</b>
-<i class="no-highlight">10</i>&nbsp;
-<i class="no-highlight">11</i>&nbsp;    override fun showErrorMessage(view: View, message: String) {
-<b class="nc"><i class="no-highlight">12</i>&nbsp;        val theme = view.resources.newTheme()</b>
-<b class="nc"><i class="no-highlight">13</i>&nbsp;        val color = view.resources.getColor(R.color.design_default_color_error, theme)</b>
-<b class="nc"><i class="no-highlight">14</i>&nbsp;        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)</b>
-<b class="nc"><i class="no-highlight">15</i>&nbsp;            .apply {</b>
-<b class="nc"><i class="no-highlight">16</i>&nbsp;                animationMode = Snackbar.ANIMATION_MODE_SLIDE</b>
-<b class="nc"><i class="no-highlight">17</i>&nbsp;                setBackgroundTint(color)</b>
-<i class="no-highlight">18</i>&nbsp;                setAction(&quot;Ok&quot;) {}
-<b class="nc"><i class="no-highlight">19</i>&nbsp;            }.show()</b>
-<i class="no-highlight">20</i>&nbsp;    }
-<i class="no-highlight">21</i>&nbsp;
-<i class="no-highlight">22</i>&nbsp;    override fun showSuccess(view: View, action: () -&gt; Unit) {
-<b class="nc"><i class="no-highlight">23</i>&nbsp;        val theme = view.resources.newTheme()</b>
-<b class="nc"><i class="no-highlight">24</i>&nbsp;        val color = view.resources.getColor(R.color.success, theme)</b>
-<b class="nc"><i class="no-highlight">25</i>&nbsp;        Snackbar.make(view, &quot;Notes Deleted&quot;, Snackbar.LENGTH_SHORT).apply {</b>
-<b class="nc"><i class="no-highlight">26</i>&nbsp;            animationMode = Snackbar.ANIMATION_MODE_SLIDE</b>
-<b class="nc"><i class="no-highlight">27</i>&nbsp;            setBackgroundTint(color)</b>
-<b class="nc"><i class="no-highlight">28</i>&nbsp;            setActionTextColor(Color.BLACK)</b>
-<b class="nc"><i class="no-highlight">29</i>&nbsp;            setTextColor(Color.BLACK)</b>
-<b class="nc"><i class="no-highlight">30</i>&nbsp;            setAction(&quot;CANCEL&quot;) {</b>
-<b class="nc"><i class="no-highlight">31</i>&nbsp;                action()</b>
-<i class="no-highlight">32</i>&nbsp;            }
-<b class="nc"><i class="no-highlight">33</i>&nbsp;        }.show()</b>
-<i class="no-highlight">34</i>&nbsp;    }
-<i class="no-highlight">35</i>&nbsp;}
+<i class="no-highlight">9</i>&nbsp;    override fun getCurrentTime(): String {
+<b class="nc"><i class="no-highlight">10</i>&nbsp;        val currentTimeInMs = System.currentTimeMillis()</b>
+<b class="nc"><i class="no-highlight">11</i>&nbsp;        val locale = Locale.getDefault()</b>
+<b class="nc"><i class="no-highlight">12</i>&nbsp;        return SimpleDateFormat(TIME_FORMAT, locale).format(currentTimeInMs)</b>
+<i class="no-highlight">13</i>&nbsp;    }
+<i class="no-highlight">14</i>&nbsp;
+<b class="nc"><i class="no-highlight">15</i>&nbsp;    companion object {</b>
+<i class="no-highlight">16</i>&nbsp;        private const val TIME_FORMAT = &quot;kk.mm&quot;
+<i class="no-highlight">17</i>&nbsp;    }
+<i class="no-highlight">18</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -134,7 +178,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-01 11:59</div>
+    <div style="float:right;">generated on 2022-05-01 12:19</div>
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > NoteInsertSingleInteractor</title>
+  <title>Coverage Report > NoteRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,17 +17,22 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.stslex93.notes.domain.interactor.interf</a>
+    <a href="../index.html">com.stslex93.notes.domain.repository</a>
 </div>
 
-<h1>Coverage Summary for Class: NoteInsertSingleInteractor (com.stslex93.notes.domain.interactor.interf)</h1>
+<h1>Coverage Summary for Class: NoteRepository (com.stslex93.notes.domain.repository)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
 </tr>
 <tr>
-  <td class="name">NoteInsertSingleInteractor</td>
+  <td class="name">NoteRepository</td>
+    <td class="coverageStat"/>
 </tr>
 
 </table>
@@ -37,13 +42,22 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.domain.interactor.interf
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.domain.repository
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import com.stslex93.notes.domain.model.NoteDomainModel
-<i class="no-highlight">4</i>&nbsp;
-<i class="no-highlight">5</i>&nbsp;fun interface NoteInsertSingleInteractor {
-<i class="no-highlight">6</i>&nbsp;    suspend fun invoke(note: NoteDomainModel)
-<i class="no-highlight">7</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import com.stslex93.core.Resource
+<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.data.model.NoteDataModel
+<i class="no-highlight">5</i>&nbsp;import kotlinx.coroutines.ExperimentalCoroutinesApi
+<i class="no-highlight">6</i>&nbsp;import kotlinx.coroutines.flow.Flow
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;interface NoteRepository {
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;    @ExperimentalCoroutinesApi
+<i class="no-highlight">11</i>&nbsp;    fun getNote(id: Int): Flow&lt;Resource&lt;NoteDataModel&gt;&gt;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;    suspend fun deleteNotesById(ids: List&lt;Int&gt;)
+<i class="no-highlight">14</i>&nbsp;    suspend fun insert(note: NoteDataModel)
+<i class="no-highlight">15</i>&nbsp;    suspend fun insertAll(notes: List&lt;NoteDataModel&gt;)
+<i class="no-highlight">16</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -70,7 +84,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-01 11:59</div>
+    <div style="float:right;">generated on 2022-05-01 12:19</div>
 </div>
 </body>
 </html>

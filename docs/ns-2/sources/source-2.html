@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > MainActivity</title>
+  <title>Coverage Report > NoteDatabaseCallback</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,41 +17,43 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.stslex93.notes</a>
+    <a href="../index.html">com.stslex93.notes.data.database</a>
 </div>
 
-<h1>Coverage Summary for Class: MainActivity (com.stslex93.notes)</h1>
+<h1>Coverage Summary for Class: NoteDatabaseCallback (com.stslex93.notes.data.database)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
 </th>
 <th class="coverageStat 
 ">
-  Block, %
+  Branch, %
 </th>
 <th class="coverageStat 
 ">
   Line, %
 </th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
 </tr>
 <tr>
-  <td class="name">MainActivity</td>
+  <td class="name">NoteDatabaseCallback</td>
 <td class="coverageStat">
   <span class="percent">
     0%
   </span>
   <span class="absValue">
-    (0/1)
+    (0/2)
   </span>
 </td>
+    <td class="coverageStat"/>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -65,7 +67,27 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/8)
+    (0/21)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NoteDatabaseCallback$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
   </span>
 </td>
 <td class="coverageStat">
@@ -73,11 +95,38 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/11)
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
   </span>
 </td>
 </tr>
-
 </table>
 
 <br/>
@@ -85,36 +134,32 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.data.database
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import android.os.Bundle
-<i class="no-highlight">4</i>&nbsp;import android.view.MenuItem
-<i class="no-highlight">5</i>&nbsp;import androidx.appcompat.app.AppCompatActivity
-<i class="no-highlight">6</i>&nbsp;import androidx.navigation.fragment.NavHostFragment
-<i class="no-highlight">7</i>&nbsp;import com.stslex93.notes.databinding.ActivityMainBinding
+<i class="no-highlight">3</i>&nbsp;import com.stslex93.notes.data.database.base.BaseRoomCallback
+<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.data.database.base.BaseRoomDatabase
+<i class="no-highlight">5</i>&nbsp;import com.stslex93.notes.data.entity.NoteEntity
+<i class="no-highlight">6</i>&nbsp;import dagger.Lazy
+<i class="no-highlight">7</i>&nbsp;import kotlinx.coroutines.CoroutineScope
 <i class="no-highlight">8</i>&nbsp;
-<b class="nc"><i class="no-highlight">9</i>&nbsp;class MainActivity : AppCompatActivity() {</b>
-<i class="no-highlight">10</i>&nbsp;
-<i class="no-highlight">11</i>&nbsp;    private lateinit var binding: ActivityMainBinding
-<i class="no-highlight">12</i>&nbsp;
-<i class="no-highlight">13</i>&nbsp;    override fun onCreate(savedInstanceState: Bundle?) {
-<b class="nc"><i class="no-highlight">14</i>&nbsp;        setTheme(R.style.PrimaryTheme_Custom)</b>
-<b class="nc"><i class="no-highlight">15</i>&nbsp;        super.onCreate(savedInstanceState)</b>
-<b class="nc"><i class="no-highlight">16</i>&nbsp;        binding = ActivityMainBinding.inflate(layoutInflater)</b>
-<b class="nc"><i class="no-highlight">17</i>&nbsp;        setContentView(binding.root)</b>
-<i class="no-highlight">18</i>&nbsp;    }
-<i class="no-highlight">19</i>&nbsp;
-<i class="no-highlight">20</i>&nbsp;    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-<b class="nc"><i class="no-highlight">21</i>&nbsp;        when (item.itemId) {</b>
-<b class="nc"><i class="no-highlight">22</i>&nbsp;            android.R.id.home -&gt; (supportFragmentManager</b>
-<b class="nc"><i class="no-highlight">23</i>&nbsp;                .findFragmentById(binding.navHostFragment.id) as NavHostFragment)</b>
-<b class="nc"><i class="no-highlight">24</i>&nbsp;                .navController</b>
-<b class="nc"><i class="no-highlight">25</i>&nbsp;                .popBackStack()</b>
-<i class="no-highlight">26</i>&nbsp;        }
-<b class="nc"><i class="no-highlight">27</i>&nbsp;        return super.onOptionsItemSelected(item)</b>
-<i class="no-highlight">28</i>&nbsp;    }
-<i class="no-highlight">29</i>&nbsp;
-<i class="no-highlight">30</i>&nbsp;}
+<i class="no-highlight">9</i>&nbsp;class NoteDatabaseCallback(
+<i class="no-highlight">10</i>&nbsp;    scope: CoroutineScope,
+<i class="no-highlight">11</i>&nbsp;    noteRoomDatabase: Lazy&lt;BaseRoomDatabase&lt;NoteDao&gt;&gt;
+<b class="nc"><i class="no-highlight">12</i>&nbsp;) : BaseRoomCallback&lt;NoteDao&gt;(scope, noteRoomDatabase) {</b>
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    override suspend fun populateDatabase(dao: NoteDao) {
+<b class="nc"><i class="no-highlight">15</i>&nbsp;        val note = NoteEntity(0, INITIAL_TITLE, INITIAL_CONTENT, System.currentTimeMillis())</b>
+<b class="nc"><i class="no-highlight">16</i>&nbsp;        dao.insert(note)</b>
+<i class="no-highlight">17</i>&nbsp;    }
+<i class="no-highlight">18</i>&nbsp;
+<b class="nc"><i class="no-highlight">19</i>&nbsp;    companion object {</b>
+<i class="no-highlight">20</i>&nbsp;        private const val INITIAL_TITLE: String = &quot;example note&quot;
+<i class="no-highlight">21</i>&nbsp;        private const val INITIAL_CONTENT: String =
+<i class="no-highlight">22</i>&nbsp;            &quot;Android 12 foregrounds the design language of Material You through updated widget styles, a dynamic color system, custom shapes, and motion enhancements. \n&quot; +
+<i class="no-highlight">23</i>&nbsp;                    &quot;\n&quot; +
+<i class="no-highlight">24</i>&nbsp;                    &quot;Starting with Android 12 on Pixel devices, users can personalize their phone with dynamic color by generating unique color experiences from any wallpaper image. Extracted colors can be applied across the entire OS, from the notification shade to the lock screen, to volume controls, and more.&quot;
+<i class="no-highlight">25</i>&nbsp;    }
+<i class="no-highlight">26</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -141,7 +186,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-01 11:59</div>
+    <div style="float:right;">generated on 2022-05-01 12:19</div>
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > BaseRoomCallback</title>
+  <title>Coverage Report > NoteAutoMigration</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,49 +17,37 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.stslex93.notes.data.database.base</a>
+    <a href="../index.html">com.stslex93.notes.data.database.migration</a>
 </div>
 
-<h1>Coverage Summary for Class: BaseRoomCallback (com.stslex93.notes.data.database.base)</h1>
+<h1>Coverage Summary for Class: NoteAutoMigration (com.stslex93.notes.data.database.migration)</h1>
 
 <table class="coverageStats">
-
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
 <th class="coverageStat 
 ">
   Method, %
 </th>
 <th class="coverageStat 
 ">
-  Block, %
+  Branch, %
 </th>
 <th class="coverageStat 
 ">
   Line, %
 </th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
 </tr>
 <tr>
-  <td class="name">BaseRoomCallback</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/3)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/6)
-  </span>
-</td>
-</tr>
-  <tr>
-    <td class="name">BaseRoomCallback$onCreate$1</td>
+  <td class="name">NoteAutoMigration</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -73,9 +61,10 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/4)
+    (0/1)
   </span>
 </td>
+    <td class="coverageStat"/>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -84,34 +73,16 @@ Current scope:     <a href="../../index.html">all classes</a>
     (0/1)
   </span>
 </td>
-  </tr>
-<tr>
-  <td class="name"><strong>Total</strong></td>
 <td class="coverageStat">
   <span class="percent">
     0%
   </span>
   <span class="absValue">
-    (0/4)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/4)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/7)
+    (0/2)
   </span>
 </td>
 </tr>
+
 </table>
 
 <br/>
@@ -119,27 +90,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.data.database.base
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.data.database.migration
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import androidx.room.RoomDatabase
-<i class="no-highlight">4</i>&nbsp;import androidx.sqlite.db.SupportSQLiteDatabase
-<i class="no-highlight">5</i>&nbsp;import dagger.Lazy
-<i class="no-highlight">6</i>&nbsp;import kotlinx.coroutines.CoroutineScope
-<i class="no-highlight">7</i>&nbsp;import kotlinx.coroutines.Dispatchers
-<i class="no-highlight">8</i>&nbsp;import kotlinx.coroutines.launch
-<i class="no-highlight">9</i>&nbsp;
-<b class="nc"><i class="no-highlight">10</i>&nbsp;abstract class BaseRoomCallback&lt;T&gt;(</b>
-<b class="nc"><i class="no-highlight">11</i>&nbsp;    private val scope: CoroutineScope,</b>
-<b class="nc"><i class="no-highlight">12</i>&nbsp;    private val roomDatabase: Lazy&lt;BaseRoomDatabase&lt;T&gt;&gt;</b>
-<b class="nc"><i class="no-highlight">13</i>&nbsp;) : RoomDatabase.Callback() {</b>
-<i class="no-highlight">14</i>&nbsp;
-<i class="no-highlight">15</i>&nbsp;    override fun onCreate(db: SupportSQLiteDatabase) {
-<b class="nc"><i class="no-highlight">16</i>&nbsp;        super.onCreate(db)</b>
-<b class="nc"><i class="no-highlight">17</i>&nbsp;        scope.launch(Dispatchers.IO) { populateDatabase(roomDatabase.get().dao()) }</b>
-<i class="no-highlight">18</i>&nbsp;    }
-<i class="no-highlight">19</i>&nbsp;
-<i class="no-highlight">20</i>&nbsp;    abstract suspend fun populateDatabase(dao: T)
-<i class="no-highlight">21</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import androidx.room.migration.AutoMigrationSpec
+<i class="no-highlight">4</i>&nbsp;
+<b class="nc"><i class="no-highlight">5</i>&nbsp;class NoteAutoMigration : AutoMigrationSpec</b>
 </div>
 </pre>
 </div>
@@ -166,7 +121,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-01 11:59</div>
+    <div style="float:right;">generated on 2022-05-01 12:19</div>
 </div>
 </body>
 </html>
