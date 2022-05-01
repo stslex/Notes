@@ -82,14 +82,14 @@ jobs:
         run: |
           rm -rf docs
           mkdir docs
-          mv -v ~/build/reports/kover/report/html/* ~/docs
+          mv -v build/reports/kover/report/html/* docs 
 
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit --file = ~/docs "Add changes" -a
-      - name: Push changes
+          git commit --file = docs "Add changes" -a
+      - name: Push changd
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PUSH_TOKEN }}
