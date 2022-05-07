@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > UtilsModule</title>
+  <title>Coverage Report > InteractorModule</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,7 +20,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.stslex93.notes.di.module</a>
 </div>
 
-<h1>Coverage Summary for Class: UtilsModule (com.stslex93.notes.di.module)</h1>
+<h1>Coverage Summary for Class: InteractorModule (com.stslex93.notes.di.module)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -31,7 +31,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">UtilsModule</td>
+  <td class="name">InteractorModule</td>
     <td class="coverageStat"/>
 </tr>
 
@@ -44,26 +44,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.di.module
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import com.stslex93.notes.ui.main.utils.SelectorNoteItemsUtil
-<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.ui.utils.snackbar.SnackBarUtil
-<i class="no-highlight">5</i>&nbsp;import com.stslex93.notes.ui.utils.snackbar.SnackBarUtilImpl
-<i class="no-highlight">6</i>&nbsp;import com.stslex93.notes.ui.utils.time.TimeUtil
-<i class="no-highlight">7</i>&nbsp;import com.stslex93.notes.ui.utils.time.TimeUtilImpl
-<i class="no-highlight">8</i>&nbsp;import dagger.Binds
-<i class="no-highlight">9</i>&nbsp;import dagger.Module
+<i class="no-highlight">3</i>&nbsp;import com.stslex93.notes.domain.interactor.impl.*
+<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.domain.interactor.interf.*
+<i class="no-highlight">5</i>&nbsp;import dagger.Binds
+<i class="no-highlight">6</i>&nbsp;import dagger.Module
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;@Module
+<i class="no-highlight">9</i>&nbsp;interface InteractorModule {
 <i class="no-highlight">10</i>&nbsp;
-<i class="no-highlight">11</i>&nbsp;@Module
-<i class="no-highlight">12</i>&nbsp;interface UtilsModule {
+<i class="no-highlight">11</i>&nbsp;    @Binds
+<i class="no-highlight">12</i>&nbsp;    fun bindsNoteDeleteByIdsInteractor(interactor: NoteDeleteByIdsInteractorImpl): NoteDeleteByIdsInteractor
 <i class="no-highlight">13</i>&nbsp;
 <i class="no-highlight">14</i>&nbsp;    @Binds
-<i class="no-highlight">15</i>&nbsp;    fun bindsTimeUtil(util: TimeUtilImpl): TimeUtil
+<i class="no-highlight">15</i>&nbsp;    fun bindsNoteGetSingleInteractor(interactor: NoteGetSingleInteractorImpl): NoteGetSingleInteractor
 <i class="no-highlight">16</i>&nbsp;
 <i class="no-highlight">17</i>&nbsp;    @Binds
-<i class="no-highlight">18</i>&nbsp;    fun bindsSnackBarUtil(util: SnackBarUtilImpl): SnackBarUtil
+<i class="no-highlight">18</i>&nbsp;    fun bindsNoteInsertSingleInteractor(interactor: NoteInsertSingleInteractorImpl): NoteInsertSingleInteractor
 <i class="no-highlight">19</i>&nbsp;
 <i class="no-highlight">20</i>&nbsp;    @Binds
-<i class="no-highlight">21</i>&nbsp;    fun bindsSelectorNoteItems(util: SelectorNoteItemsUtil.Base): SelectorNoteItemsUtil
-<i class="no-highlight">22</i>&nbsp;}
+<i class="no-highlight">21</i>&nbsp;    fun bindsNotesGetAllInteractor(interactor: NoteGetAllWithQueryInteractorImpl): NoteGetAllWithQueryInteractor
+<i class="no-highlight">22</i>&nbsp;
+<i class="no-highlight">23</i>&nbsp;    @Binds
+<i class="no-highlight">24</i>&nbsp;    fun bindsNoteInsertAllInteractor(interactor: NoteInsertAllInteractorImpl): NoteInsertAllInteractor
+<i class="no-highlight">25</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -90,7 +93,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-01 13:21</div>
+    <div style="float:right;">generated on 2022-05-07 12:37</div>
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > NoteGetSingleInteractor</title>
+  <title>Coverage Report > NoteInsertAllInteractor</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,7 +20,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.stslex93.notes.domain.interactor.interf</a>
 </div>
 
-<h1>Coverage Summary for Class: NoteGetSingleInteractor (com.stslex93.notes.domain.interactor.interf)</h1>
+<h1>Coverage Summary for Class: NoteInsertAllInteractor (com.stslex93.notes.domain.interactor.interf)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -31,7 +31,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">NoteGetSingleInteractor</td>
+  <td class="name">NoteInsertAllInteractor</td>
     <td class="coverageStat"/>
 </tr>
 
@@ -44,16 +44,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.domain.interactor.interf
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import com.stslex93.core.Resource
-<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.domain.model.NoteDomainModel
-<i class="no-highlight">5</i>&nbsp;import kotlinx.coroutines.ExperimentalCoroutinesApi
-<i class="no-highlight">6</i>&nbsp;import kotlinx.coroutines.flow.Flow
-<i class="no-highlight">7</i>&nbsp;
-<i class="no-highlight">8</i>&nbsp;fun interface NoteGetSingleInteractor {
-<i class="no-highlight">9</i>&nbsp;
-<i class="no-highlight">10</i>&nbsp;    @ExperimentalCoroutinesApi
-<i class="no-highlight">11</i>&nbsp;    fun invoke(id: Int): Flow&lt;Resource&lt;NoteDomainModel&gt;&gt;
-<i class="no-highlight">12</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import com.stslex93.notes.domain.model.NoteDomainModel
+<i class="no-highlight">4</i>&nbsp;
+<i class="no-highlight">5</i>&nbsp;fun interface NoteInsertAllInteractor {
+<i class="no-highlight">6</i>&nbsp;    suspend fun invoke(notes: List&lt;NoteDomainModel&gt;)
+<i class="no-highlight">7</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -80,7 +75,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-01 13:21</div>
+    <div style="float:right;">generated on 2022-05-07 12:37</div>
 </div>
 </body>
 </html>
