@@ -33,9 +33,16 @@
 #### Already:
 - Kotlin
 - MVVM
-- Room database
+- Room database with Migrations
 - Coroutines
 - Dagger 2
+- Jacoco
+- Kover
+- Kotlin DSL
+- Kotlin Symbol Processing
+- Robolectric
+- Jetpack Paging
+- Flow
 - Navigation component / Jetpack's navigation
 
 #### In the near future:
