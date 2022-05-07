@@ -51,6 +51,12 @@ android {
         }
     }
 
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+
     viewBinding {
         android.buildFeatures.viewBinding = true
     }
@@ -71,6 +77,10 @@ android {
 
 dependencies {
     implementation(project(mapOf("path" to ":core")))
+
+    val robolectricVersion = "4.8"
+    testImplementation("org.robolectric:robolectric:$robolectricVersion")
+    testImplementation("androidx.test:core-ktx:1.4.0")
 
     /*KSP*/
     val kspVersion = "1.6.21-1.0.5"
@@ -113,4 +123,24 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+}
+
+private val excludeList: List<String> by lazy {
+    listOf(
+        "**/*Activity*.*",
+        "**/*Fragment*.*",
+        "**/*FXCMApp*.*",
+        "**/*View*.*",
+        "**/*Adapter*.*",
+        "**/*View.class",
+        "**/R.class",
+        "**/R$*.class'",
+        "**/BuildConfig.*",
+        "**/*di*/**'",
+        "**/*_MembersInjector.class",
+        "**/Dagger*Component.class",
+        "**/Dagger*Component*.class",
+        "**/*Module_*Factory.class",
+        "**/*_Factory*.*"
+    )
 }
