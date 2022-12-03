@@ -1,17 +1,13 @@
 plugins {
-    id("com.android.application") version "7.0.2" apply false
-    id("com.android.library") version "7.0.2" apply false
-    id("org.jetbrains.kotlin.android") version "1.6.21" apply false
     id("org.jetbrains.kotlinx.kover") version "0.5.0"
-    kotlin("jvm") version "1.6.21" apply false
-    kotlin("plugin.serialization") version "1.6.21"
+    kotlin("plugin.serialization") version "1.7.21"
+    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
 }
 
 buildscript {
     dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.6.21"))
-        classpath("com.android.tools.build:gradle:7.1.3")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2")
+        classpath(libs.android.gradlePlugin)
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
     }
 }
 

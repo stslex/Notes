@@ -1,9 +1,15 @@
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    id("notes.android.library")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+dependencies {
+    libs.apply {
+        api(androidx.core.ktx)
+        api(bundles.ksp)
+        api(kotlinx.coroutines)
+        api(kotlin.stdlib)
+        api(androidx.appcompat)
+    }
 }
+
+android.namespace = "com.stslex93.core"

@@ -1,0 +1,38 @@
+[versions]
+androidDesugarJdkLibs = "1.2.0"
+androidGradlePlugin = "7.3.1"
+kotlin = "1.7.21"
+kspVersion = "1.7.21-1.0.8"
+composeCompiler = "1.4.0-alpha02"
+ktxVersion = "1.9.0"
+coroutinesVersion = "1.6.4"
+appcompatVersion = "1.5.1"
+
+material3Compose = "1.0.1"
+compose = "1.3.1"
+activityCompose = "1.6.1"
+
+[libraries]
+android-desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktxVersion" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Compose" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+androidx-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutinesVersion" }
+
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+
+ksp-api = { group = "com.google.devtools.ksp", name = "symbol-processing-api", version.ref = "kspVersion" }
+ksp-core = { group = "com.google.devtools.ksp", name = "symbol-processing", version.ref = "kspVersion" }
+
+[plugins]
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+
+[bundles]
+ksp = ["ksp-api", "ksp-core"]
+compose = ["androidx-compose-ui", "androidx-compose-activity", "androidx-compose-material3"]
