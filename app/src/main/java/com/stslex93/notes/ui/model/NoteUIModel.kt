@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.widget.TextView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.TextInputLayout
+import com.stslex93.notes.ui.widget.ComposeCustomTextView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -11,7 +12,7 @@ interface NoteUIModel {
 
     fun bind(
         titleTextView: TextView,
-        contentTextView: TextView,
+        contentTextView: ComposeCustomTextView,
         itemCardView: MaterialCardView
     )
 
@@ -49,11 +50,11 @@ interface NoteUIModel {
 
         override fun bind(
             titleTextView: TextView,
-            contentTextView: TextView,
+            contentTextView: ComposeCustomTextView,
             itemCardView: MaterialCardView
         ) {
             titleTextView.text = title
-            contentTextView.text = content
+            contentTextView.setText(content)
             _cardView = itemCardView
             cardView.transitionName = id.toString()
         }

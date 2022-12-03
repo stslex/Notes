@@ -1,9 +1,47 @@
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+android {
+    namespace = "com.stslex93.core"
+    compileSdk = 33
+
+    defaultConfig {
+        minSdk = 26
+        targetSdk = 33
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    api("androidx.core:core-ktx:1.9.0")
+
+    val kspVersion = "1.7.21-1.0.8"
+    api("com.google.devtools.ksp:symbol-processing-api:$kspVersion")
+    api("com.google.devtools.ksp:symbol-processing:$kspVersion")
+
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+    api("org.jetbrains.kotlin:kotlin-stdlib:1.7.21")
+    api("androidx.appcompat:appcompat:1.5.1")
 }

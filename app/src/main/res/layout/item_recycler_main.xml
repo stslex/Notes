@@ -26,14 +26,9 @@
             android:lines="1"
             tools:text="Title" />
 
-        <TextView
+        <com.stslex93.notes.ui.widget.ComposeCustomTextView
             android:id="@+id/contentTextView"
-            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/primary_padding"
-            android:ellipsize="end"
-            android:maxLines="10"
-            tools:text="Content" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

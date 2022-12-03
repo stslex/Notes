@@ -15,7 +15,7 @@ class MainViewHolder(
 
     override fun bind(item: NoteUIModel): Unit = with(item) {
         binding.itemCardView.isChecked = isChecked()
-        binding.itemCardView.setOnClickListener(itemClickListener)
+        binding.titleTextView.setOnClickListener(itemClickListener)
         binding.itemCardView.setOnLongClickListener(itemLongCLickListener)
         bindItem()
     }
