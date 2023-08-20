@@ -9,8 +9,7 @@ import javax.inject.Inject
 class SnackBarUtilImpl @Inject constructor() : SnackBarUtil {
 
     override fun showErrorMessage(view: View, message: String) {
-        val theme = view.resources.newTheme()
-        val color = view.resources.getColor(R.color.design_default_color_error, theme)
+        val color = Color.RED // TODO replace
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
             .apply {
                 animationMode = Snackbar.ANIMATION_MODE_SLIDE

@@ -1,7 +1,4 @@
-enableFeaturePreview("VERSION_CATALOGS")
-
 pluginManagement {
-    @Suppress("UnstableApiUsage")
     includeBuild("build-logic")
     repositories {
         gradlePluginPortal()

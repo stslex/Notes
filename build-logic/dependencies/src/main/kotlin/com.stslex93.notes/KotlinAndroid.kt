@@ -7,98 +7,95 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.provideDelegate
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-@Suppress("UnstableApiUsage")
-fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *>,
+/**
+ * Configure base Kotlin with Android options
+ */
+internal fun Project.configureKotlinAndroid(
+    commonExtension: CommonExtension<*, *, *, *, *>,
 ) {
     commonExtension.apply {
-        compileSdk = 33
+
+        compileSdk = 34
 
         defaultConfig {
-            minSdk = 26
-
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-            packagingOptions {
-                with(resources.excludes) {
-                    add("kotlin/internal/internal.kotlin_builtins")
-                    add("kotlin/reflect/reflect.kotlin_builtins")
-                    add("kotlin/kotlin.kotlin_builtins")
-                    add("kotlin/coroutines/coroutines.kotlin_builtins")
-                    add("kotlin/ranges/ranges.kotlin_builtins")
-                    add("kotlin/collections/collections.kotlin_builtins")
-                    add("kotlin/annotation/annotation.kotlin_builtins")
-                }
-            }
-
-            vectorDrawables {
-                useSupportLibrary = true
-            }
+            minSdk = 28
+            buildFeatures.buildConfig = true
         }
 
         compileOptions {
+            // Up to Java 11 APIs are available through desugaring
+            // https://developer.android.com/studio/write/java11-minimal-support-table
             sourceCompatibility = JavaVersion.VERSION_11
             targetCompatibility = JavaVersion.VERSION_11
             isCoreLibraryDesugaringEnabled = true
         }
-
-        kotlinOptions {
-            freeCompilerArgs = freeCompilerArgs + listOf(
-                "-opt-in=kotlin.RequiresOptIn",
-                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-opt-in=kotlinx.coroutines.FlowPreview",
-                "-opt-in=kotlin.Experimental"
-            )
-            jvmTarget = "11"
-            sourceSets.all {
-                kotlin.srcDir("build/generated/ksp/$name/kotlin")
-            }
-        }
-
-        packagingOptions {
-            resources {
-                excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            }
-        }
-
-        sourceSets {
-            getByName("androidTest").assets.srcDir("$projectDir/schemas")
-        }
-
-        compileOptions {
-            sourceCompatibility(JavaVersion.VERSION_11)
-            targetCompatibility(JavaVersion.VERSION_11)
-        }
-
-        testOptions {
-            unitTests {
-                isIncludeAndroidResources = true
-            }
-        }
-
-        buildTypes {
-            getByName("release") {
-                isMinifyEnabled = false
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
-            }
-            getByName("debug") {
-                isTestCoverageEnabled = true
-            }
-        }
     }
+
+    configureKotlin()
 
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     dependencies {
-        add("coreLibraryDesugaring", libs.findLibrary("android.desugarJdkLibs").get())
+        add("coreLibraryDesugaring", libs.findLibrary("android-desugarJdkLibs").get())
+
+        val ktx = libs.findLibrary("androidx-core-ktx").get()
+        add("implementation", ktx)
+
+        val test = libs.findBundle("test").get()
+        add("testImplementation", test)
+
+        val androidTest = libs.findBundle("android-test").get()
+        add("androidTestImplementation", androidTest)
+
+        val immutableCollection = libs.findLibrary("kotlinx-collections-immutable").get()
+        add("implementation", immutableCollection)
+
+        // TODO вынести
+        val koin = libs.findBundle("koin").get()
+        add("implementation", koin)
     }
 }
 
-private fun CommonExtension<*, *, *, *>.kotlinOptions(block: KotlinJvmOptions.() -> Unit) {
+private fun CommonExtension<*, *, *, *, *>.kotlinOptions(block: KotlinJvmOptions.() -> Unit) {
     (this as ExtensionAware).extensions.configure("kotlinOptions", block)
+}
+
+// TODO check
+///**
+// * Configure base Kotlin options for JVM (non-Android)
+// */
+//internal fun Project.configureKotlinJvm() {
+//    extensions.configure<JavaPluginExtension> {
+//        // Up to Java 11 APIs are available through desugaring
+//        // https://developer.android.com/studio/write/java11-minimal-support-table
+//        sourceCompatibility = JavaVersion.VERSION_11
+//        targetCompatibility = JavaVersion.VERSION_11
+//    }
+//
+//    configureKotlin()
+//}
+
+/**
+ * Configure base Kotlin options
+ */
+private fun Project.configureKotlin() {
+    // Use withType to workaround https://youtrack.jetbrains.com/issue/KT-55947
+    tasks.withType<KotlinCompile>().configureEach {
+        kotlinOptions {
+            // Set JVM target to 11
+            jvmTarget = JavaVersion.VERSION_11.toString()
+            // Treat all Kotlin warnings as errors (disabled by default)
+            // Override by setting warningsAsErrors=true in your ~/.gradle/gradle.properties
+            val warningsAsErrors: String? by project
+            allWarningsAsErrors = warningsAsErrors.toBoolean()
+            freeCompilerArgs = freeCompilerArgs + listOf(
+                "-opt-in=kotlin.RequiresOptIn",
+            )
+        }
+    }
 }

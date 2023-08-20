@@ -7,6 +7,7 @@ group = "com.stslex93.notes.buildlogic"
 dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(libs.kotlin.gradlePlugin)
+    implementation(libs.kotlin.serialization)
 }
 
 gradlePlugin {
@@ -26,18 +27,6 @@ gradlePlugin {
         register("androidLibrary") {
             id = "notes.android.library"
             implementationClass = "AndroidLibraryPlugin"
-        }
-        register("androidTest") {
-            id = "notes.android.test"
-            implementationClass = "AndroidTestPlugin"
-        }
-        register("androidLibraryJacoco") {
-            id = "notes.android.library.jacoco"
-            implementationClass = "AndroidLibraryJacocoPlugin"
-        }
-        register("androidApplicationJacoco") {
-            id = "notes.android.application.jacoco"
-            implementationClass = "AndroidApplicationJacocoPlugin"
         }
     }
 }

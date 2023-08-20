@@ -52,9 +52,12 @@ class NoteRepositoryTest : TestCase() {
             is Resource.Success -> {
                 Assert.assertEquals(expectedNote, actual.data)
             }
+
             is Resource.Failure -> {
                 Assert.fail(actual.exception.message)
             }
+
+            Resource.Loading -> Unit
         }
     }
 

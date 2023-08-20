@@ -2,26 +2,16 @@ plugins {
     id("notes.android.application")
     id("notes.android.application.compose")
     id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
-    id("kotlin-parcelize")
-    id("com.google.devtools.ksp")
+//    id("kotlin-kapt")
+//    id("androidx.navigation.safeargs.kotlin")
+//    id("kotlin-parcelize")
+//    id("com.google.devtools.ksp")
 }
 
-android {
-    compileSdk = 33
-    defaultConfig {
-        applicationId = "com.stslex.cnotes"
-        versionCode = 7
-        versionName = "1.07"
+android.namespace = "com.stslex93.notes"
 
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
-    }
-
-    android.buildFeatures.viewBinding = true
-
-    namespace = "com.stslex93.notes"
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
@@ -30,7 +20,7 @@ dependencies {
     implementation("androidx.paging:paging-runtime:$pagingVersion")
 
     /*Dagger 2*/
-    val daggerVersion = "2.44.2"
+    val daggerVersion = "2.47"
     implementation("com.google.dagger:dagger:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 
@@ -55,14 +45,14 @@ dependencies {
 
     androidTestApi("androidx.room:room-testing:2.4.3")
 
-    libs.apply {
-        implementation(androidx.core.ktx)
-        implementation(bundles.ksp)
-        implementation(kotlinx.coroutines)
-        implementation(kotlin.stdlib)
-        implementation(androidx.appcompat)
-        implementation(bundles.compose)
-    }
-    implementation("com.google.android.material:material:1.7.0")
+//    libs.apply {
+//        implementation(androidx.core.ktx)
+//        implementation(bundles.ksp)
+//        implementation(kotlinx.coroutines)
+//        implementation(kotlin.stdlib)
+//        implementation(androidx.appcompat)
+//        implementation(bundles.compose)
+//    }
+    implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }
