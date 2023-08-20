@@ -1,12 +1,20 @@
 plugins {
     id("org.jetbrains.kotlinx.kover") version "0.5.0"
-    kotlin("plugin.serialization") version "1.7.21"
-    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
+    alias(libs.plugins.application) apply false
+    alias(libs.plugins.kotlin) apply false
+    alias(libs.plugins.library) apply false
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.ksp) apply false
 }
 
 buildscript {
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
     dependencies {
-        classpath(libs.android.gradlePlugin)
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
     }
 }
