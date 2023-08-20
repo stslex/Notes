@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.stslex93.core.Mapper
+import com.stslex93.notes.core.Mapper
 import com.stslex93.notes.domain.interactor.interf.NoteDeleteByIdsInteractor
 import com.stslex93.notes.domain.interactor.interf.NoteGetAllWithQueryInteractor
 import com.stslex93.notes.domain.interactor.interf.NoteInsertAllInteractor

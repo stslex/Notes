@@ -1,7 +1,7 @@
 package com.stslex93.notes.domain.interactor.impl
 
 import androidx.paging.PagingData
-import com.stslex93.core.Mapper
+import com.stslex93.notes.core.Mapper
 import com.stslex93.notes.data.model.NoteDataModel
 import com.stslex93.notes.domain.interactor.interf.NoteGetAllWithQueryInteractor
 import com.stslex93.notes.domain.model.NoteDomainModel

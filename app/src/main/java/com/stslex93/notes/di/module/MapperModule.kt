@@ -1,8 +1,8 @@
 package com.stslex93.notes.di.module
 
 import androidx.paging.PagingData
-import com.stslex93.core.Mapper
-import com.stslex93.core.Resource
+import com.stslex93.notes.core.Mapper
+import com.stslex93.notes.core.Resource
 import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.data.mapper.NoteDataEntityMapper
 import com.stslex93.notes.data.mapper.NoteEntityDataMapper

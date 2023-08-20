@@ -3,8 +3,8 @@ package com.stslex93.notes.data.repository
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.stslex93.core.Mapper
-import com.stslex93.core.Resource
+import com.stslex93.notes.core.Mapper
+import com.stslex93.notes.core.Resource
 import com.stslex93.notes.data.database.NoteDao
 import com.stslex93.notes.data.database.NoteRoomDatabase
 import com.stslex93.notes.data.entity.NoteEntity

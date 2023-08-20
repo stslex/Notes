@@ -1,8 +1,8 @@
 package com.stslex93.notes.data.repository
 
 import androidx.annotation.WorkerThread
-import com.stslex93.core.Mapper
-import com.stslex93.core.Resource
+import com.stslex93.notes.core.Mapper
+import com.stslex93.notes.core.Resource
 import com.stslex93.notes.data.database.NoteDao
 import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.data.model.NoteDataModel

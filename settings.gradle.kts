@@ -21,11 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Notes"
 include(":app")
-include(":core")
-include(":core-ui")
-include(":core-data-notes")
-include(":core-test")
-include(":feature-main")
-include(":feature-note-edit")
-
-

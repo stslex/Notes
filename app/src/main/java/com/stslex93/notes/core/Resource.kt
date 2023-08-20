@@ -1,4 +1,4 @@
-package com.stslex93.core
+package com.stslex93.notes.core
 
 
 sealed class Resource<out T> : Object<T> {
