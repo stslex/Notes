@@ -1,6 +1,6 @@
 package com.stslex93.notes.data.mapper
 
-import com.stslex93.core.Mapper
+import com.stslex93.notes.core.Mapper
 import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.data.model.NoteDataModel
 

@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
-import com.stslex93.core.Resource
+import com.stslex93.notes.core.Resource
 import com.stslex93.notes.R
 import com.stslex93.notes.appComponent
 import com.stslex93.notes.databinding.FragmentEditBinding

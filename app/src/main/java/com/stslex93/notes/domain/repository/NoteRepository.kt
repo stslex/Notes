@@ -1,6 +1,6 @@
 package com.stslex93.notes.domain.repository
 
-import com.stslex93.core.Resource
+import com.stslex93.notes.core.Resource
 import com.stslex93.notes.data.model.NoteDataModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

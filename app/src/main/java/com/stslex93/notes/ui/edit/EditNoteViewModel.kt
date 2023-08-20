@@ -2,8 +2,8 @@ package com.stslex93.notes.ui.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.stslex93.core.Mapper
-import com.stslex93.core.Resource
+import com.stslex93.notes.core.Mapper
+import com.stslex93.notes.core.Resource
 import com.stslex93.notes.domain.interactor.interf.NoteGetSingleInteractor
 import com.stslex93.notes.domain.interactor.interf.NoteInsertSingleInteractor
 import com.stslex93.notes.domain.model.NoteDomainModel

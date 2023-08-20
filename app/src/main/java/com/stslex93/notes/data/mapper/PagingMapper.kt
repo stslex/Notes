@@ -2,7 +2,7 @@ package com.stslex93.notes.data.mapper
 
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.stslex93.core.Mapper
+import com.stslex93.notes.core.Mapper
 import java.util.concurrent.Executors
 import javax.inject.Inject
 

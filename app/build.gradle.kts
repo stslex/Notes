@@ -25,11 +25,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":core-ui"))
-    implementation(project(":core-test"))
-    implementation(project(":core-data-notes"))
-
     /*Paging*/
     val pagingVersion = "3.1.1"
     implementation("androidx.paging:paging-runtime:$pagingVersion")
@@ -49,4 +44,25 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-paging:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
+
+    val robolectricVersion = "4.9"
+    api("org.robolectric:robolectric:$robolectricVersion")
+    api("androidx.test:core-ktx:1.5.0")
+
+    api("junit:junit:4.13.2")
+    api("androidx.test.ext:junit:1.1.4")
+    api("androidx.test.espresso:espresso-core:3.5.0")
+
+    androidTestApi("androidx.room:room-testing:2.4.3")
+
+    libs.apply {
+        implementation(androidx.core.ktx)
+        implementation(bundles.ksp)
+        implementation(kotlinx.coroutines)
+        implementation(kotlin.stdlib)
+        implementation(androidx.appcompat)
+        implementation(bundles.compose)
+    }
+    implementation("com.google.android.material:material:1.7.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }

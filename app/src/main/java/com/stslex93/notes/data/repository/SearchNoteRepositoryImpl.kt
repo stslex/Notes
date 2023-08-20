@@ -3,7 +3,7 @@ package com.stslex93.notes.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.stslex93.core.Mapper
+import com.stslex93.notes.core.Mapper
 import com.stslex93.notes.data.database.NoteDao
 import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.data.model.NoteDataModel
