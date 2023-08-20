@@ -74,7 +74,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/119)
+    (0/122)
   </span>
 </td>
   </tr>
@@ -113,7 +113,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/119)
+    (0/122)
   </span>
 </td>
 </tr>
@@ -161,11 +161,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">35</i>&nbsp;        override val lastSelectedItems: List&lt;NoteUIModel&gt;
 <b class="nc"><i class="no-highlight">36</i>&nbsp;            get() = _lastSelectedItems</b>
 <i class="no-highlight">37</i>&nbsp;
-<i class="no-highlight">38</i>&nbsp;        override suspend fun deleteAll() {
+<b class="nc"><i class="no-highlight">38</i>&nbsp;        override suspend fun deleteAll() {</b>
 <b class="nc"><i class="no-highlight">39</i>&nbsp;            listOfItems.forEach {</b>
 <b class="nc"><i class="no-highlight">40</i>&nbsp;                it.setChecked(false)</b>
 <b class="nc"><i class="no-highlight">41</i>&nbsp;                it.updateViewCheck()</b>
-<b class="nc"><i class="no-highlight">42</i>&nbsp;            }</b>
+<i class="no-highlight">42</i>&nbsp;            }
 <b class="nc"><i class="no-highlight">43</i>&nbsp;            listOfItems.clear()</b>
 <b class="nc"><i class="no-highlight">44</i>&nbsp;            _isSelectionStart = false</b>
 <b class="nc"><i class="no-highlight">45</i>&nbsp;            _itemsSelected.tryEmit(emptyList())</b>
@@ -207,7 +207,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-05-07 21:52</div>
+    <div style="float:right;">generated on 2023-08-20 18:34</div>
 </div>
 </body>
 </html>

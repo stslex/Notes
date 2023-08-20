@@ -1,0 +1,235 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > NoteRoomDatabase</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.data.database</a>
+</div>
+
+<h1>Coverage Summary for Class: NoteRoomDatabase (com.stslex93.notes.data.database)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">NoteRoomDatabase</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NoteRoomDatabase$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NoteRoomDatabase$NoteAutoMigration</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.data.database
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import androidx.room.AutoMigration
+<i class="no-highlight">4</i>&nbsp;import androidx.room.Database
+<i class="no-highlight">5</i>&nbsp;import androidx.room.RoomDatabase
+<i class="no-highlight">6</i>&nbsp;import androidx.room.migration.AutoMigrationSpec
+<i class="no-highlight">7</i>&nbsp;import com.stslex93.notes.data.database.NoteRoomDatabase.Companion.SCHEMA_VERSION
+<i class="no-highlight">8</i>&nbsp;import com.stslex93.notes.data.entity.NoteEntity
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;@Database(
+<i class="no-highlight">11</i>&nbsp;    entities = [NoteEntity::class],
+<i class="no-highlight">12</i>&nbsp;    version = SCHEMA_VERSION,
+<i class="no-highlight">13</i>&nbsp;    exportSchema = true,
+<i class="no-highlight">14</i>&nbsp;    autoMigrations = [
+<i class="no-highlight">15</i>&nbsp;        AutoMigration(
+<i class="no-highlight">16</i>&nbsp;            from = SCHEMA_VERSION - 3,
+<i class="no-highlight">17</i>&nbsp;            to = SCHEMA_VERSION - 2,
+<i class="no-highlight">18</i>&nbsp;            spec = NoteRoomDatabase.NoteAutoMigration::class
+<i class="no-highlight">19</i>&nbsp;        ),
+<i class="no-highlight">20</i>&nbsp;        AutoMigration(
+<i class="no-highlight">21</i>&nbsp;            from = SCHEMA_VERSION - 2,
+<i class="no-highlight">22</i>&nbsp;            to = SCHEMA_VERSION - 1,
+<i class="no-highlight">23</i>&nbsp;            spec = NoteRoomDatabase.NoteAutoMigration::class
+<i class="no-highlight">24</i>&nbsp;        ),
+<i class="no-highlight">25</i>&nbsp;        AutoMigration(
+<i class="no-highlight">26</i>&nbsp;            from = SCHEMA_VERSION - 1,
+<i class="no-highlight">27</i>&nbsp;            to = SCHEMA_VERSION,
+<i class="no-highlight">28</i>&nbsp;            spec = NoteRoomDatabase.NoteAutoMigration::class
+<i class="no-highlight">29</i>&nbsp;        ),
+<i class="no-highlight">30</i>&nbsp;    ]
+<i class="no-highlight">31</i>&nbsp;)
+<b class="fc"><i class="no-highlight">32</i>&nbsp;abstract class NoteRoomDatabase : RoomDatabase() {</b>
+<i class="no-highlight">33</i>&nbsp;
+<i class="no-highlight">34</i>&nbsp;    abstract fun dao(): NoteDao
+<i class="no-highlight">35</i>&nbsp;
+<b class="fc"><i class="no-highlight">36</i>&nbsp;    class NoteAutoMigration : AutoMigrationSpec</b>
+<i class="no-highlight">37</i>&nbsp;
+<b class="fc"><i class="no-highlight">38</i>&nbsp;    companion object {</b>
+<i class="no-highlight">39</i>&nbsp;        const val SCHEMA_VERSION: Int = 5
+<i class="no-highlight">40</i>&nbsp;    }
+<i class="no-highlight">41</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-20 18:34</div>
+</div>
+</body>
+</html>
