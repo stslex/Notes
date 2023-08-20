@@ -4,15 +4,9 @@ import android.content.Context
 import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.stslex93.notes.data.database.NoteDao
-import com.stslex93.notes.data.database.NoteDatabaseCallback
 import com.stslex93.notes.data.database.NoteRoomDatabase
-import com.stslex93.notes.data.database.base.BaseRoomCallback
-import com.stslex93.notes.data.database.base.BaseRoomDatabase
-import dagger.Lazy
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
 @Module
@@ -22,22 +16,18 @@ class DataBaseModule {
     @Provides
     fun provideDatabase(
         context: Context,
-        roomCallback: BaseRoomCallback<NoteDao>
-    ): BaseRoomDatabase<NoteDao> = Room.databaseBuilder(
-        context.applicationContext,
-        NoteRoomDatabase::class.java,
-        DATABASE_NAME
-    ).fallbackToDestructiveMigration()
-        .addCallback(roomCallback)
+    ): NoteRoomDatabase = Room
+        .databaseBuilder(
+            context.applicationContext,
+            NoteRoomDatabase::class.java,
+            DATABASE_NAME
+        )
+        .fallbackToDestructiveMigration()
         .build()
 
     @Singleton
     @Provides
-    fun provideForecastDao(db: BaseRoomDatabase<NoteDao>): NoteDao = db.dao()
-
-    @Provides
-    fun providesNoteRoomCallback(roomDatabase: Lazy<BaseRoomDatabase<NoteDao>>): BaseRoomCallback<NoteDao> =
-        NoteDatabaseCallback(CoroutineScope(SupervisorJob()), roomDatabase)
+    fun provideForecastDao(db: NoteRoomDatabase): NoteDao = db.dao()
 
     @Provides
     fun providesPagingConfig(): PagingConfig =

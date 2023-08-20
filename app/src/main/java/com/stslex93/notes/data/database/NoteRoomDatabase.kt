@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
 import com.stslex93.notes.data.database.NoteRoomDatabase.Companion.SCHEMA_VERSION
-import com.stslex93.notes.data.database.base.BaseRoomDatabase
 import com.stslex93.notes.data.entity.NoteEntity
 
 @Database(
@@ -30,7 +29,9 @@ import com.stslex93.notes.data.entity.NoteEntity
         ),
     ]
 )
-abstract class NoteRoomDatabase : RoomDatabase(), BaseRoomDatabase<NoteDao> {
+abstract class NoteRoomDatabase : RoomDatabase() {
+
+    abstract fun dao(): NoteDao
 
     class NoteAutoMigration : AutoMigrationSpec
 
