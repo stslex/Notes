@@ -10,6 +10,8 @@ ksp {
 }
 
 dependencies {
+    implementation(project(":core:ui"))
+
     implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)
     androidTestApi(libs.androidx.room.testing)
