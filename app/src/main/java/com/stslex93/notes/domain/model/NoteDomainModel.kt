@@ -5,11 +5,4 @@ data class NoteDomainModel(
     val title: String,
     val content: String,
     val timestamp: Long,
-) {
-
-    companion object {
-
-        val EMPTY
-            get() = NoteDomainModel(0, "", "", System.currentTimeMillis())
-    }
-}
+)

@@ -4,55 +4,46 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.stslex93.notes.core.Mapper
-import com.stslex93.notes.domain.interactor.interf.NoteDeleteByIdsInteractor
-import com.stslex93.notes.domain.interactor.interf.NoteGetAllWithQueryInteractor
-import com.stslex93.notes.domain.interactor.interf.NoteInsertAllInteractor
-import com.stslex93.notes.domain.model.NoteDomainModel
+import androidx.paging.map
+import com.stslex93.notes.domain.interactor.interf.MainScreenInteractor
 import com.stslex93.notes.ui.model.NoteUIModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.stslex93.notes.ui.model.toDomain
+import com.stslex93.notes.ui.model.toUI
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
-    private val noteGetAllInteractor: NoteGetAllWithQueryInteractor,
-    private val noteDeleteByIdsInteractor: NoteDeleteByIdsInteractor,
-    private val insertAllInteractor: NoteInsertAllInteractor,
-    private val pagingMapper: Mapper.Data<PagingData<NoteDomainModel>, PagingData<NoteUIModel>>,
-    private val mapperUIDomain: Mapper.Data<NoteUIModel, NoteDomainModel>
+class MainViewModel(
+    private val interactor: MainScreenInteractor
 ) : ViewModel() {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val notes: StateFlow<PagingData<NoteUIModel>> = noteGetAllInteractor.invoke()
-        .mapLatest(pagingMapper::map)
-        .flowOn(Dispatchers.IO)
-        .cachedIn(viewModelScope)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = PagingData.empty()
-        )
+    val notes: StateFlow<PagingData<NoteUIModel>>
+        get() = interactor.searchNotes
+            .map { it.map { it.toUI() } }
+            .cachedIn(viewModelScope)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = PagingData.empty()
+            )
 
     fun setQuery(query: String) {
-        noteGetAllInteractor.setQuery(query)
+        interactor.search(query)
     }
 
     fun deleteNotesByIds(notes: List<NoteUIModel>) {
-        val noteList: List<Int> = notes.map { it.id };
-        viewModelScope.launch(Dispatchers.IO) {
-            noteDeleteByIdsInteractor.invoke(noteList)
+        viewModelScope.launch {
+            val noteList: List<Int> = notes.map { it.id };
+            interactor.deleteAll(noteList)
         }
     }
 
     fun insertAll(notes: List<NoteUIModel>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            insertAllInteractor.invoke(notes.map(mapperUIDomain::map))
+        viewModelScope.launch {
+            val data = notes.map { it.toDomain() }
+            interactor.insertAll(data)
         }
     }
 }

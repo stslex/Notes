@@ -1,19 +1,23 @@
 package com.stslex93.notes
 
 import android.app.Application
-import android.content.Context
-import com.stslex93.notes.di.component.AppComponent
-import com.stslex93.notes.di.component.DaggerAppComponent
+import com.stslex93.notes.di.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class NoteApplication : Application() {
 
-    val appComponent: AppComponent by lazy {
-        DaggerAppComponent.builder().application(this).create()
+    override fun onCreate() {
+        setUpKoin()
+        super.onCreate()
+    }
+
+    private fun setUpKoin() {
+        startKoin {
+            androidLogger()
+            androidContext(this@NoteApplication)
+            modules(appModule)
+        }
     }
 }
-
-val Context.appComponent: AppComponent
-    get() = when (this) {
-        is NoteApplication -> appComponent
-        else -> (applicationContext as NoteApplication).appComponent
-    }

@@ -52,6 +52,10 @@ internal fun Project.configureKotlinAndroid(
 
         val immutableCollection = libs.findLibrary("kotlinx-collections-immutable").get()
         add("implementation", immutableCollection)
+
+        // TODO вынести
+        val koin = libs.findBundle("koin").get()
+        add("implementation", koin)
     }
 }
 

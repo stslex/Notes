@@ -1,10 +1,9 @@
 package com.stslex93.notes.ui.utils.time
 
 import java.text.SimpleDateFormat
-import java.util.*
-import javax.inject.Inject
+import java.util.Locale
 
-class TimeUtilImpl @Inject constructor() : TimeUtil {
+class TimeUtilImpl : TimeUtil {
 
     override fun getCurrentTime(): String {
         val currentTimeInMs = System.currentTimeMillis()

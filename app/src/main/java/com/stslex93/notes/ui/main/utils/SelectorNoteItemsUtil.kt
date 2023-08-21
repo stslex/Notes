@@ -5,11 +5,10 @@ import com.stslex93.notes.ui.model.NoteUIModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import javax.inject.Inject
 
 interface SelectorNoteItemsUtil : SelectItemsUtil<NoteUIModel> {
 
-    class Base @Inject constructor() : SelectorNoteItemsUtil {
+    class Base : SelectorNoteItemsUtil {
 
         private val listOfItems = mutableListOf<NoteUIModel>()
 

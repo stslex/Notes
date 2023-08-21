@@ -4,9 +4,8 @@ import android.graphics.Color
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import com.stslex93.notes.R
-import javax.inject.Inject
 
-class SnackBarUtilImpl @Inject constructor() : SnackBarUtil {
+class SnackBarUtilImpl : SnackBarUtil {
 
     override fun showErrorMessage(view: View, message: String) {
         val color = Color.RED // TODO replace
