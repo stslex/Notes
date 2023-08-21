@@ -7,11 +7,11 @@ import com.stslex93.notes.domain.model.NoteDomainModel
 class NoteDomainDataMapper : Mapper.Data<NoteDomainModel, NoteDataModel> {
 
     override fun map(data: NoteDomainModel): NoteDataModel = with(data) {
-        NoteDataModel.Base(
-            id = id(),
-            title = title(),
-            content = content(),
-            timestamp = timestamp()
+        NoteDataModel(
+            id = id,
+            title = title,
+            content = content,
+            timestamp = timestamp
         )
     }
 }

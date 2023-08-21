@@ -8,86 +8,66 @@ import com.stslex93.notes.ui.widget.ComposeCustomTextView
 import java.text.SimpleDateFormat
 import java.util.*
 
-interface NoteUIModel {
+data class NoteUIModel(
+    val id: Int,
+    val title: String,
+    val content: String,
+    val timestamp: Long,
+) {
+    var isChecked: Boolean = false
+
+    fun updateViewCheck() {
+        cardView.isChecked = isChecked
+    }
+
+    private var _cardView: MaterialCardView? = null
+    private val cardView: MaterialCardView get() = checkNotNull(_cardView)
 
     fun bind(
         titleTextView: TextView,
         contentTextView: ComposeCustomTextView,
         itemCardView: MaterialCardView
-    )
+    ) {
+        titleTextView.text = title
+        contentTextView.setText(content)
+        _cardView = itemCardView
+        cardView.transitionName = id.toString()
+    }
 
-    fun bindEditNote(titleTextView: TextInputLayout, contentTextView: TextInputLayout)
-    fun setLastEditTime(textView: TextView, labelEdit: String)
-    fun click(function: (MaterialCardView) -> Unit)
+    fun bindEditNote(
+        titleTextView: TextInputLayout,
+        contentTextView: TextInputLayout
+    ) {
+        titleTextView.editText?.setText(title)
+        contentTextView.editText?.setText(content)
+    }
 
-    fun id(): Int
-    fun title(): String
-    fun content(): String
-    fun timestamp(): Long
-    fun isChecked(): Boolean
-    fun setChecked(isChecked: Boolean)
-    suspend fun updateViewCheck()
+    @SuppressLint("SetTextI18n")
+    fun setLastEditTime(textView: TextView, labelEdit: String) {
+        val currentDate = convert(DATE_FORMAT, System.currentTimeMillis())
+        val date = convert(DATE_FORMAT, timestamp)
+        val time = convert(TIME_FORMAT, timestamp)
+        val resultTime = if (date == currentDate) time else date
+        textView.text = "$labelEdit: $resultTime"
+    }
 
-    data class Base(
-        private val id: Int,
-        private val title: String,
-        private val content: String,
-        private val timestamp: Long,
-        private var isChecked: Boolean = false
-    ) : NoteUIModel {
-
-        override fun isChecked(): Boolean = isChecked
-        override fun setChecked(isChecked: Boolean) {
-            this.isChecked = isChecked
-        }
-
-        override suspend fun updateViewCheck() {
-            cardView.isChecked = isChecked
-        }
-
-        private var _cardView: MaterialCardView? = null
-        private val cardView: MaterialCardView get() = checkNotNull(_cardView)
-
-        override fun bind(
-            titleTextView: TextView,
-            contentTextView: ComposeCustomTextView,
-            itemCardView: MaterialCardView
-        ) {
-            titleTextView.text = title
-            contentTextView.setText(content)
-            _cardView = itemCardView
-            cardView.transitionName = id.toString()
-        }
-
-        override fun bindEditNote(
-            titleTextView: TextInputLayout,
-            contentTextView: TextInputLayout
-        ) {
-            titleTextView.editText?.setText(title)
-            contentTextView.editText?.setText(content)
-        }
-
-        @SuppressLint("SetTextI18n")
-        override fun setLastEditTime(textView: TextView, labelEdit: String) {
+    val timeString: String
+        get() {
             val currentDate = convert(DATE_FORMAT, System.currentTimeMillis())
             val date = convert(DATE_FORMAT, timestamp)
             val time = convert(TIME_FORMAT, timestamp)
-            val resultTime = if (date == currentDate) time else date
-            textView.text = "$labelEdit: $resultTime"
+            return if (date == currentDate) time else date
         }
 
-        private fun convert(format: String, time: Long): String =
-            SimpleDateFormat(format, Locale.getDefault()).format(time)
+    private fun convert(format: String, time: Long): String =
+        SimpleDateFormat(format, Locale.getDefault()).format(time)
 
-        override fun click(function: (MaterialCardView) -> Unit) = function(cardView)
-        override fun id(): Int = id
-        override fun title(): String = title
-        override fun content(): String = content
-        override fun timestamp(): Long = timestamp
+    fun click(function: (MaterialCardView) -> Unit) = function(cardView)
 
-        companion object {
-            private const val DATE_FORMAT = "dd.MM.yyyy"
-            private const val TIME_FORMAT = "kk:mm"
-        }
+    companion object {
+        private const val DATE_FORMAT = "dd.MM.yyyy"
+        private const val TIME_FORMAT = "kk:mm"
+
+        val EMPTY = NoteUIModel(0, "", "", 0)
     }
 }

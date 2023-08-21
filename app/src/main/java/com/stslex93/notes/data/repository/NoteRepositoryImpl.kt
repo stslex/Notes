@@ -1,16 +1,15 @@
 package com.stslex93.notes.data.repository
 
-import androidx.annotation.WorkerThread
 import com.stslex93.notes.core.Mapper
-import com.stslex93.notes.core.Resource
 import com.stslex93.notes.data.database.NoteDao
 import com.stslex93.notes.data.entity.NoteEntity
 import com.stslex93.notes.data.model.NoteDataModel
 import com.stslex93.notes.domain.repository.NoteRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class NoteRepositoryImpl @Inject constructor(
@@ -19,23 +18,22 @@ class NoteRepositoryImpl @Inject constructor(
     private val mapperDataToEntity: Mapper.Data<NoteDataModel, NoteEntity>
 ) : NoteRepository {
 
-    @ExperimentalCoroutinesApi
-    override fun getNote(id: Int): Flow<Resource<NoteDataModel>> = try {
-        dao.getNote(id = id).flatMapLatest { note ->
-            flowOf(Resource.Success(mapperToData.map(note)))
-        }
-    } catch (exception: Exception) {
-        flowOf(Resource.Failure(exception))
-    }
+    override fun getNote(id: Int): Flow<NoteDataModel> = dao.getNote(id = id)
+        .map(mapperToData::map)
+        .flowOn(Dispatchers.IO)
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
+    override fun getLastNote(): Flow<NoteDataModel> = dao.getLastNote()
+        .map(mapperToData::map)
+        .flowOn(Dispatchers.IO)
+
     override suspend fun deleteNotesById(ids: List<Int>) {
         dao.deleteNotesById(ids = ids)
     }
 
     override suspend fun insert(note: NoteDataModel) {
-        dao.insert(note = mapperDataToEntity.map(note))
+        withContext(Dispatchers.IO) {
+            dao.insert(note = mapperDataToEntity.map(note))
+        }
     }
 
     override suspend fun insertAll(notes: List<NoteDataModel>) {

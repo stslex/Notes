@@ -12,9 +12,9 @@ import com.stslex93.notes.domain.mappers.NoteDataDomainMapper
 import com.stslex93.notes.domain.mappers.NoteDataDomainPrimaryMapper
 import com.stslex93.notes.domain.mappers.NoteDomainDataMapper
 import com.stslex93.notes.domain.model.NoteDomainModel
-import com.stslex93.notes.ui.mapper.NoteDomainUIMapper
-import com.stslex93.notes.ui.mapper.NoteDomainUIPrimaryMapper
-import com.stslex93.notes.ui.mapper.NoteUIDomainMapper
+import com.stslex93.notes.ui.model.mapper.NoteDomainUIMapper
+import com.stslex93.notes.ui.model.mapper.NoteDomainUIPrimaryMapper
+import com.stslex93.notes.ui.model.mapper.NoteUIDomainMapper
 import com.stslex93.notes.ui.model.NoteUIModel
 import dagger.Module
 import dagger.Provides

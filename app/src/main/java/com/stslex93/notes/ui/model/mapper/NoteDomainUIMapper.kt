@@ -1,4 +1,4 @@
-package com.stslex93.notes.ui.mapper
+package com.stslex93.notes.ui.model.mapper
 
 import com.stslex93.notes.core.Mapper
 import com.stslex93.notes.core.Resource
