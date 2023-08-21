@@ -1,10 +1,9 @@
-package com.stslex93.notes.domain.interactor.impl
+package com.stslex93.notes.feature.edit.domain.interactor
 
 import com.stslex93.notes.core.notes.repository.NoteRepository
-import com.stslex93.notes.domain.interactor.interf.NoteEditInteractor
-import com.stslex93.notes.domain.model.NoteDomainModel
-import com.stslex93.notes.domain.model.toData
-import com.stslex93.notes.domain.model.toDomain
+import com.stslex93.notes.feature.edit.domain.model.NoteDomainModel
+import com.stslex93.notes.feature.edit.domain.model.toData
+import com.stslex93.notes.feature.edit.domain.model.toDomain
 import kotlinx.coroutines.flow.map
 
 class NoteEditInteractorImpl(

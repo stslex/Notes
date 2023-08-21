@@ -1,4 +1,4 @@
-package com.stslex93.notes.ui.edit.model
+package com.stslex93.notes.feature.edit.ui.model
 
 data class Note(
     val uuid: Int,

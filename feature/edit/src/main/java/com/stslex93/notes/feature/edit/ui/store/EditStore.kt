@@ -1,10 +1,10 @@
-package com.stslex93.notes.ui.edit.store
+package com.stslex93.notes.feature.edit.ui.store
 
 import com.stslex93.notes.core.ui.base.store.Store
-import com.stslex93.notes.ui.edit.model.Note
-import com.stslex93.notes.ui.edit.store.EditStore.Action
-import com.stslex93.notes.ui.edit.store.EditStore.Event
-import com.stslex93.notes.ui.edit.store.EditStore.State
+import com.stslex93.notes.feature.edit.ui.model.Note
+import com.stslex93.notes.feature.edit.ui.store.EditStore.Action
+import com.stslex93.notes.feature.edit.ui.store.EditStore.Event
+import com.stslex93.notes.feature.edit.ui.store.EditStore.State
 import java.text.SimpleDateFormat
 import java.util.Locale
 

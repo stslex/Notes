@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Заметки</string>
-    <string name="title_hint">Название</string>
-    <string name="content_hint">Текст</string>
     <string name="default_transition_name">default</string>
 
     <!--Labels-->
@@ -17,7 +15,6 @@
     <string name="style">Стиль</string>
     <string name="label_bottom_menu_delete">"   "Удалить</string>
     <string name="label_toolbar_search">поиск</string>
-    <string name="label_edit">Изменено</string>
     <string name="label_search">Поиск</string>
     <string name="label_settings">Настройки</string>
     <string name="label_folders">Папки</string>
