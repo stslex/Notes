@@ -50,7 +50,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/1)
+    (0/3)
   </span>
 </td>
     <td class="coverageStat"/>
@@ -59,7 +59,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/2)
+    (0/4)
   </span>
 </td>
 <td class="coverageStat">
@@ -67,12 +67,12 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/16)
+    (0/13)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">NoteApplication$appComponent$2</td>
+    <td class="name">NoteApplication$setUpKoin$1</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -87,7 +87,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/1)
+    (0/7)
   </span>
 </td>
 <td class="coverageStat">
@@ -95,7 +95,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/6)
+    (0/35)
   </span>
 </td>
   </tr>
@@ -106,7 +106,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/2)
+    (0/4)
   </span>
 </td>
     <td class="coverageStat"/>
@@ -115,7 +115,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/3)
+    (0/11)
   </span>
 </td>
 <td class="coverageStat">
@@ -123,7 +123,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/22)
+    (0/48)
   </span>
 </td>
 </tr>
@@ -137,24 +137,34 @@ Current scope:     <a href="../../index.html">all classes</a>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes
 <i class="no-highlight">2</i>&nbsp;
 <i class="no-highlight">3</i>&nbsp;import android.app.Application
-<i class="no-highlight">4</i>&nbsp;import android.content.Context
-<i class="no-highlight">5</i>&nbsp;import com.stslex93.notes.di.component.AppComponent
-<i class="no-highlight">6</i>&nbsp;import com.stslex93.notes.di.component.DaggerAppComponent
-<i class="no-highlight">7</i>&nbsp;import kotlinx.coroutines.ExperimentalCoroutinesApi
-<i class="no-highlight">8</i>&nbsp;
-<i class="no-highlight">9</i>&nbsp;@ExperimentalCoroutinesApi
-<b class="nc"><i class="no-highlight">10</i>&nbsp;class NoteApplication : Application() {</b>
-<b class="nc"><i class="no-highlight">11</i>&nbsp;    val appComponent: AppComponent by lazy {</b>
-<b class="nc"><i class="no-highlight">12</i>&nbsp;        DaggerAppComponent.builder().application(this).create()</b>
-<i class="no-highlight">13</i>&nbsp;    }
-<i class="no-highlight">14</i>&nbsp;}
-<i class="no-highlight">15</i>&nbsp;
-<i class="no-highlight">16</i>&nbsp;@ExperimentalCoroutinesApi
-<i class="no-highlight">17</i>&nbsp;val Context.appComponent: AppComponent
-<i class="no-highlight">18</i>&nbsp;    get() = when (this) {
-<i class="no-highlight">19</i>&nbsp;        is NoteApplication -&gt; appComponent
-<i class="no-highlight">20</i>&nbsp;        else -&gt; (applicationContext as NoteApplication).appComponent
-<i class="no-highlight">21</i>&nbsp;    }
+<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.core.database.coreDatabaseModule
+<i class="no-highlight">5</i>&nbsp;import com.stslex93.notes.core.notes.di.coreNotesModule
+<i class="no-highlight">6</i>&nbsp;import com.stslex93.notes.di.appModule
+<i class="no-highlight">7</i>&nbsp;import com.stslex93.notes.feature.edit.di.featureEditModule
+<i class="no-highlight">8</i>&nbsp;import org.koin.android.ext.koin.androidContext
+<i class="no-highlight">9</i>&nbsp;import org.koin.android.ext.koin.androidLogger
+<i class="no-highlight">10</i>&nbsp;import org.koin.core.context.startKoin
+<i class="no-highlight">11</i>&nbsp;
+<b class="nc"><i class="no-highlight">12</i>&nbsp;class NoteApplication : Application() {</b>
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    override fun onCreate() {
+<b class="nc"><i class="no-highlight">15</i>&nbsp;        setUpKoin()</b>
+<b class="nc"><i class="no-highlight">16</i>&nbsp;        super.onCreate()</b>
+<i class="no-highlight">17</i>&nbsp;    }
+<i class="no-highlight">18</i>&nbsp;
+<i class="no-highlight">19</i>&nbsp;    private fun setUpKoin() {
+<b class="nc"><i class="no-highlight">20</i>&nbsp;        startKoin {</b>
+<b class="nc"><i class="no-highlight">21</i>&nbsp;            androidLogger()</b>
+<b class="nc"><i class="no-highlight">22</i>&nbsp;            androidContext(this@NoteApplication)</b>
+<b class="nc"><i class="no-highlight">23</i>&nbsp;            modules(</b>
+<b class="nc"><i class="no-highlight">24</i>&nbsp;                appModule,</b>
+<b class="nc"><i class="no-highlight">25</i>&nbsp;                coreDatabaseModule,</b>
+<b class="nc"><i class="no-highlight">26</i>&nbsp;                coreNotesModule,</b>
+<b class="nc"><i class="no-highlight">27</i>&nbsp;                featureEditModule</b>
+<i class="no-highlight">28</i>&nbsp;            )
+<i class="no-highlight">29</i>&nbsp;        }
+<i class="no-highlight">30</i>&nbsp;    }
+<i class="no-highlight">31</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -181,7 +191,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-08-20 18:34</div>
+    <div style="float:right;">generated on 2023-08-21 19:05</div>
 </div>
 </body>
 </html>
