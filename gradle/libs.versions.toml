@@ -70,6 +70,7 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "a
 androidx-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 androidx-test = { group = "androidx.test", name = "core-ktx", version.ref = "androidxTest" }
+coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version = "1.7.2" }
 
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
@@ -118,7 +119,8 @@ test = [
     "mockito",
     "junit",
     "robolectric",
-    "androidx-test"
+    "androidx-test",
+    "coroutine-test"
 ]
 
 koin = [

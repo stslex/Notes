@@ -3,7 +3,7 @@ package com.stslex93.notes.ui.main.utils
 import android.view.View
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import com.stslex93.notes.data.entity.NoteEntity
+import com.stslex93.notes.core.database.NoteEntity
 import com.stslex93.notes.ui.core.ClickListener
 import com.stslex93.notes.ui.core.SelectItemsUtil
 import com.stslex93.notes.ui.main.MainFragmentDirections

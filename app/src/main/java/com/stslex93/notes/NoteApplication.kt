@@ -1,6 +1,8 @@
 package com.stslex93.notes
 
 import android.app.Application
+import com.stslex93.notes.core.database.coreDatabaseModule
+import com.stslex93.notes.core.notes.di.coreNotesModule
 import com.stslex93.notes.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -17,7 +19,11 @@ class NoteApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@NoteApplication)
-            modules(appModule)
+            modules(
+                appModule,
+                coreDatabaseModule,
+                coreNotesModule
+            )
         }
     }
 }

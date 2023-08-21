@@ -1,6 +1,6 @@
 package com.stslex93.notes.domain.model
 
-import com.stslex93.notes.data.model.NoteDataModel
+import com.stslex93.notes.core.notes.model.NoteDataModel
 import com.stslex93.notes.domain.model.NoteDomainModel
 
 fun NoteDataModel.toDomain() = NoteDomainModel(
