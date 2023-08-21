@@ -1,22 +1,20 @@
 package com.stslex93.notes.data.model
 
-interface NoteDataModel {
+data class NoteDataModel(
+    val id: Int = 0,
+    val title: String,
+    val content: String,
+    val timestamp: Long,
+) {
 
-    fun id(): Int
-    fun title(): String
-    fun content(): String
-    fun timestamp(): Long
+    companion object {
 
-    data class Base(
-        private val id: Int,
-        private val title: String,
-        private val content: String,
-        private val timestamp: Long,
-    ) : NoteDataModel {
-
-        override fun id(): Int = id
-        override fun title(): String = title
-        override fun content(): String = content
-        override fun timestamp(): Long = timestamp
+        val EMPTY
+            get() = NoteDataModel(
+                id = 0,
+                title = "",
+                content = "",
+                timestamp = System.currentTimeMillis()
+            )
     }
 }

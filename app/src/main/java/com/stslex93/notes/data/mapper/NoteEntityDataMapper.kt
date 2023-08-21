@@ -7,7 +7,7 @@ import com.stslex93.notes.data.model.NoteDataModel
 class NoteEntityDataMapper : Mapper.Data<NoteEntity, NoteDataModel> {
 
     override fun map(data: NoteEntity): NoteDataModel = with(data) {
-        NoteDataModel.Base(
+        NoteDataModel(
             id = id,
             title = title,
             content = content,

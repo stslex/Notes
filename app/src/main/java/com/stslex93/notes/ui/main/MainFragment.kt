@@ -25,7 +25,6 @@ import com.stslex93.notes.ui.utils.snackbar.SnackBarUtil
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null

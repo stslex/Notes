@@ -12,7 +12,11 @@ import com.stslex93.notes.domain.model.NoteDomainModel
 import com.stslex93.notes.ui.model.NoteUIModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +28,7 @@ class MainViewModel @Inject constructor(
     private val mapperUIDomain: Mapper.Data<NoteUIModel, NoteDomainModel>
 ) : ViewModel() {
 
-    @ExperimentalCoroutinesApi
+    @OptIn(ExperimentalCoroutinesApi::class)
     val notes: StateFlow<PagingData<NoteUIModel>> = noteGetAllInteractor.invoke()
         .mapLatest(pagingMapper::map)
         .flowOn(Dispatchers.IO)

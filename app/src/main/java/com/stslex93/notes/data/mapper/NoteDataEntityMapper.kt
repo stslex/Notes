@@ -8,10 +8,10 @@ class NoteDataEntityMapper : Mapper.Data<NoteDataModel, NoteEntity> {
 
     override fun map(data: NoteDataModel): NoteEntity = with(data) {
         NoteEntity(
-            id = id(),
-            title = title(),
-            content = content(),
-            timestamp = timestamp()
+            id = id,
+            title = title,
+            content = content,
+            timestamp = timestamp
         )
     }
 }

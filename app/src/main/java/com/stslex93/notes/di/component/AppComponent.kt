@@ -6,11 +6,8 @@ import com.stslex93.notes.ui.edit.EditFragment
 import com.stslex93.notes.ui.main.MainFragment
 import dagger.BindsInstance
 import dagger.Component
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
-
-@ExperimentalCoroutinesApi
 @Singleton
 @Component(modules = [AppModule::class])
 interface AppComponent {

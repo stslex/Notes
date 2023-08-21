@@ -25,6 +25,9 @@ interface NoteDao {
     @Query("SELECT * FROM note_table WHERE id=:id")
     fun getNote(id: Int): Flow<NoteEntity>
 
+    @Query("SELECT * FROM note_table ORDER BY timestamp DESC LIMIT 1")
+    fun getLastNote(): Flow<NoteEntity>
+
     @Query("SELECT * FROM note_table WHERE id IN (:ids)")
     fun getNotesById(ids: List<String>): Flow<List<NoteEntity>>
 
