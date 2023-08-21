@@ -9,5 +9,5 @@ class NotesDiffItemCallback : DiffUtil.ItemCallback<NoteUIModel>() {
         oldItem == newItem
 
     override fun areContentsTheSame(oldItem: NoteUIModel, newItem: NoteUIModel): Boolean =
-        oldItem.id() == newItem.id()
+        oldItem.id == newItem.id
 }

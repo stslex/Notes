@@ -44,7 +44,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun deleteNotesByIds(notes: List<NoteUIModel>) {
-        val noteList: List<Int> = notes.map { it.id() };
+        val noteList: List<Int> = notes.map { it.id };
         viewModelScope.launch(Dispatchers.IO) {
             noteDeleteByIdsInteractor.invoke(noteList)
         }

@@ -8,6 +8,8 @@ import com.stslex93.notes.domain.interactor.interf.NoteDeleteByIdsInteractor
 import com.stslex93.notes.domain.interactor.interf.NoteEditInteractor
 import com.stslex93.notes.domain.interactor.interf.NoteGetAllWithQueryInteractor
 import com.stslex93.notes.domain.interactor.interf.NoteInsertAllInteractor
+import com.stslex93.notes.ui.edit.store.EditStore
+import com.stslex93.notes.ui.edit.store.EditStoreImpl
 import dagger.Binds
 import dagger.Module
 
@@ -25,4 +27,7 @@ interface InteractorModule {
 
     @Binds
     fun bindsNoteInsertAllInteractor(interactor: NoteInsertAllInteractorImpl): NoteInsertAllInteractor
+
+    @Binds
+    fun bindsEditStore(store: EditStoreImpl): EditStore
 }

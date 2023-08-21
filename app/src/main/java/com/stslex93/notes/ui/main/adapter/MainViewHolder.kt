@@ -14,7 +14,7 @@ class MainViewHolder(
 ) : AbstractViewHolder<NoteUIModel>(binding) {
 
     override fun bind(item: NoteUIModel): Unit = with(item) {
-        binding.itemCardView.isChecked = isChecked()
+        binding.itemCardView.isChecked = isChecked
         binding.titleTextView.setOnClickListener(itemClickListener)
         binding.itemCardView.setOnLongClickListener(itemLongCLickListener)
         bindItem()
@@ -27,13 +27,13 @@ class MainViewHolder(
     private val NoteUIModel.itemClickListener: View.OnClickListener
         get() = View.OnClickListener {
             clickListener.onClick(this)
-            binding.itemCardView.isChecked = isChecked()
+            binding.itemCardView.isChecked = isChecked
         }
 
     private val NoteUIModel.itemLongCLickListener: View.OnLongClickListener
         get() = View.OnLongClickListener {
             longClickListener.click(this)
-            binding.itemCardView.isChecked = isChecked()
+            binding.itemCardView.isChecked = isChecked
             true
         }
 }

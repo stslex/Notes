@@ -1,4 +1,4 @@
-package com.stslex93.notes.core.ui
+package com.stslex93.notes.core.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
