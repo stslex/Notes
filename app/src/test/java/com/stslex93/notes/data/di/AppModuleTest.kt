@@ -1,6 +1,8 @@
 package com.stslex93.notes.data.di
 
 import android.content.Context
+import com.stslex93.notes.core.database.coreDatabaseModule
+import com.stslex93.notes.core.notes.di.coreNotesModule
 import com.stslex93.notes.di.appModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,7 +30,11 @@ class AppModuleTest : KoinTest {
     fun testAppModule() {
         koinApplication {
             androidContext(Mockito.mock(Context::class.java))
-            modules(appModule)
+            modules(
+                appModule,
+                coreDatabaseModule,
+                coreNotesModule
+            )
             checkModules()
         }
     }

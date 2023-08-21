@@ -21,7 +21,7 @@ class MainViewModel(
 
     val notes: StateFlow<PagingData<NoteUIModel>>
         get() = interactor.searchNotes
-            .map { it.map { it.toUI() } }
+            .map { pagingData -> pagingData.map { it.toUI() } }
             .cachedIn(viewModelScope)
             .stateIn(
                 scope = viewModelScope,

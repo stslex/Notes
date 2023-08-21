@@ -5,13 +5,12 @@ plugins {
 
 android.namespace = "com.stslex93.notes"
 
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
-}
-
 dependencies {
     implementation(project(":core:ui"))
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
+    implementation(project(":core:database"))
+    implementation(project(":core:notes"))
+
+    implementation(project(":feature:edit"))
 
     implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)

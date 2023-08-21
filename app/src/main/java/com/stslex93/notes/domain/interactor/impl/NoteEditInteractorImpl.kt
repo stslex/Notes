@@ -1,6 +1,6 @@
 package com.stslex93.notes.domain.interactor.impl
 
-import com.stslex93.notes.data.repository.NoteRepository
+import com.stslex93.notes.core.notes.repository.NoteRepository
 import com.stslex93.notes.domain.interactor.interf.NoteEditInteractor
 import com.stslex93.notes.domain.model.NoteDomainModel
 import com.stslex93.notes.domain.model.toData
