@@ -51,14 +51,6 @@ data class NoteUIModel(
         textView.text = "$labelEdit: $resultTime"
     }
 
-    val timeString: String
-        get() {
-            val currentDate = convert(DATE_FORMAT, System.currentTimeMillis())
-            val date = convert(DATE_FORMAT, timestamp)
-            val time = convert(TIME_FORMAT, timestamp)
-            return if (date == currentDate) time else date
-        }
-
     private fun convert(format: String, time: Long): String =
         SimpleDateFormat(format, Locale.getDefault()).format(time)
 

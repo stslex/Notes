@@ -28,7 +28,7 @@ interface OnNoteClickListener : ClickListener<NoteUIModel> {
             if (itemsSelector.isSelectionStart) {
                 itemsSelector.select(item)
             } else {
-                item.click { it.navigateToEdit(true, item.id()) }
+                item.click { it.navigateToEdit(true, item.id) }
             }
         }
 

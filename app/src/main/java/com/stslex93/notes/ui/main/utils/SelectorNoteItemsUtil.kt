@@ -37,7 +37,7 @@ interface SelectorNoteItemsUtil : SelectItemsUtil<NoteUIModel> {
 
         override suspend fun deleteAll() {
             listOfItems.forEach {
-                it.setChecked(false)
+                it.isChecked = false
                 it.updateViewCheck()
             }
             listOfItems.clear()
@@ -46,8 +46,8 @@ interface SelectorNoteItemsUtil : SelectItemsUtil<NoteUIModel> {
         }
 
         override fun select(item: NoteUIModel) {
-            item.setChecked(!item.isChecked())
-            if (item.isChecked()) listOfItems.add(item) else listOfItems.remove(item)
+            item.isChecked = !item.isChecked
+            if (item.isChecked) listOfItems.add(item) else listOfItems.remove(item)
             _lastSelectedItems.clear()
             _lastSelectedItems.addAll(listOfItems)
             _isSelectionStart = listOfItems.isNotEmpty()
