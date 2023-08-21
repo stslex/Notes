@@ -1,4 +1,4 @@
-package com.stslex93.notes.ui.edit
+package com.stslex93.notes.feature.edit.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.stslex93.notes.R
-import com.stslex93.notes.ui.edit.store.EditStore
+import com.stslex93.notes.feature.edit.R
+import com.stslex93.notes.feature.edit.ui.store.EditStore
 
 @Composable
 fun EditScreen(

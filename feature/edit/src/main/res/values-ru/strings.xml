@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_hint">Название</string>
+    <string name="content_hint">Текст</string>
+    <string name="label_edit">Изменено</string>
+</resources>

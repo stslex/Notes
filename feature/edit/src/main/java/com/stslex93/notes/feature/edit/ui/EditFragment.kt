@@ -1,4 +1,4 @@
-package com.stslex93.notes.ui.edit
+package com.stslex93.notes.feature.edit.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,14 +16,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.stslex93.notes.ui.AppTheme
-import com.stslex93.notes.ui.edit.store.EditStore.Action
+import com.stslex93.notes.core.ui.theme.AppTheme
+import com.stslex93.notes.feature.edit.ui.store.EditStore.Action
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditFragment : Fragment() {
 
-    private val args: EditFragmentArgs by navArgs()
     private val viewModel: EditNoteViewModel by viewModel<EditNoteViewModel>()
 
     override fun onCreateView(
@@ -33,8 +31,8 @@ class EditFragment : Fragment() {
     ): View {
         viewModel.sendAction(
             Action.Init(
-                id = args.id,
-                isEdit = args.edit
+                id = arguments?.getInt("id") ?: 0,
+                isEdit = arguments?.getBoolean("edit") ?: false
             )
         )
         return ComposeView(requireContext()).apply {

@@ -1,13 +1,13 @@
-package com.stslex93.notes.ui.edit.store
+package com.stslex93.notes.feature.edit.ui.store
 
 import com.stslex93.notes.core.ui.base.store.BaseStoreImpl
-import com.stslex93.notes.domain.interactor.interf.NoteEditInteractor
-import com.stslex93.notes.ui.edit.model.Note
-import com.stslex93.notes.ui.edit.model.toDomain
-import com.stslex93.notes.ui.edit.model.toPresentation
-import com.stslex93.notes.ui.edit.store.EditStore.Action
-import com.stslex93.notes.ui.edit.store.EditStore.Event
-import com.stslex93.notes.ui.edit.store.EditStore.State
+import com.stslex93.notes.feature.edit.domain.interactor.NoteEditInteractor
+import com.stslex93.notes.feature.edit.ui.model.Note
+import com.stslex93.notes.feature.edit.ui.model.toDomain
+import com.stslex93.notes.feature.edit.ui.model.toPresentation
+import com.stslex93.notes.feature.edit.ui.store.EditStore.Action
+import com.stslex93.notes.feature.edit.ui.store.EditStore.Event
+import com.stslex93.notes.feature.edit.ui.store.EditStore.State
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch

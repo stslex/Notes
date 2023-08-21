@@ -1,4 +1,4 @@
-package com.stslex93.notes.domain.interactor.interf
+package com.stslex93.notes.domain.interactor
 
 import androidx.paging.PagingData
 import com.stslex93.notes.domain.model.NoteDomainModel

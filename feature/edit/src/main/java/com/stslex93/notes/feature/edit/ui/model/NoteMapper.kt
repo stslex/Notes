@@ -1,6 +1,6 @@
-package com.stslex93.notes.ui.edit.model
+package com.stslex93.notes.feature.edit.ui.model
 
-import com.stslex93.notes.domain.model.NoteDomainModel
+import com.stslex93.notes.feature.edit.domain.model.NoteDomainModel
 
 fun NoteDomainModel.toPresentation(): Note = Note(
     uuid = id,

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
-import com.stslex93.notes.domain.interactor.interf.MainScreenInteractor
+import com.stslex93.notes.domain.interactor.MainScreenInteractor
 import com.stslex93.notes.ui.model.NoteUIModel
 import com.stslex93.notes.ui.model.toDomain
 import com.stslex93.notes.ui.model.toUI

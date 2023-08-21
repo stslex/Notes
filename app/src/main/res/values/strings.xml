@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Notes</string>
-    <string name="title_hint">Title</string>
-    <string name="content_hint">Content</string>
     <string name="default_transition_name">default</string>
     <string name="search_transition_name" translatable="false">search</string>
 
@@ -17,7 +15,6 @@
     <string name="style">Style</string>
     <string name="label_bottom_menu_delete">"   "Delete</string>
     <string name="label_toolbar_search">search</string>
-    <string name="label_edit">Edit</string>
     <string name="label_search">Search</string>
     <string name="label_settings">Settings</string>
     <string name="label_folders">Folders</string>

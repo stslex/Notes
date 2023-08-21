@@ -1,9 +1,7 @@
-package com.stslex93.notes.data.di
+package com.stslex93.notes.feature.edit
 
 import android.content.Context
-import com.stslex93.notes.core.database.coreDatabaseModule
-import com.stslex93.notes.core.notes.di.coreNotesModule
-import com.stslex93.notes.di.appModule
+import com.stslex93.notes.core.notes.repository.NoteRepository
 import com.stslex93.notes.feature.edit.di.featureEditModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,12 +14,14 @@ import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.KoinApplication
 import org.koin.dsl.koinApplication
+import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.check.checkModules
 import org.mockito.Mockito
 
-class AppModuleTest : KoinTest {
+class FeatureEditModuleTest : KoinTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -30,15 +30,18 @@ class AppModuleTest : KoinTest {
     @Test
     fun testModule() {
         koinApplication {
+            load<NoteRepository>()
             androidContext(Mockito.mock(Context::class.java))
-            modules(
-                appModule,
-                coreDatabaseModule,
-                coreNotesModule,
-                featureEditModule
-            )
+            modules(featureEditModule)
             checkModules()
         }
+    }
+
+
+    private inline fun <reified T> KoinApplication.load() {
+        koin.loadModules(
+            listOf(module { single<T> { Mockito.mock(T::class.java) } })
+        )
     }
 }
 
