@@ -1,7 +1,6 @@
 package com.stslex93.notes.ui.main
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Icon
 import android.os.Bundle
@@ -11,19 +10,17 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.stslex93.notes.R
-import com.stslex93.notes.appComponent
 import com.stslex93.notes.databinding.FragmentMainBinding
 import com.stslex93.notes.ui.main.adapter.MainAdapter
 import com.stslex93.notes.ui.main.utils.*
 import com.stslex93.notes.ui.model.NoteUIModel
 import com.stslex93.notes.ui.utils.snackbar.SnackBarUtil
 import kotlinx.coroutines.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
 
@@ -31,49 +28,29 @@ class MainFragment : Fragment() {
     private val binding: FragmentMainBinding
         get() = checkNotNull(_binding)
 
-    private lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var noteClicker: OnNoteClickListener
-    private lateinit var noteLongClickListener: OnNoteLongClickListener
-    private lateinit var itemsSelector: SelectorNoteItemsUtil
-    private lateinit var queryTextListenerFactory: QueryTextListener.Factory
-    private lateinit var snackBarUtil: SnackBarUtil
+    private val snackBarUtil by inject<SnackBarUtil>()
+    private val viewModel: MainViewModel by viewModel<MainViewModel>()
 
-    @Inject
-    fun injection(
-        viewModelFactory: ViewModelProvider.Factory,
-        noteClicker: OnNoteClickListener.Factory,
-        noteLongClickListener: OnNoteLongClickListener.Factory,
-        itemsSelector: SelectorNoteItemsUtil,
-        queryTextListenerFactory: QueryTextListener.Factory,
-        snackBarUtil: SnackBarUtil
-    ) {
-        this.viewModelFactory = viewModelFactory
-        this.itemsSelector = itemsSelector
-        this.noteClicker = noteClicker.create(itemsSelector)
-        this.noteLongClickListener = noteLongClickListener.create(itemsSelector)
-        this.queryTextListenerFactory = queryTextListenerFactory
-        this.snackBarUtil = snackBarUtil
-    }
-
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+    private val itemsSelector: SelectorNoteItemsUtil = SelectorNoteItemsUtil.Base()
+    private val noteClicker: OnNoteClickListener = OnNoteClickListener.Base(
+        itemsSelector = itemsSelector
+    )
+    private val noteLongClickListener: OnNoteLongClickListener = OnNoteLongClickListener.Base(
+        itemsSelector = itemsSelector
+    )
 
     private val adapter: MainAdapter by lazy {
         MainAdapter(noteClicker, noteLongClickListener, NotesDiffItemCallback())
     }
 
     private val queryTextListener: SearchView.OnQueryTextListener by lazy {
-        queryTextListenerFactory.create {
+        QueryTextListener {
             clearAllSelectedItems()
             viewModel.setQuery(it)
         }
     }
 
     private var deleteJob: Job = Job()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().appComponent.inject(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

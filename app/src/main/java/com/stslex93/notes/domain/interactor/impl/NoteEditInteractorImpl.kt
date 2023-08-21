@@ -1,14 +1,13 @@
 package com.stslex93.notes.domain.interactor.impl
 
+import com.stslex93.notes.data.repository.NoteRepository
 import com.stslex93.notes.domain.interactor.interf.NoteEditInteractor
-import com.stslex93.notes.domain.mappers.toData
-import com.stslex93.notes.domain.mappers.toDomain
 import com.stslex93.notes.domain.model.NoteDomainModel
-import com.stslex93.notes.domain.repository.NoteRepository
+import com.stslex93.notes.domain.model.toData
+import com.stslex93.notes.domain.model.toDomain
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class NoteEditInteractorImpl @Inject constructor(
+class NoteEditInteractorImpl(
     private val repository: NoteRepository,
 ) : NoteEditInteractor {
 

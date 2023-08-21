@@ -11,15 +11,13 @@ ksp {
 
 dependencies {
     implementation(project(":core:ui"))
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
 
     implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)
     androidTestApi(libs.androidx.room.testing)
 
     implementation(libs.androidx.paging.runtime)
-
-    implementation(libs.dagger.core)
-    kapt(libs.dagger.compiler)
 
     // TODO remove after compose integration
     val navigationVersion = "2.5.3"

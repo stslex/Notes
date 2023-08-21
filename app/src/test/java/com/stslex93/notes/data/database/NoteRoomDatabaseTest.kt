@@ -26,7 +26,7 @@ class NoteRoomDatabaseTest {
 
     @Test
     fun t1GetDao() {
-        _dao = database.dao()
+        _dao = database.dao
         Assert.assertNotNull(dao)
     }
 

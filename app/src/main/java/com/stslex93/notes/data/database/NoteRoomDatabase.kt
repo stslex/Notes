@@ -31,11 +31,12 @@ import com.stslex93.notes.data.entity.NoteEntity
 )
 abstract class NoteRoomDatabase : RoomDatabase() {
 
-    abstract fun dao(): NoteDao
+    abstract val dao: NoteDao
 
     class NoteAutoMigration : AutoMigrationSpec
 
     companion object {
         const val SCHEMA_VERSION: Int = 5
+        const val DB_NAME = "db.note"
     }
 }

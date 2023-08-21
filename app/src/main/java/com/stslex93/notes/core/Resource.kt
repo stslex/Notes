@@ -15,7 +15,4 @@ sealed class Resource<out T> : Object<T> {
     data object Loading : Resource<Nothing>() {
         override fun <U> map(mapper: Mapper.DataToUI<in Nothing, U>): U = mapper.map()
     }
-
-    val successValue: T?
-        get() = if (this is Success) data else null
 }

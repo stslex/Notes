@@ -28,7 +28,7 @@ class NoteDaoTest {
             context, NoteRoomDatabase::class.java,
             DATABASE_NAME
         ).build()
-        dao = database.dao()
+        dao = database.dao
     }
 
     @Test

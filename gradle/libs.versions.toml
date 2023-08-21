@@ -18,7 +18,9 @@ paging = "3.2.0"
 room = "2.5.2"
 ksp = "1.9.0-1.0.13"
 mockito = "2.19.0"
-dagger = "2.47"
+
+koin = "3.3.0"
+koinAndroid = "3.3.1"
 
 junit = "4.13.2"
 androidxJunit = "1.1.5"
@@ -75,8 +77,12 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 
-dagger-core = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
-dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+
+koin-test-core = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+koin-test-junit = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -113,6 +119,14 @@ test = [
     "junit",
     "robolectric",
     "androidx-test"
+]
+
+koin = [
+    "koin-core",
+    "koin-android",
+    "koin-androidx-compose",
+    "koin-test-core",
+    "koin-test-junit"
 ]
 
 room = [

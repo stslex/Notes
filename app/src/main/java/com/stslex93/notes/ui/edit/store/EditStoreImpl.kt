@@ -11,9 +11,8 @@ import com.stslex93.notes.ui.edit.store.EditStore.State
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class EditStoreImpl @Inject constructor(
+class EditStoreImpl(
     private val interactor: NoteEditInteractor
 ) : EditStore, BaseStoreImpl<State, Event, Action>() {
 
