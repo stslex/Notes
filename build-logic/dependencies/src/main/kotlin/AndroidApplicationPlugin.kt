@@ -1,10 +1,8 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.stslex93.notes.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.version
 
 class AndroidApplicationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -28,8 +26,8 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 defaultConfig.apply {
                     applicationId = "com.stslex93.notes"
                     targetSdk = 34
-                    versionCode = 7
-                    versionName = "1.07"
+                    versionCode = AppVersion.VERSION_CODE
+                    versionName = AppVersion.VERSION_NAME
                     buildTypes {
                         release {
                             isMinifyEnabled = false
