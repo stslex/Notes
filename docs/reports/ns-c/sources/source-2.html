@@ -23,9 +23,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 <h1>Coverage Summary for Class: NoteUIModel (com.stslex93.notes.ui.model)</h1>
 
 <table class="coverageStats">
-
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -50,6 +53,30 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
     (0/10)
   </span>
 </td>
@@ -58,89 +85,11 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/8)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/22)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/138)
+    (0/53)
   </span>
 </td>
 </tr>
-  <tr>
-    <td class="name">NoteUIModel$Companion</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/1)
-  </span>
-</td>
-    <td class="coverageStat"/>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/1)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/1)
-  </span>
-</td>
-  </tr>
-<tr>
-  <td class="name"><strong>Total</strong></td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/11)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/8)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/23)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/139)
-  </span>
-</td>
-</tr>
+
 </table>
 
 <br/>
@@ -150,69 +99,30 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.ui.model
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import android.annotation.SuppressLint
-<i class="no-highlight">4</i>&nbsp;import android.widget.TextView
-<i class="no-highlight">5</i>&nbsp;import com.google.android.material.card.MaterialCardView
-<i class="no-highlight">6</i>&nbsp;import com.google.android.material.textfield.TextInputLayout
-<i class="no-highlight">7</i>&nbsp;import com.stslex93.notes.ui.widget.ComposeCustomTextView
-<i class="no-highlight">8</i>&nbsp;import java.text.SimpleDateFormat
-<i class="no-highlight">9</i>&nbsp;import java.util.*
-<i class="no-highlight">10</i>&nbsp;
-<b class="nc"><i class="no-highlight">11</i>&nbsp;data class NoteUIModel(</b>
-<b class="nc"><i class="no-highlight">12</i>&nbsp;    val id: Int,</b>
-<b class="nc"><i class="no-highlight">13</i>&nbsp;    val title: String,</b>
-<b class="nc"><i class="no-highlight">14</i>&nbsp;    val content: String,</b>
-<b class="nc"><i class="no-highlight">15</i>&nbsp;    val timestamp: Long,</b>
-<i class="no-highlight">16</i>&nbsp;) {
-<b class="nc"><i class="no-highlight">17</i>&nbsp;    var isChecked: Boolean = false</b>
-<i class="no-highlight">18</i>&nbsp;
-<i class="no-highlight">19</i>&nbsp;    fun updateViewCheck() {
-<b class="nc"><i class="no-highlight">20</i>&nbsp;        cardView.isChecked = isChecked</b>
-<i class="no-highlight">21</i>&nbsp;    }
-<i class="no-highlight">22</i>&nbsp;
-<i class="no-highlight">23</i>&nbsp;    private var _cardView: MaterialCardView? = null
-<b class="nc"><i class="no-highlight">24</i>&nbsp;    private val cardView: MaterialCardView get() = checkNotNull(_cardView)</b>
-<i class="no-highlight">25</i>&nbsp;
-<i class="no-highlight">26</i>&nbsp;    fun bind(
-<i class="no-highlight">27</i>&nbsp;        titleTextView: TextView,
-<i class="no-highlight">28</i>&nbsp;        contentTextView: ComposeCustomTextView,
-<i class="no-highlight">29</i>&nbsp;        itemCardView: MaterialCardView
-<i class="no-highlight">30</i>&nbsp;    ) {
-<b class="nc"><i class="no-highlight">31</i>&nbsp;        titleTextView.text = title</b>
-<b class="nc"><i class="no-highlight">32</i>&nbsp;        contentTextView.setText(content)</b>
-<b class="nc"><i class="no-highlight">33</i>&nbsp;        _cardView = itemCardView</b>
-<b class="nc"><i class="no-highlight">34</i>&nbsp;        cardView.transitionName = id.toString()</b>
-<i class="no-highlight">35</i>&nbsp;    }
-<i class="no-highlight">36</i>&nbsp;
-<i class="no-highlight">37</i>&nbsp;    fun bindEditNote(
-<i class="no-highlight">38</i>&nbsp;        titleTextView: TextInputLayout,
-<i class="no-highlight">39</i>&nbsp;        contentTextView: TextInputLayout
-<i class="no-highlight">40</i>&nbsp;    ) {
-<b class="nc"><i class="no-highlight">41</i>&nbsp;        titleTextView.editText?.setText(title)</b>
-<b class="nc"><i class="no-highlight">42</i>&nbsp;        contentTextView.editText?.setText(content)</b>
-<i class="no-highlight">43</i>&nbsp;    }
-<i class="no-highlight">44</i>&nbsp;
-<i class="no-highlight">45</i>&nbsp;    @SuppressLint(&quot;SetTextI18n&quot;)
-<i class="no-highlight">46</i>&nbsp;    fun setLastEditTime(textView: TextView, labelEdit: String) {
-<b class="nc"><i class="no-highlight">47</i>&nbsp;        val currentDate = convert(DATE_FORMAT, System.currentTimeMillis())</b>
-<b class="nc"><i class="no-highlight">48</i>&nbsp;        val date = convert(DATE_FORMAT, timestamp)</b>
-<b class="nc"><i class="no-highlight">49</i>&nbsp;        val time = convert(TIME_FORMAT, timestamp)</b>
-<b class="nc"><i class="no-highlight">50</i>&nbsp;        val resultTime = if (date == currentDate) time else date</b>
-<b class="nc"><i class="no-highlight">51</i>&nbsp;        textView.text = &quot;$labelEdit: $resultTime&quot;</b>
-<i class="no-highlight">52</i>&nbsp;    }
-<i class="no-highlight">53</i>&nbsp;
-<i class="no-highlight">54</i>&nbsp;    private fun convert(format: String, time: Long): String =
-<b class="nc"><i class="no-highlight">55</i>&nbsp;        SimpleDateFormat(format, Locale.getDefault()).format(time)</b>
-<i class="no-highlight">56</i>&nbsp;
-<b class="nc"><i class="no-highlight">57</i>&nbsp;    fun click(function: (MaterialCardView) -&gt; Unit) = function(cardView)</b>
-<i class="no-highlight">58</i>&nbsp;
-<i class="no-highlight">59</i>&nbsp;    companion object {
-<i class="no-highlight">60</i>&nbsp;        private const val DATE_FORMAT = &quot;dd.MM.yyyy&quot;
-<i class="no-highlight">61</i>&nbsp;        private const val TIME_FORMAT = &quot;kk:mm&quot;
-<i class="no-highlight">62</i>&nbsp;
-<b class="nc"><i class="no-highlight">63</i>&nbsp;        val EMPTY = NoteUIModel(0, &quot;&quot;, &quot;&quot;, 0)</b>
-<i class="no-highlight">64</i>&nbsp;    }
-<i class="no-highlight">65</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import com.google.android.material.card.MaterialCardView
+<i class="no-highlight">4</i>&nbsp;
+<b class="nc"><i class="no-highlight">5</i>&nbsp;data class NoteUIModel(</b>
+<b class="nc"><i class="no-highlight">6</i>&nbsp;    val id: Int,</b>
+<b class="nc"><i class="no-highlight">7</i>&nbsp;    val title: String,</b>
+<b class="nc"><i class="no-highlight">8</i>&nbsp;    val content: String,</b>
+<b class="nc"><i class="no-highlight">9</i>&nbsp;    val timestamp: Long,</b>
+<i class="no-highlight">10</i>&nbsp;) {
+<b class="nc"><i class="no-highlight">11</i>&nbsp;    var isChecked: Boolean = false</b>
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;    fun updateViewCheck() {
+<b class="nc"><i class="no-highlight">14</i>&nbsp;        cardView.isChecked = isChecked</b>
+<i class="no-highlight">15</i>&nbsp;    }
+<i class="no-highlight">16</i>&nbsp;
+<i class="no-highlight">17</i>&nbsp;    private var _cardView: MaterialCardView? = null
+<b class="nc"><i class="no-highlight">18</i>&nbsp;    private val cardView: MaterialCardView get() = checkNotNull(_cardView)</b>
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;    // TODO remove
+<i class="no-highlight">21</i>&nbsp;    fun setCardView(cardView: MaterialCardView) {
+<b class="nc"><i class="no-highlight">22</i>&nbsp;        _cardView = cardView</b>
+<i class="no-highlight">23</i>&nbsp;    }
+<i class="no-highlight">24</i>&nbsp;
+<b class="nc"><i class="no-highlight">25</i>&nbsp;    fun click(function: (MaterialCardView) -&gt; Unit) = function(cardView)</b>
+<i class="no-highlight">26</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -239,7 +149,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-08-22 16:03</div>
+    <div style="float:right;">generated on 2023-08-22 16:38</div>
 </div>
 </body>
 </html>
