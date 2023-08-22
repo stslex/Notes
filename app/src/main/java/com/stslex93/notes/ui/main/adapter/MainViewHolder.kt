@@ -1,6 +1,5 @@
 package com.stslex93.notes.ui.main.adapter
 
-import android.view.View
 import com.stslex93.notes.databinding.ItemRecyclerMainBinding
 import com.stslex93.notes.ui.core.AbstractViewHolder
 import com.stslex93.notes.ui.core.ClickListener
@@ -13,27 +12,36 @@ class MainViewHolder(
     private val longClickListener: LongClickListener<NoteUIModel>
 ) : AbstractViewHolder<NoteUIModel>(binding) {
 
-    override fun bind(item: NoteUIModel): Unit = with(item) {
-        binding.itemCardView.isChecked = isChecked
-        binding.titleTextView.setOnClickListener(itemClickListener)
-        binding.itemCardView.setOnLongClickListener(itemLongCLickListener)
-        bindItem()
-    }
+    override fun bind(item: NoteUIModel) {
+        val clickListener = itemClickListener(item)
+        val longClickListener = itemLongCLickListener(item)
 
-    private fun NoteUIModel.bindItem(): Unit = with(binding) {
-        bind(titleTextView, contentTextView, itemCardView)
-    }
-
-    private val NoteUIModel.itemClickListener: View.OnClickListener
-        get() = View.OnClickListener {
-            clickListener.onClick(this)
-            binding.itemCardView.isChecked = isChecked
+        binding.titleTextView.text = item.title
+        binding.titleTextView.setOnClickListener {
+            clickListener()
         }
 
-    private val NoteUIModel.itemLongCLickListener: View.OnLongClickListener
-        get() = View.OnLongClickListener {
-            longClickListener.click(this)
-            binding.itemCardView.isChecked = isChecked
+        item.setCardView(binding.itemCardView)
+        binding.itemCardView.isChecked = item.isChecked
+        binding.itemCardView.transitionName = item.id.toString()
+        binding.itemCardView.setOnLongClickListener {
+            longClickListener()
             true
         }
+
+        binding.contentTextView.setText(item.content)
+        binding.contentTextView.setClickListener {
+            clickListener()
+        }
+    }
+
+    private fun itemClickListener(item: NoteUIModel): () -> Unit = {
+        clickListener.onClick(item)
+        binding.itemCardView.isChecked = item.isChecked
+    }
+
+    private fun itemLongCLickListener(item: NoteUIModel): () -> Unit = {
+        longClickListener.click(item)
+        binding.itemCardView.isChecked = item.isChecked
+    }
 }
