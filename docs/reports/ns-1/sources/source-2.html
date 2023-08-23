@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > MainActivity</title>
+  <title>Coverage Report > NoteApplication</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,15 +20,12 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.stslex93.notes</a>
 </div>
 
-<h1>Coverage Summary for Class: MainActivity (com.stslex93.notes)</h1>
+<h1>Coverage Summary for Class: NoteApplication (com.stslex93.notes)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -47,15 +44,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">MainActivity</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/1)
-  </span>
-</td>
+  <td class="name">NoteApplication</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -64,14 +53,63 @@ Current scope:     <a href="../../index.html">all classes</a>
     (0/3)
   </span>
 </td>
+    <td class="coverageStat"/>
 <td class="coverageStat">
   <span class="percent">
     0%
   </span>
   <span class="absValue">
-    (0/6)
+    (0/4)
   </span>
 </td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/13)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NoteApplication$setUpKoin$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/35)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+    <td class="coverageStat"/>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -85,11 +123,10 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/57)
+    (0/48)
   </span>
 </td>
 </tr>
-
 </table>
 
 <br/>
@@ -99,33 +136,35 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import android.os.Bundle
-<i class="no-highlight">4</i>&nbsp;import android.view.MenuItem
-<i class="no-highlight">5</i>&nbsp;import androidx.appcompat.app.AppCompatActivity
-<i class="no-highlight">6</i>&nbsp;import androidx.navigation.fragment.NavHostFragment
-<i class="no-highlight">7</i>&nbsp;import com.stslex93.notes.databinding.ActivityMainBinding
-<i class="no-highlight">8</i>&nbsp;
-<b class="nc"><i class="no-highlight">9</i>&nbsp;class MainActivity : AppCompatActivity() {</b>
-<i class="no-highlight">10</i>&nbsp;
-<i class="no-highlight">11</i>&nbsp;    private lateinit var binding: ActivityMainBinding
-<i class="no-highlight">12</i>&nbsp;
-<i class="no-highlight">13</i>&nbsp;    override fun onCreate(savedInstanceState: Bundle?) {
-<b class="nc"><i class="no-highlight">14</i>&nbsp;        setTheme(R.style.PrimaryTheme_Custom)</b>
-<b class="nc"><i class="no-highlight">15</i>&nbsp;        super.onCreate(savedInstanceState)</b>
-<b class="nc"><i class="no-highlight">16</i>&nbsp;        binding = ActivityMainBinding.inflate(layoutInflater)</b>
-<b class="nc"><i class="no-highlight">17</i>&nbsp;        setContentView(binding.root)</b>
-<i class="no-highlight">18</i>&nbsp;    }
-<i class="no-highlight">19</i>&nbsp;
-<i class="no-highlight">20</i>&nbsp;    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-<b class="nc"><i class="no-highlight">21</i>&nbsp;        when (item.itemId) {</b>
-<b class="nc"><i class="no-highlight">22</i>&nbsp;            android.R.id.home -&gt; (supportFragmentManager</b>
-<b class="nc"><i class="no-highlight">23</i>&nbsp;                .findFragmentById(binding.navHostFragment.id) as NavHostFragment)</b>
-<b class="nc"><i class="no-highlight">24</i>&nbsp;                .navController</b>
-<b class="nc"><i class="no-highlight">25</i>&nbsp;                .popBackStack()</b>
-<i class="no-highlight">26</i>&nbsp;        }
-<b class="nc"><i class="no-highlight">27</i>&nbsp;        return super.onOptionsItemSelected(item)</b>
-<i class="no-highlight">28</i>&nbsp;    }
-<i class="no-highlight">29</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import android.app.Application
+<i class="no-highlight">4</i>&nbsp;import com.stslex93.notes.core.database.coreDatabaseModule
+<i class="no-highlight">5</i>&nbsp;import com.stslex93.notes.core.notes.di.coreNotesModule
+<i class="no-highlight">6</i>&nbsp;import com.stslex93.notes.feature.edit.di.featureEditModule
+<i class="no-highlight">7</i>&nbsp;import com.stslex93.notes.feature.home.di.featureHomeModule
+<i class="no-highlight">8</i>&nbsp;import org.koin.android.ext.koin.androidContext
+<i class="no-highlight">9</i>&nbsp;import org.koin.android.ext.koin.androidLogger
+<i class="no-highlight">10</i>&nbsp;import org.koin.core.context.startKoin
+<i class="no-highlight">11</i>&nbsp;
+<b class="nc"><i class="no-highlight">12</i>&nbsp;class NoteApplication : Application() {</b>
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    override fun onCreate() {
+<b class="nc"><i class="no-highlight">15</i>&nbsp;        setUpKoin()</b>
+<b class="nc"><i class="no-highlight">16</i>&nbsp;        super.onCreate()</b>
+<i class="no-highlight">17</i>&nbsp;    }
+<i class="no-highlight">18</i>&nbsp;
+<i class="no-highlight">19</i>&nbsp;    private fun setUpKoin() {
+<b class="nc"><i class="no-highlight">20</i>&nbsp;        startKoin {</b>
+<b class="nc"><i class="no-highlight">21</i>&nbsp;            androidLogger()</b>
+<b class="nc"><i class="no-highlight">22</i>&nbsp;            androidContext(this@NoteApplication)</b>
+<b class="nc"><i class="no-highlight">23</i>&nbsp;            modules(</b>
+<b class="nc"><i class="no-highlight">24</i>&nbsp;                coreDatabaseModule,</b>
+<b class="nc"><i class="no-highlight">25</i>&nbsp;                coreNotesModule,</b>
+<b class="nc"><i class="no-highlight">26</i>&nbsp;                featureEditModule,</b>
+<b class="nc"><i class="no-highlight">27</i>&nbsp;                featureHomeModule,</b>
+<i class="no-highlight">28</i>&nbsp;            )
+<i class="no-highlight">29</i>&nbsp;        }
+<i class="no-highlight">30</i>&nbsp;    }
+<i class="no-highlight">31</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -152,7 +191,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-08-23 17:53</div>
+    <div style="float:right;">generated on 2023-08-23 19:51</div>
 </div>
 </body>
 </html>

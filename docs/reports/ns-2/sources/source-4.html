@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > ViewComposeCustomBinding</title>
+  <title>Coverage Report > NavigationHostKt</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,18 +17,15 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.stslex93.notes.databinding</a>
+    <a href="../index.html">com.stslex93.notes.ui</a>
 </div>
 
-<h1>Coverage Summary for Class: ViewComposeCustomBinding (com.stslex93.notes.databinding)</h1>
+<h1>Coverage Summary for Class: NavigationHostKt (com.stslex93.notes.ui)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -47,7 +44,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">ViewComposeCustomBinding</td>
+  <td class="name">NavigationHostKt</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -61,7 +58,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/5)
+    (0/10)
   </span>
 </td>
 <td class="coverageStat">
@@ -69,7 +66,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/4)
+    (0/7)
   </span>
 </td>
 <td class="coverageStat">
@@ -77,25 +74,110 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/16)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/55)
+    (0/83)
   </span>
 </td>
 </tr>
-
+  <tr>
+    <td class="name">NavigationHostKt$NavigationHost$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NavigationHostKt$NavigationHost$2</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/91)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
 <br/>
 
-  <div class="sourceCode">Source code is not available<br /></div>
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stslex93.notes.ui
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import androidx.compose.runtime.Composable
+<i class="no-highlight">4</i>&nbsp;import androidx.compose.ui.Modifier
+<i class="no-highlight">5</i>&nbsp;import androidx.navigation.NavHostController
+<i class="no-highlight">6</i>&nbsp;import androidx.navigation.compose.NavHost
+<i class="no-highlight">7</i>&nbsp;import com.stslex93.notes.core.navigation.AppDestination
+<i class="no-highlight">8</i>&nbsp;import com.stslex93.notes.feature.edit.ui.init.editGraph
+<i class="no-highlight">9</i>&nbsp;import com.stslex93.notes.feature.home.ui.init.homeGraph
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;@Composable
+<i class="no-highlight">12</i>&nbsp;fun NavigationHost(
+<i class="no-highlight">13</i>&nbsp;    navHostController: NavHostController,
+<b class="nc"><i class="no-highlight">14</i>&nbsp;    modifier: Modifier = Modifier,</b>
+<b class="nc"><i class="no-highlight">15</i>&nbsp;    startDestination: AppDestination = AppDestination.HOME</b>
+<b class="nc"><i class="no-highlight">16</i>&nbsp;) {</b>
+<b class="nc"><i class="no-highlight">17</i>&nbsp;    NavHost(</b>
+<b class="nc"><i class="no-highlight">18</i>&nbsp;        navController = navHostController,</b>
+<b class="nc"><i class="no-highlight">19</i>&nbsp;        startDestination = startDestination.route</b>
+<b class="nc"><i class="no-highlight">20</i>&nbsp;    ) {</b>
+<b class="nc"><i class="no-highlight">21</i>&nbsp;        homeGraph(modifier)</b>
+<b class="nc"><i class="no-highlight">22</i>&nbsp;        editGraph(modifier)</b>
+<i class="no-highlight">23</i>&nbsp;    }
+<i class="no-highlight">24</i>&nbsp;}
+</div>
+</pre>
 </div>
 
 <script type="text/javascript">
@@ -120,7 +202,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-08-23 17:53</div>
+    <div style="float:right;">generated on 2023-08-23 19:51</div>
 </div>
 </body>
 </html>
