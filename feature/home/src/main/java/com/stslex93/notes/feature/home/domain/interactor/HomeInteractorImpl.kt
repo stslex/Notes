@@ -19,10 +19,6 @@ class HomeInteractorImpl(
             }
         }
 
-    override fun setQuery(query: String) {
-        repository.search(query)
-    }
-
     override suspend fun deleteNotes(noteIds: List<Int>) {
         repository.deleteNotesById(noteIds)
     }

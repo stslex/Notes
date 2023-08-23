@@ -8,7 +8,5 @@ interface HomeInteractor {
 
     fun queryNotes(query: String): Flow<PagingData<NoteDomain>>
 
-    fun setQuery(query: String)
-
     suspend fun deleteNotes(noteIds: List<Int>)
 }

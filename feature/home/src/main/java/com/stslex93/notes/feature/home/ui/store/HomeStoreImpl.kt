@@ -63,7 +63,6 @@ class HomeStoreImpl(
     }
 
     private fun clearSelection() {
-        interactor.setQuery("")
         updateState { currentState ->
             currentState.copy(
                 selectedNotes = emptySet<Int>().toImmutableSet(),
