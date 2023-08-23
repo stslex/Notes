@@ -12,14 +12,12 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.util.concurrent.atomic.AtomicBoolean
 
 
 @RunWith(RobolectricTestRunner::class)
 class NoteDaoTest {
 
     private val dao: NoteDao
-    private val assertFlag: AtomicBoolean = AtomicBoolean(false)
 
     init {
         val context: Context = ApplicationProvider.getApplicationContext()
@@ -35,10 +33,10 @@ class NoteDaoTest {
         val notesSize = dao.getAllNotes().size
         dao.insert(testNote)
         val notes = dao.getAllNotes()
-        assertFlag.set(notesSize.plus(1) == notes.size && notes.containsCurrentItem)
-        Assert.assertTrue(assertFlag.get())
+        val notesSizeAssert = notesSize.plus(1)
+        Assert.assertEquals(notesSizeAssert, notes.size)
+        Assert.assertTrue(notes.containsCurrentItem)
     }
-
 
     @Test
     fun getAllNotes() = runBlocking(Dispatchers.IO) {
@@ -58,7 +56,9 @@ class NoteDaoTest {
     fun getNotesById() = runBlocking(Dispatchers.IO) {
         dao.insertAll(testListOfNotes)
         val listOfIds = dao.getAllNotes().map { it.id.toString() }
-        if (listOfIds.isNullOrEmpty()) Assert.fail()
+        if (listOfIds.isEmpty()) {
+            Assert.fail()
+        }
         val compareListOfIds = dao.getNotesById(listOfIds).first().map { it.id.toString() }
         Assert.assertEquals(listOfIds, compareListOfIds)
     }
@@ -67,15 +67,14 @@ class NoteDaoTest {
     fun deleteNotesById() = runBlocking(Dispatchers.IO) {
         dao.insertAll(testListOfNotes)
         val listOfIds = dao.getAllNotes().map { it.id }
-        if (listOfIds.isNullOrEmpty()) Assert.fail()
+        if (listOfIds.isEmpty()) {
+            Assert.fail()
+        }
         dao.insertAll(testListOfNotes)
         dao.deleteNotesById(listOfIds)
         val allNotes = dao.getAllNotes()
-        if (allNotes.isEmpty()) assertFlag.set(true)
-        allNotes.forEach {
-            assertFlag.set(!listOfIds.contains(it.id))
-        }
-        Assert.assertTrue("Notes contains deleted ids", assertFlag.get())
+        val isNotContains = allNotes.isEmpty() || allNotes.any { listOfIds.contains(it.id).not() }
+        Assert.assertTrue("Notes contains deleted ids", isNotContains)
     }
 
     @Test

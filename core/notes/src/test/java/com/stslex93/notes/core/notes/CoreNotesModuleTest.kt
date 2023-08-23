@@ -3,30 +3,29 @@ package com.stslex93.notes.core.notes
 import android.content.Context
 import com.stslex93.notes.core.database.NoteDao
 import com.stslex93.notes.core.notes.di.coreNotesModule
+import org.junit.Rule
 import org.junit.Test
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.KoinApplication
 import org.koin.dsl.koinApplication
-import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.check.checkModules
+import org.koin.test.mock.MockProviderRule
 import org.mockito.Mockito
 
 class CoreNotesModuleTest : KoinTest {
 
-    @Test
-    fun testModule() {
-        koinApplication {
-            load<NoteDao>()
-            androidContext(Mockito.mock(Context::class.java))
-            modules(coreNotesModule)
-            checkModules()
-        }
+    @get:Rule
+    val mockProvider = MockProviderRule.create { clazz ->
+        Mockito.mock(clazz.java)
     }
 
-    private inline fun <reified T> KoinApplication.load() {
-        koin.loadModules(
-            listOf(module { single<T> { Mockito.mock(T::class.java) } })
-        )
+    @Test
+    fun `check koin definitions`() {
+        koinApplication {
+            modules(coreNotesModule)
+            checkModules {
+                withInstance<NoteDao>()
+                withInstance<Context>()
+            }
+        }
     }
 }

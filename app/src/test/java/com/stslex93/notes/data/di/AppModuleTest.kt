@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import com.stslex93.notes.core.database.coreDatabaseModule
 import com.stslex93.notes.core.navigation.di.moduleCoreNavigation
 import com.stslex93.notes.core.notes.di.coreNotesModule
-import com.stslex93.notes.di.appModule
 import com.stslex93.notes.feature.edit.di.featureEditModule
 import com.stslex93.notes.feature.home.di.featureHomeModule
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +17,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
-import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.koinApplication
 import org.koin.test.KoinTest
 import org.koin.test.check.checkModules
+import org.koin.test.mock.MockProviderRule
 import org.mockito.Mockito
 
 class AppModuleTest : KoinTest {
@@ -30,20 +29,25 @@ class AppModuleTest : KoinTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
+    @get:Rule
+    val mockProvider = MockProviderRule.create { clazz ->
+        Mockito.mock(clazz.java)
+    }
+
     @Test
-    fun testModule() {
+    fun `check koin definitions`() {
         val navController = Mockito.mock(NavHostController::class.java)
         koinApplication {
-            androidContext(Mockito.mock(Context::class.java))
             modules(
                 moduleCoreNavigation(navController),
-                appModule,
                 coreDatabaseModule,
                 coreNotesModule,
                 featureEditModule,
                 featureHomeModule
             )
-            checkModules()
+            checkModules {
+                withInstance<Context>()
+            }
         }
     }
 }

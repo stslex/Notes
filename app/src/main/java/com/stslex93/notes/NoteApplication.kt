@@ -3,7 +3,6 @@ package com.stslex93.notes
 import android.app.Application
 import com.stslex93.notes.core.database.coreDatabaseModule
 import com.stslex93.notes.core.notes.di.coreNotesModule
-import com.stslex93.notes.di.appModule
 import com.stslex93.notes.feature.edit.di.featureEditModule
 import com.stslex93.notes.feature.home.di.featureHomeModule
 import org.koin.android.ext.koin.androidContext
@@ -22,7 +21,6 @@ class NoteApplication : Application() {
             androidLogger()
             androidContext(this@NoteApplication)
             modules(
-                appModule,
                 coreDatabaseModule,
                 coreNotesModule,
                 featureEditModule,

@@ -16,7 +16,7 @@ class NavigatorImpl(
 
     private fun navigateScreen(screen: NavigationScreen) {
         val currentRoute = navController.currentDestination?.route ?: return
-        if (currentRoute == screen.screenRoute) return
+        if (currentRoute == screen.screen.navigationRoute) return
 
         navController.navigate(screen.screenRoute) {
             if (screen.isSingleTop.not()) return@navigate

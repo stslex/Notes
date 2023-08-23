@@ -8,6 +8,7 @@ import com.stslex93.notes.feature.edit.ui.model.toPresentation
 import com.stslex93.notes.feature.edit.ui.store.EditStore.Action
 import com.stslex93.notes.feature.edit.ui.store.EditStore.Event
 import com.stslex93.notes.feature.edit.ui.store.EditStore.State
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -16,15 +17,16 @@ class EditStoreImpl(
     private val interactor: NoteEditInteractor
 ) : EditStore, BaseStoreImpl<State, Event, Action>() {
 
-    override val initialState: State
-        get() = State(
-            note = Note(
-                uuid = 0,
-                title = "",
-                content = "",
-                timestamp = System.currentTimeMillis()
-            )
+    override val initialState: State = State(
+        note = Note(
+            uuid = 0,
+            title = "",
+            content = "",
+            timestamp = System.currentTimeMillis()
         )
+    )
+
+    override val state: MutableStateFlow<State> = MutableStateFlow(initialState)
 
     override fun processAction(action: Action) {
         when (action) {
@@ -64,7 +66,7 @@ class EditStoreImpl(
     }
 
     private fun initStore(action: Action.Init) {
-        if (action.isEdit.not()) return
+        if (action.isEdit) return
         interactor.getNote(action.id)
             .onEach { note ->
                 updateState { currentState ->
