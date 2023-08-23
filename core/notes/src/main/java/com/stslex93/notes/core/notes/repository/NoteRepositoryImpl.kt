@@ -10,9 +10,6 @@ import com.stslex93.notes.core.notes.model.toData
 import com.stslex93.notes.core.notes.model.toEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -20,10 +17,6 @@ import kotlinx.coroutines.withContext
 class NoteRepositoryImpl(
     private val dao: NoteDao,
 ) : NoteRepository {
-
-    private var _query: MutableStateFlow<String> = MutableStateFlow("")
-    private val query: StateFlow<String>
-        get() = _query.asStateFlow()
 
     override fun getNote(id: Int): Flow<NoteDataModel> = dao.getNote(id = id)
         .map { it.toData() }
@@ -49,10 +42,6 @@ class NoteRepositoryImpl(
                 pagingData.map { it.toData() }
             }
             .flowOn(Dispatchers.IO)
-
-    override fun search(query: String) {
-        _query.value = query
-    }
 
     override suspend fun deleteNotesById(ids: List<Int>) {
         withContext(Dispatchers.IO) {

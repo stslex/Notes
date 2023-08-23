@@ -12,8 +12,6 @@ interface NoteRepository {
 
     fun getLastNote(): Flow<NoteDataModel>
 
-    fun search(query: String)
-
     suspend fun deleteNotesById(ids: List<Int>)
 
     suspend fun insert(note: NoteDataModel)

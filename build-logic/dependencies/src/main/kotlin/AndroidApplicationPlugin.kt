@@ -14,12 +14,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
-
-                apply("kotlin-kapt")
-                apply("androidx.navigation.safeargs.kotlin")
-                apply("kotlin-parcelize")
                 apply("com.google.devtools.ksp")
-//                apply("org.jetbrains.kotlinx.kover")
             }
 
             extensions.configure<ApplicationExtension> {

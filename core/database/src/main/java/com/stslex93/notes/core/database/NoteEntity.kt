@@ -1,12 +1,9 @@
 package com.stslex93.notes.core.database
 
-import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 @Entity(tableName = "note_table")
 data class NoteEntity(
 
@@ -22,4 +19,4 @@ data class NoteEntity(
 
     @ColumnInfo(name = "timestamp")
     val timestamp: Long
-) : Parcelable
+)
