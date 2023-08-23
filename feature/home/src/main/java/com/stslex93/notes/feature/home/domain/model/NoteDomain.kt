@@ -1,6 +1,6 @@
-package com.stslex93.notes.core.notes.model
+package com.stslex93.notes.feature.home.domain.model
 
-data class NoteDataModel(
+data class NoteDomain(
     val id: Int = 0,
     val title: String,
     val content: String,

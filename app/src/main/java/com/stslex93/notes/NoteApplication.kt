@@ -5,6 +5,7 @@ import com.stslex93.notes.core.database.coreDatabaseModule
 import com.stslex93.notes.core.notes.di.coreNotesModule
 import com.stslex93.notes.di.appModule
 import com.stslex93.notes.feature.edit.di.featureEditModule
+import com.stslex93.notes.feature.home.di.featureHomeModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -24,7 +25,8 @@ class NoteApplication : Application() {
                 appModule,
                 coreDatabaseModule,
                 coreNotesModule,
-                featureEditModule
+                featureEditModule,
+                featureHomeModule,
             )
         }
     }

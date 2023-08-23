@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.stslex93.notes.core.navigation.AppDestination
 import com.stslex93.notes.feature.edit.ui.init.editGraph
-import com.stslex93.notes.feature.home.homeGraph
+import com.stslex93.notes.feature.home.ui.init.homeGraph
 
 @Composable
 fun NavigationHost(

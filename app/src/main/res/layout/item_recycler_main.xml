@@ -26,7 +26,7 @@
             android:lines="1"
             tools:text="Title" />
 
-        <com.stslex93.notes.ui.widget.ComposeCustomTextView
+        <com.stslex93.notes.ui.legacy.widget.ComposeCustomTextView
             android:id="@+id/contentTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

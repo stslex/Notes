@@ -17,14 +17,13 @@ sealed class NavigationScreen {
         get() = AppArguments.Empty
 
     data object HomeScreen : NavigationScreen() {
-
         override val screen: AppDestination = AppDestination.HOME
         override val isSingleTop: Boolean = true
     }
 
     data class EditNoteScreen(
-        private val noteId: String,
-        private val isEdit: String
+        private val noteId: Int,
+        private val isEdit: Boolean
     ) : NavigationScreen() {
         override val screen: AppDestination = AppDestination.NOTE_EDIT
         override val appArgs: AppArguments = AppArguments.NoteEdit(noteId, isEdit)
