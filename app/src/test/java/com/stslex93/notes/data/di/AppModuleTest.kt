@@ -1,10 +1,13 @@
 package com.stslex93.notes.data.di
 
 import android.content.Context
+import androidx.navigation.NavHostController
 import com.stslex93.notes.core.database.coreDatabaseModule
+import com.stslex93.notes.core.navigation.di.moduleCoreNavigation
 import com.stslex93.notes.core.notes.di.coreNotesModule
 import com.stslex93.notes.di.appModule
 import com.stslex93.notes.feature.edit.di.featureEditModule
+import com.stslex93.notes.feature.home.di.featureHomeModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -29,13 +32,16 @@ class AppModuleTest : KoinTest {
 
     @Test
     fun testModule() {
+        val navController = Mockito.mock(NavHostController::class.java)
         koinApplication {
             androidContext(Mockito.mock(Context::class.java))
             modules(
+                moduleCoreNavigation(navController),
                 appModule,
                 coreDatabaseModule,
                 coreNotesModule,
-                featureEditModule
+                featureEditModule,
+                featureHomeModule
             )
             checkModules()
         }

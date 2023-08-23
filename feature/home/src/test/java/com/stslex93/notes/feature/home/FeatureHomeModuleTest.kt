@@ -1,9 +1,9 @@
-package com.stslex93.notes.feature.edit
+package com.stslex93.notes.feature.home
 
 import android.content.Context
 import com.stslex93.notes.core.navigation.navigator.Navigator
 import com.stslex93.notes.core.notes.repository.NoteRepository
-import com.stslex93.notes.feature.edit.di.featureEditModule
+import com.stslex93.notes.feature.home.di.featureHomeModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -22,7 +22,7 @@ import org.koin.test.KoinTest
 import org.koin.test.check.checkModules
 import org.mockito.Mockito
 
-class FeatureEditModuleTest : KoinTest {
+class FeatureHomeModuleTest : KoinTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -31,14 +31,15 @@ class FeatureEditModuleTest : KoinTest {
     @Test
     fun testModule() {
         koinApplication {
-            load<NoteRepository>()
-            load<Navigator>()
-            androidContext(Mockito.mock(Context::class.java))
-            modules(featureEditModule)
-            checkModules()
+            koinApplication {
+                load<NoteRepository>()
+                load<Navigator>()
+                androidContext(Mockito.mock(Context::class.java))
+                modules(featureHomeModule)
+                checkModules()
+            }
         }
     }
-
 
     private inline fun <reified T> KoinApplication.load() {
         koin.loadModules(

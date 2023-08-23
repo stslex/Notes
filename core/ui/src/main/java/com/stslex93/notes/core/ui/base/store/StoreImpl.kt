@@ -5,7 +5,7 @@ import com.stslex93.notes.core.ui.base.store.Store.Event
 import com.stslex93.notes.core.ui.base.store.Store.State
 import kotlinx.coroutines.flow.SharedFlow
 
-interface StoreImpl<S : State, in E : Event, A : Action> {
+internal interface StoreImpl<S : State, in E : Event, A : Action> {
 
     val action: SharedFlow<A>
 
