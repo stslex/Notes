@@ -9,12 +9,10 @@ import com.stslex93.notes.core.notes.model.NoteDataModel
 import com.stslex93.notes.core.notes.model.toData
 import com.stslex93.notes.core.notes.model.toEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -35,17 +33,18 @@ class NoteRepositoryImpl(
         .map { it.toData() }
         .flowOn(Dispatchers.IO)
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override val searchNotes: Flow<PagingData<NoteDataModel>>
-        get() = query.flatMapLatest { query ->
-            Pager(
-                PagingConfig(
-                    pageSize = 15,
-                    enablePlaceholders = false
-                )
-            ) { dao.getAll(query) }
-                .flow
+    override fun searchNotes(
+        query: String
+    ): Flow<PagingData<NoteDataModel>> =
+        Pager(
+            PagingConfig(
+                pageSize = 15,
+                enablePlaceholders = false
+            )
+        ) {
+            dao.getAll(query)
         }
+            .flow
             .map { pagingData ->
                 pagingData.map { it.toData() }
             }

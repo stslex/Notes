@@ -1,14 +1,14 @@
 package com.stslex93.notes.feature.home.domain.interactor
 
 import androidx.paging.PagingData
-import com.stslex93.notes.core.notes.model.NoteDataModel
+import com.stslex93.notes.feature.home.domain.model.NoteDomain
 import kotlinx.coroutines.flow.Flow
 
 interface HomeInteractor {
 
-    val queryNotes: Flow<PagingData<NoteDataModel>>
+    fun queryNotes(query: String): Flow<PagingData<NoteDomain>>
 
     fun setQuery(query: String)
 
-    suspend fun deleteNote(noteIds: List<Int>)
+    suspend fun deleteNotes(noteIds: List<Int>)
 }

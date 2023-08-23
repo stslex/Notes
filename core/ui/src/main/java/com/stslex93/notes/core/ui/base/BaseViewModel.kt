@@ -8,7 +8,6 @@ import com.stslex93.notes.core.ui.base.store.Store.Event
 import com.stslex93.notes.core.ui.base.store.Store.State
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 open class BaseViewModel<out S : State, out E : Event, in A : Action>(
     private val store: Store<S, E, A>
@@ -18,12 +17,10 @@ open class BaseViewModel<out S : State, out E : Event, in A : Action>(
     val event: SharedFlow<E> = store.event
 
     init {
-        viewModelScope.launch {
-            store.init()
-        }
+        store.init(viewModelScope)
     }
 
     fun sendAction(action: A) {
-        store.sendAction(action)
+        store.processAction(action)
     }
 }

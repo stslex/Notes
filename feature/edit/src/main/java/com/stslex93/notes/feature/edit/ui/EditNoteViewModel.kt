@@ -9,10 +9,9 @@ import st.slex.csplashscreen.core.navigation.NavigationScreen
 class EditNoteViewModel(
     store: EditStore,
     private val navigator: Navigator,
-    arguments: AppArguments.NoteEdit
 ) : BaseViewModel<EditStore.State, EditStore.Event, EditStore.Action>(store) {
 
-    init {
+    fun init(arguments: AppArguments.NoteEdit) {
         sendAction(
             EditStore.Action.Init(
                 id = arguments.noteId,

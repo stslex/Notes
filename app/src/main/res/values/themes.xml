@@ -1,37 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="PrimaryTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-    </style>
+<resources>
 
-    <style name="PrimaryTheme.Custom">
-        <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:colorPrimary">@color/deep_purple_300</item>
-    </style>
-
-    <style name="PrimaryTheme.New">
-        <item name="android:statusBarColor">@color/primary</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:colorPrimary">@color/primary</item>
-    </style>
-
-    <style name="SplashScreen" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowBackground">@drawable/splash_screen_light</item>
-    </style>
-
-    <style name="CoordinatorLayoutEditText" parent="Theme.Material3.DynamicColors.DayNight">
-        <item name="android:background">@color/white</item>
-    </style>
+    <style name="Theme.Notes" parent="Theme.Material3.DayNight.NoActionBar" />
 </resources>

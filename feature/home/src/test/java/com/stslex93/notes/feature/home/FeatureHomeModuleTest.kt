@@ -14,12 +14,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.KoinApplication
 import org.koin.dsl.koinApplication
-import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.check.checkModules
+import org.koin.test.mock.MockProviderRule
 import org.mockito.Mockito
 
 class FeatureHomeModuleTest : KoinTest {
@@ -28,23 +26,23 @@ class FeatureHomeModuleTest : KoinTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    @Test
-    fun testModule() {
-        koinApplication {
-            koinApplication {
-                load<NoteRepository>()
-                load<Navigator>()
-                androidContext(Mockito.mock(Context::class.java))
-                modules(featureHomeModule)
-                checkModules()
-            }
-        }
+    @get:Rule
+    val mockProvider = MockProviderRule.create { clazz ->
+        Mockito.mock(clazz.java)
     }
 
-    private inline fun <reified T> KoinApplication.load() {
-        koin.loadModules(
-            listOf(module { single<T> { Mockito.mock(T::class.java) } })
-        )
+    @Test
+    fun `check koin definitions`() {
+        koinApplication {
+            koinApplication {
+                modules(featureHomeModule)
+                checkModules {
+                    withInstance<Context>()
+                    withInstance<NoteRepository>()
+                    withInstance<Navigator>()
+                }
+            }
+        }
     }
 }
 

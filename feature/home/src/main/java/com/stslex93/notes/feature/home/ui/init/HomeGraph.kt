@@ -13,7 +13,9 @@ fun NavGraphBuilder.homeGraph(
     composable(
         route = AppDestination.HOME.navigationRoute
     ) {
-        val viewModel = koinViewModel<HomeViewModel>()
+        val viewModel = koinViewModel<HomeViewModel>(
+            key = HomeViewModel::class.simpleName
+        )
         HomeScreeInit(
             modifier = modifier,
             viewModel = viewModel

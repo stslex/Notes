@@ -32,7 +32,9 @@ fun InitEditScreen(
         }
     }
 
-    val state by remember { viewModel.state }.collectAsState()
+    val state by remember(viewModel) {
+        viewModel.state
+    }.collectAsState()
 
     EditScreen(
         modifier = modifier,
