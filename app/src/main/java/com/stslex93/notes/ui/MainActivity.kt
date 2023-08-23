@@ -1,9 +1,10 @@
-package com.stslex93.notes
+package com.stslex93.notes.ui
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import com.stslex93.notes.R
 import com.stslex93.notes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

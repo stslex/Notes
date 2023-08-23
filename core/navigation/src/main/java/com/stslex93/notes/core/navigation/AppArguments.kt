@@ -16,10 +16,10 @@ sealed class AppArguments {
     }
 
     data class NoteEdit(
-        val noteId: String,
-        val isEdit: String,
+        val noteId: Int,
+        val isEdit: Boolean,
     ) : AppArguments() {
-        override val arguments = listOf(noteId, isEdit)
+        override val arguments = listOf(noteId.toString(), isEdit.toString())
     }
 
     companion object {
