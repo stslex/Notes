@@ -7,6 +7,7 @@ android.namespace = "com.stslex93.notes.feature.edit"
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":core:navigation"))
     implementation(project(":core:notes"))
 
     implementation(libs.bundles.room)
