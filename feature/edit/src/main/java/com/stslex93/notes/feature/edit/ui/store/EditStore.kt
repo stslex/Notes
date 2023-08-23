@@ -1,5 +1,6 @@
 package com.stslex93.notes.feature.edit.ui.store
 
+import androidx.compose.runtime.Stable
 import com.stslex93.notes.core.ui.base.store.Store
 import com.stslex93.notes.feature.edit.ui.model.Note
 import com.stslex93.notes.feature.edit.ui.store.EditStore.Action
@@ -10,6 +11,7 @@ import java.util.Locale
 
 interface EditStore : Store<State, Event, Action> {
 
+    @Stable
     data class State(
         val note: Note
     ) : Store.State {

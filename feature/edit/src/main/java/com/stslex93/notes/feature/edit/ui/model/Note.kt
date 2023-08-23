@@ -1,5 +1,8 @@
 package com.stslex93.notes.feature.edit.ui.model
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class Note(
     val uuid: Int,
     val title: String,

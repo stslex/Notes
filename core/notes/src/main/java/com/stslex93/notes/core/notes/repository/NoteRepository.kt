@@ -6,13 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface NoteRepository {
 
-    val searchNotes: Flow<PagingData<NoteDataModel>>
+    fun searchNotes(query: String): Flow<PagingData<NoteDataModel>>
 
     fun getNote(id: Int): Flow<NoteDataModel>
 
     fun getLastNote(): Flow<NoteDataModel>
-
-    fun search(query: String)
 
     suspend fun deleteNotesById(ids: List<Int>)
 
