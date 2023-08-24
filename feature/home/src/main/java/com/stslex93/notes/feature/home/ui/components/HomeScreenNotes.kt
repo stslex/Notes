@@ -1,5 +1,7 @@
 package com.stslex93.notes.feature.home.ui.components
 
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -9,6 +11,7 @@ import androidx.paging.compose.itemKey
 import com.stslex93.notes.feature.home.ui.model.Note
 import kotlinx.collections.immutable.ImmutableSet
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreenNotes(
     items: LazyPagingItems<Note>,
@@ -27,6 +30,8 @@ fun HomeScreenNotes(
         ) { index ->
             items[index]?.let { item ->
                 HomeScreenItemNote(
+                    modifier = Modifier
+                        .animateItemPlacement(tween(600)),
                     isSelected = selectedItems.contains(item.id),
                     item = item,
                     onClick = onClick,

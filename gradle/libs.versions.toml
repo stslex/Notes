@@ -44,6 +44,7 @@ androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", versi
 
 androidx-compose-activity = "androidx.activity:activity-compose:1.7.2"
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
@@ -102,11 +103,12 @@ accompanist = [
 compose = [
     "androidx-compose-activity",
     "androidx-compose-material3",
+    "androidx-compose-material",
     "androidx-compose-ui",
     "androidx-compose-tooling-preview",
     "androidx-compose-foundation",
     "androidx-compose-paging",
-    "coil-compose"
+    "coil-compose",
 ]
 
 android-test = [
