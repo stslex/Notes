@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import com.stslex93.notes.core.ui.theme.AppDimens
 import com.stslex93.notes.feature.edit.R
 import com.stslex93.notes.feature.edit.ui.store.EditStore
 
@@ -35,15 +35,14 @@ fun EditScreen(
             .fillMaxSize()
             .systemBarsPadding()
     ) {
-
         TextField(
             modifier = Modifier
                 .wrapContentHeight()
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = AppDimens.Padding.normal),
             value = state.note.title,
             onValueChange = onInputTitle,
-            maxLines = 1,
+            singleLine = true,
             label = {
                 Text(text = stringResource(id = R.string.title_hint))
             }
@@ -53,7 +52,7 @@ fun EditScreen(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(AppDimens.Padding.normal),
             value = state.note.content,
             onValueChange = onInputContent,
             label = {
@@ -76,7 +75,7 @@ fun EditScreen(
             FloatingActionButton(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .padding(16.dp),
+                    .padding(AppDimens.Padding.normal),
                 onClick = onBackButtonClicked
             ) {
                 Icon(
