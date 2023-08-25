@@ -54,14 +54,17 @@ fun HomeScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            HomeSearchNoteField(query = query, onClearClick = {
-                sendAction(Action.ClearSelection)
-            }, onTextChange = { value ->
-                sendAction(Action.QueryInput(value))
-            })
-            HomeScreenNotes(modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
+            HomeSearchNoteField(
+                query = query, onClearClick = {
+                    sendAction(Action.ClearSelection)
+                }, onTextChange = { value ->
+                    sendAction(Action.QueryInput(value))
+                }
+            )
+            HomeScreenNotes(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
                 items = notes,
                 selectedItems = selectedNotes,
                 onClick = { id ->
@@ -69,7 +72,8 @@ fun HomeScreen(
                 },
                 onLingClick = { id ->
                     sendAction(Action.OnNoteLongClick(id))
-                })
+                }
+            )
         }
 
         HomeScreenFloatingButton(

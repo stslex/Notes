@@ -41,7 +41,12 @@ class EditStoreImpl(
         val note = state.value.note
         if (note.title.isBlank() && note.content.isBlank()) return
         scope.launch {
-            interactor.insert(note.toDomain())
+            interactor.insert(
+                note.copy(
+                    title = note.title.trimEnd(),
+                    content = note.content.trimEnd()
+                ).toDomain()
+            )
         }
     }
 
@@ -66,7 +71,7 @@ class EditStoreImpl(
     }
 
     private fun initStore(action: Action.Init) {
-        if (action.isEdit) return
+        if (action.isEdit || action.id <= -1) return
         interactor.getNote(action.id)
             .onEach { note ->
                 updateState { currentState ->

@@ -6,6 +6,8 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -26,3 +28,21 @@ fun <T> SharedFlow<T>.CollectAsEvent(
             .launchIn(lifecycleOwner.lifecycleScope)
     }
 }
+
+fun <T> ImmutableSet<T>.removeItem(
+    item: T
+): ImmutableSet<T> = this.toMutableSet()
+    .apply {
+        remove(item)
+    }
+    .toImmutableSet()
+
+fun <T> ImmutableSet<T>.addItem(
+    item: T
+): ImmutableSet<T> = this.toMutableSet()
+    .apply {
+        add(item)
+    }
+    .toImmutableSet()
+
+fun <T> emptyImmutableSet(): ImmutableSet<T> = emptySet<T>().toImmutableSet()

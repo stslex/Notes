@@ -1,8 +1,10 @@
 package com.stslex93.notes.feature.home.ui.components
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -23,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.unit.dp
 import com.stslex93.notes.core.ui.theme.AppDimens
 import com.stslex93.notes.feature.home.ui.model.Note
 
@@ -44,7 +45,7 @@ fun HomeScreenItemNote(
         } else {
             MaterialTheme.colorScheme.surfaceVariant
         },
-        animationSpec = tween(600),
+        animationSpec = tween(300),
         label = "note color container animation"
     )
 
@@ -54,7 +55,7 @@ fun HomeScreenItemNote(
         } else {
             MaterialTheme.colorScheme.onSurfaceVariant
         },
-        animationSpec = tween(600),
+        animationSpec = tween(300),
         label = "note color text animation"
     )
 
@@ -65,10 +66,16 @@ fun HomeScreenItemNote(
             AppDimens.Padding.normal
         },
         animationSpec = spring(
-            dampingRatio = Spring.DampingRatioHighBouncy,
-            stiffness = Spring.StiffnessMedium
+            dampingRatio = Spring.DampingRatioLowBouncy,
+            stiffness = Spring.StiffnessLow
         ),
         label = "note padding animation"
+    )
+
+    val maxLines by animateIntAsState(
+        targetValue = if (isSelected) 5 else 3,
+        animationSpec = tween(300),
+        label = "animate note max lines"
     )
 
     Column(
@@ -77,7 +84,7 @@ fun HomeScreenItemNote(
             .fillMaxWidth()
             .wrapContentHeight()
             .shadow(
-                elevation = 8.dp,
+                elevation = AppDimens.Padding.medium,
                 shape = RoundedCornerShape(AppDimens.Corner.normal)
             )
             .background(colorBackground)
@@ -98,12 +105,15 @@ fun HomeScreenItemNote(
             text = item.title,
             color = colorText,
             style = MaterialTheme.typography.titleMedium,
+            maxLines = 1,
         )
         Spacer(modifier = Modifier.height(AppDimens.Padding.small))
         Text(
+            modifier = Modifier.animateContentSize(tween(300)),
             text = item.content,
             style = MaterialTheme.typography.bodyMedium,
-            color = colorText
+            color = colorText,
+            maxLines = maxLines
         )
     }
 }
