@@ -22,8 +22,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeStoreImpl(
+class HomeStoreImpl @Inject constructor(
     private val interactor: HomeInteractor
 ) : HomeStore, BaseStoreImpl<State, Event, Action>() {
 

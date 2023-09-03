@@ -1,31 +1,25 @@
 package com.stslex93.notes
 
 import android.app.Application
-import com.stslex93.notes.core.database.coreDatabaseModule
-import com.stslex93.notes.core.notes.di.coreNotesModule
-import com.stslex93.notes.feature.edit.di.featureEditModule
-import com.stslex93.notes.feature.home.di.featureHomeModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import com.stslex93.notes.core.core.AppApi
+import com.stslex93.notes.core.core.ApplicationApi
+import com.stslex93.notes.di.app.AppComponent
+import com.stslex93.notes.di.app.DaggerAppComponent
 
-class NoteApplication : Application() {
+class NoteApplication : Application(), ApplicationApi {
 
-    override fun onCreate() {
-        setUpKoin()
-        super.onCreate()
+    private val appComponent: AppComponent by lazy {
+        DaggerAppComponent
+            .builder()
+            .context(this)
+            .build()
     }
 
-    private fun setUpKoin() {
-        startKoin {
-            androidLogger()
-            androidContext(this@NoteApplication)
-            modules(
-                coreDatabaseModule,
-                coreNotesModule,
-                featureEditModule,
-                featureHomeModule,
-            )
-        }
+    override val appApi: AppApi
+        get() = appComponent
+
+    override fun onCreate() {
+        appComponent.inject(this)
+        super.onCreate()
     }
 }

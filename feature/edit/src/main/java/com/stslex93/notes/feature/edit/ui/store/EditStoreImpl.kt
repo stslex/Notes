@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditStoreImpl(
+class EditStoreImpl @Inject constructor(
     private val interactor: NoteEditInteractor
 ) : EditStore, BaseStoreImpl<State, Event, Action>() {
 

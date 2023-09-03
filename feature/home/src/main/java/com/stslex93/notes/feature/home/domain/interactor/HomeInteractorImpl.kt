@@ -7,8 +7,9 @@ import com.stslex93.notes.feature.home.domain.model.NoteDomain
 import com.stslex93.notes.feature.home.domain.model.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class HomeInteractorImpl(
+class HomeInteractorImpl @Inject constructor(
     private val repository: NoteRepository
 ) : HomeInteractor {
 

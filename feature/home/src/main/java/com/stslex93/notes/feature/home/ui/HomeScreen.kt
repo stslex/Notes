@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
@@ -108,7 +107,12 @@ fun HomeSearchNoteField(
                         dampingRatio = Spring.DampingRatioHighBouncy,
                         stiffness = Spring.StiffnessMedium
                     )
-                ), exit = scaleOut(tween(600))
+                ), exit = scaleOut(
+                    spring(
+                        dampingRatio = Spring.DampingRatioHighBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                )
             ) {
                 IconButton(onClick = {
                     hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)

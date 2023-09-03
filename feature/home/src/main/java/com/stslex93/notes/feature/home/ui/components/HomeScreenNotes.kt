@@ -1,6 +1,5 @@
 package com.stslex93.notes.feature.home.ui.components
 
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -30,8 +29,7 @@ fun HomeScreenNotes(
         ) { index ->
             items[index]?.let { item ->
                 HomeScreenItemNote(
-                    modifier = Modifier
-                        .animateItemPlacement(tween(300)),
+                    modifier = Modifier.animateItemPlacement(),
                     isSelected = selectedItems.contains(item.id),
                     item = item,
                     onClick = onClick,

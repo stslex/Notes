@@ -5,8 +5,9 @@ import com.stslex93.notes.feature.edit.domain.model.NoteDomainModel
 import com.stslex93.notes.feature.edit.domain.model.toData
 import com.stslex93.notes.feature.edit.domain.model.toDomain
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class NoteEditInteractorImpl(
+class NoteEditInteractorImpl @Inject constructor(
     private val repository: NoteRepository,
 ) : NoteEditInteractor {
 
