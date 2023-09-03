@@ -3,15 +3,16 @@ package com.stslex93.notes.feature.home.ui.store
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.stslex93.notes.core.ui.addItem
 import com.stslex93.notes.core.ui.base.store.BaseStoreImpl
+import com.stslex93.notes.core.ui.emptyImmutableSet
+import com.stslex93.notes.core.ui.removeItem
 import com.stslex93.notes.feature.home.domain.interactor.HomeInteractor
 import com.stslex93.notes.feature.home.ui.model.Note
 import com.stslex93.notes.feature.home.ui.model.toUI
 import com.stslex93.notes.feature.home.ui.store.HomeStore.Action
 import com.stslex93.notes.feature.home.ui.store.HomeStore.Event
 import com.stslex93.notes.feature.home.ui.store.HomeStore.State
-import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -28,7 +29,7 @@ class HomeStoreImpl(
 
     override val initialState = State(
         query = "",
-        selectedNotes = emptySet<Int>().toImmutableSet(),
+        selectedNotes = emptyImmutableSet(),
         notes = ::notes
     )
 
@@ -65,7 +66,7 @@ class HomeStoreImpl(
     private fun clearSelection() {
         updateState { currentState ->
             currentState.copy(
-                selectedNotes = emptySet<Int>().toImmutableSet(),
+                selectedNotes = emptyImmutableSet(),
                 query = ""
             )
         }
@@ -76,6 +77,9 @@ class HomeStoreImpl(
         if (items.isNotEmpty()) {
             scope.launch {
                 interactor.deleteNotes(items.toList())
+                updateState { currentState ->
+                    currentState.copy(selectedNotes = emptyImmutableSet())
+                }
             }
         } else {
             sendEvent(
@@ -124,20 +128,4 @@ class HomeStoreImpl(
             )
         }
     }
-
-    private fun <T> ImmutableSet<T>.removeItem(
-        item: T
-    ) = this.toMutableSet()
-        .apply {
-            remove(item)
-        }
-        .toImmutableSet()
-
-    private fun <T> ImmutableSet<T>.addItem(
-        item: T
-    ) = this.toMutableSet()
-        .apply {
-            add(item)
-        }
-        .toImmutableSet()
 }
