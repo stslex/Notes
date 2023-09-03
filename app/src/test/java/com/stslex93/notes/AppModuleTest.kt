@@ -1,4 +1,4 @@
-package com.stslex93.notes.data.di
+package com.stslex93.notes
 
 import android.content.Context
 import androidx.navigation.NavHostController
