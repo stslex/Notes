@@ -1,12 +1,13 @@
 [versions]
 androidDesugarJdkLibs = "2.0.3"
 kotlin = "1.9.0"
-androidGradlePlugin = "8.2.0-alpha16"
+androidGradlePlugin = "8.1.1"
 
 ktx = "1.10.1"
 material = "1.9.0"
 appcompat = "1.6.1"
 immutableCollection = "0.3.5"
+lifecycle = "2.6.1"
 
 composeCompiler = "1.5.1"
 composeBom = "2023.08.00"
@@ -19,8 +20,7 @@ room = "2.5.2"
 ksp = "1.9.0-1.0.13"
 mockito = "2.19.0"
 
-koin = "3.3.0"
-koinAndroid = "3.3.1"
+dagger = "2.48"
 
 junit = "4.13.2"
 androidxJunit = "1.1.5"
@@ -39,11 +39,14 @@ kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotli
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "ktx" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+lifecycle-viewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 
 androidx-compose-activity = "androidx.activity:activity-compose:1.7.2"
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
@@ -78,12 +81,8 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 
-koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
-
-koin-test-core = { module = "io.insert-koin:koin-test", version.ref = "koin" }
-koin-test-junit = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
+dagger-core = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -93,6 +92,10 @@ library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 [bundles]
+lifecycle = [
+    "lifecycle-compose",
+    "lifecycle-viewModel"
+]
 
 accompanist = [
     "accompanist-placeholder",
@@ -102,11 +105,13 @@ accompanist = [
 compose = [
     "androidx-compose-activity",
     "androidx-compose-material3",
+    "androidx-compose-material",
     "androidx-compose-ui",
     "androidx-compose-tooling-preview",
     "androidx-compose-foundation",
     "androidx-compose-paging",
-    "coil-compose"
+    "coil-compose",
+    "androidx-compose-navigation"
 ]
 
 android-test = [
@@ -121,14 +126,6 @@ test = [
     "robolectric",
     "androidx-test",
     "coroutine-test"
-]
-
-koin = [
-    "koin-core",
-    "koin-android",
-    "koin-androidx-compose",
-    "koin-test-core",
-    "koin-test-junit"
 ]
 
 room = [

@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditStoreImpl(
+class EditStoreImpl @Inject constructor(
     private val interactor: NoteEditInteractor
 ) : EditStore, BaseStoreImpl<State, Event, Action>() {
 
@@ -41,7 +42,12 @@ class EditStoreImpl(
         val note = state.value.note
         if (note.title.isBlank() && note.content.isBlank()) return
         scope.launch {
-            interactor.insert(note.toDomain())
+            interactor.insert(
+                note.copy(
+                    title = note.title.trimEnd(),
+                    content = note.content.trimEnd()
+                ).toDomain()
+            )
         }
     }
 
@@ -66,7 +72,7 @@ class EditStoreImpl(
     }
 
     private fun initStore(action: Action.Init) {
-        if (action.isEdit) return
+        if (action.isEdit || action.id <= -1) return
         interactor.getNote(action.id)
             .onEach { note ->
                 updateState { currentState ->

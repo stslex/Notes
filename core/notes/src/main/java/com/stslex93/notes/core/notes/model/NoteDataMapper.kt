@@ -1,6 +1,6 @@
 package com.stslex93.notes.core.notes.model
 
-import com.stslex93.notes.core.database.NoteEntity
+import com.stslex93.notes.core.database.model.NoteEntity
 
 fun NoteDataModel.toEntity() = NoteEntity(
     id = id,

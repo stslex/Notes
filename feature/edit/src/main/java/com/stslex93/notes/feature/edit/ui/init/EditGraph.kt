@@ -4,12 +4,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.stslex93.notes.core.navigation.AppArguments
-import com.stslex93.notes.core.navigation.AppDestination
-import com.stslex93.notes.core.navigation.NavExt.composableArguments
-import com.stslex93.notes.core.navigation.NavExt.parseArguments
-import com.stslex93.notes.feature.edit.ui.EditNoteViewModel
-import org.koin.androidx.compose.koinViewModel
+import com.stslex93.notes.core.navigation.model.AppArguments
+import com.stslex93.notes.core.navigation.model.AppDestination
+import com.stslex93.notes.core.navigation.utils.NavExt.composableArguments
+import com.stslex93.notes.core.navigation.utils.NavExt.parseArguments
+import com.stslex93.notes.feature.edit.di.setupComponent
 
 fun NavGraphBuilder.editGraph(
     modifier: Modifier = Modifier,
@@ -28,9 +27,7 @@ fun NavGraphBuilder.editGraph(
                 )
             }
 
-        val argKey = arguments.hashCode().toString()
-
-        val viewModel = koinViewModel<EditNoteViewModel>(key = argKey)
+        val viewModel = setupComponent(arguments.hashCode().toString())
 
         LaunchedEffect(Unit) {
             viewModel.init(arguments)

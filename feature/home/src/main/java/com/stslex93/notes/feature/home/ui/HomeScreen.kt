@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
@@ -54,14 +53,17 @@ fun HomeScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            HomeSearchNoteField(query = query, onClearClick = {
-                sendAction(Action.ClearSelection)
-            }, onTextChange = { value ->
-                sendAction(Action.QueryInput(value))
-            })
-            HomeScreenNotes(modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
+            HomeSearchNoteField(
+                query = query, onClearClick = {
+                    sendAction(Action.ClearSelection)
+                }, onTextChange = { value ->
+                    sendAction(Action.QueryInput(value))
+                }
+            )
+            HomeScreenNotes(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
                 items = notes,
                 selectedItems = selectedNotes,
                 onClick = { id ->
@@ -69,7 +71,8 @@ fun HomeScreen(
                 },
                 onLingClick = { id ->
                     sendAction(Action.OnNoteLongClick(id))
-                })
+                }
+            )
         }
 
         HomeScreenFloatingButton(
@@ -104,7 +107,12 @@ fun HomeSearchNoteField(
                         dampingRatio = Spring.DampingRatioHighBouncy,
                         stiffness = Spring.StiffnessMedium
                     )
-                ), exit = scaleOut(tween(600))
+                ), exit = scaleOut(
+                    spring(
+                        dampingRatio = Spring.DampingRatioHighBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                )
             ) {
                 IconButton(onClick = {
                     hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)

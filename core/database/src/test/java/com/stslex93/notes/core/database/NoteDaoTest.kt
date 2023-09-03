@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.paging.PagingSource
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import com.stslex93.notes.core.database.database.NoteRoomDatabase
+import com.stslex93.notes.core.database.model.NoteEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

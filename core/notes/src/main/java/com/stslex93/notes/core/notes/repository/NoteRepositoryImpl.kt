@@ -13,8 +13,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NoteRepositoryImpl(
+@Singleton
+class NoteRepositoryImpl @Inject constructor(
     private val dao: NoteDao,
 ) : NoteRepository {
 
@@ -31,8 +34,8 @@ class NoteRepositoryImpl(
     ): Flow<PagingData<NoteDataModel>> =
         Pager(
             PagingConfig(
-                pageSize = 15,
-                enablePlaceholders = false
+                pageSize = PAGE_SIZE,
+                enablePlaceholders = IS_PLACEHOLDER_ENABLE
             )
         ) {
             dao.getAll(query)
@@ -59,5 +62,10 @@ class NoteRepositoryImpl(
         withContext(Dispatchers.IO) {
             dao.insertAll(notes.map { it.toEntity() })
         }
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 15
+        private const val IS_PLACEHOLDER_ENABLE = false
     }
 }
