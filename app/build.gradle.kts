@@ -1,15 +1,10 @@
-import java.io.FileInputStream
-import java.io.InputStreamReader
-import java.util.Properties
-
 plugins {
     id("notes.android.application")
     id("notes.android.application.compose")
 }
 
-android.namespace = "com.stslex93.notes"
-
 dependencies {
+    implementation(project(":core:core"))
     implementation(project(":core:ui"))
     implementation(project(":core:database"))
     implementation(project(":core:notes"))
@@ -17,3 +12,5 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:edit"))
 }
+
+android.namespace = "com.stslex93.notes"

@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.stslex93.notes.core.database.NoteEntity
+import com.stslex93.notes.core.database.model.NoteEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

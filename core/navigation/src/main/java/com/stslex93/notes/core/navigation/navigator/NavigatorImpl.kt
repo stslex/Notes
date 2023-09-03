@@ -1,16 +1,23 @@
 package com.stslex93.notes.core.navigation.navigator
 
 import androidx.navigation.NavHostController
-import st.slex.csplashscreen.core.navigation.NavigationScreen
+import com.stslex.aproselection.core.core.Logger
+import com.stslex93.notes.core.navigation.model.NavigationScreen
+import com.stslex93.notes.core.ui.di.Navigator
+import com.stslex93.notes.core.ui.di.Screen
+import javax.inject.Inject
 
-class NavigatorImpl(
+class NavigatorImpl @Inject constructor(
     private val navController: NavHostController
 ) : Navigator {
 
-    override fun invoke(screen: NavigationScreen) {
+    override fun invoke(screen: Screen) {
         when (screen) {
             is NavigationScreen.PopBackStack -> navController.popBackStack()
-            else -> navigateScreen(screen)
+            is NavigationScreen -> navigateScreen(screen)
+            else -> {
+                Logger.debug("unresolve navigation route", this::class.simpleName)
+            }
         }
     }
 

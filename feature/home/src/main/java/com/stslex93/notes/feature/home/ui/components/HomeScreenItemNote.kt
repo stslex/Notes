@@ -84,7 +84,7 @@ fun HomeScreenItemNote(
             .fillMaxWidth()
             .wrapContentHeight()
             .shadow(
-                elevation = AppDimens.Padding.medium,
+                elevation = AppDimens.Padding.small,
                 shape = RoundedCornerShape(AppDimens.Corner.normal)
             )
             .background(colorBackground)

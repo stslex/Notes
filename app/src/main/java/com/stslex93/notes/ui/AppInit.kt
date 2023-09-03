@@ -19,7 +19,7 @@ fun AppInit(
 ) {
     val systemUiController = rememberSystemUiController()
     val isDarkTheme = isSystemInDarkTheme()
-    
+
     DisposableEffect(systemUiController, isDarkTheme) {
         systemUiController.setSystemBarsColor(
             color = Color.Transparent,
