@@ -1,7 +1,8 @@
 
 [![Android CI/CD](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml) \
-[![Deploy beta Store](https://github.com/stslex/Notes/actions/workflows/android_deploy_beta.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml) \
-[![Deploy prod Store](https://github.com/stslex/Notes/actions/workflows/android_deploy_prod.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/android_jobs.yml)
+[![Report test result](https://github.com/stslex/Notes/actions/workflows/testReportJob.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/testReportJob.yml) \
+[![Deploy beta Store](https://github.com/stslex/Notes/actions/workflows/android_deploy_beta.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/android_deploy_beta.yml) \
+[![Deploy prod Store](https://github.com/stslex/Notes/actions/workflows/android_deploy_prod.yml/badge.svg)](https://github.com/stslex/Notes/actions/workflows/android_deploy_prod.yml)
 
 https://stslex.github.io/Notes/
 
