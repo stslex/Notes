@@ -13,12 +13,14 @@ import com.stslex93.notes.feature.home.ui.model.toUI
 import com.stslex93.notes.feature.home.ui.store.HomeStore.Action
 import com.stslex93.notes.feature.home.ui.store.HomeStore.Event
 import com.stslex93.notes.feature.home.ui.store.HomeStore.State
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -43,11 +45,12 @@ class HomeStoreImpl @Inject constructor(
                 currentState.query
             }
             .distinctUntilChanged()
-            .flatMapLatest(interactor::queryNotes)
+            .flatMapLatest(interactor::searchNotes)
             .map { pagingData ->
                 pagingData.map { note -> note.toUI() }
             }
             .cachedIn(scope)
+            .flowOn(Dispatchers.IO)
             .stateIn(
                 scope = scope,
                 started = SharingStarted.Lazily,
@@ -76,7 +79,7 @@ class HomeStoreImpl @Inject constructor(
     private fun onNoteCreateClick() {
         val items = state.value.selectedNotes
         if (items.isNotEmpty()) {
-            scope.launch {
+            scope.launch(Dispatchers.IO) {
                 interactor.deleteNotes(items.toList())
                 updateState { currentState ->
                     currentState.copy(selectedNotes = emptyImmutableSet())

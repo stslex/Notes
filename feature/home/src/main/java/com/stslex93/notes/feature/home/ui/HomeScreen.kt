@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.stslex93.notes.core.ui.emptyImmutableSet
 import com.stslex93.notes.core.ui.theme.AppDimens
 import com.stslex93.notes.core.ui.theme.PreviewTheme
 import com.stslex93.notes.feature.home.ui.components.HomeScreenFloatingButton
@@ -140,7 +141,8 @@ fun HomeScreenPreview() {
                         id = index,
                         title = "title $index",
                         content = "content: $index",
-                        timestamp = 0
+                        timestamp = 0,
+                        labels = emptyImmutableSet()
                     )
                 }.toList()
             )

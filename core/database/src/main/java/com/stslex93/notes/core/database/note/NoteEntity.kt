@@ -16,5 +16,5 @@ data class NoteEntity(
     @ColumnInfo(name = "timestamp")
     val timestamp: Long,
     @ColumnInfo(name = "labels")
-    val labels: List<String>
+    val labels: Set<String>
 )

@@ -11,7 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface LabelDao {
 
     @Query("SELECT * FROM label_table WHERE uuid = :uuid LIMIT 1")
-    fun getLabel(uuid: String): Flow<LabelEntity>
+    fun getLabel(uuid: String): LabelEntity
+
+    @Query("SELECT * FROM label_table WHERE uuid in (:uuids)")
+    fun getLabels(uuids: Set<String>): Set<LabelEntity>
 
     @Query("SELECT * FROM label_table WHERE uuid in (:uuids)")
     fun getMatchLabels(uuids: List<String>): Flow<List<LabelEntity>>
