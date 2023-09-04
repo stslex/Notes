@@ -5,7 +5,8 @@ import androidx.paging.PagingSource
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.stslex93.notes.core.database.database.NoteRoomDatabase
-import com.stslex93.notes.core.database.model.NoteEntity
+import com.stslex93.notes.core.database.note.NoteDao
+import com.stslex93.notes.core.database.note.NoteEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -27,7 +28,7 @@ class NoteDaoTest {
             context, NoteRoomDatabase::class.java,
             DATABASE_NAME
         ).build()
-        dao = database.dao
+        dao = database.noteDao
     }
 
     @Test
@@ -56,7 +57,7 @@ class NoteDaoTest {
 
     @Test
     fun getNotesById() = runBlocking(Dispatchers.IO) {
-        dao.insertAll(testListOfNotes)
+        testListOfNotes.forEach { dao.insert(it) }
         val listOfIds = dao.getAllNotes().map { it.id.toString() }
         if (listOfIds.isEmpty()) {
             Assert.fail()
@@ -67,12 +68,12 @@ class NoteDaoTest {
 
     @Test
     fun deleteNotesById() = runBlocking(Dispatchers.IO) {
-        dao.insertAll(testListOfNotes)
+        testListOfNotes.forEach { dao.insert(it) }
         val listOfIds = dao.getAllNotes().map { it.id }
         if (listOfIds.isEmpty()) {
             Assert.fail()
         }
-        dao.insertAll(testListOfNotes)
+        testListOfNotes.forEach { dao.insert(it) }
         dao.deleteNotesById(listOfIds)
         val allNotes = dao.getAllNotes()
         val isNotContains = allNotes.isEmpty() || allNotes.any { listOfIds.contains(it.id).not() }
@@ -82,7 +83,7 @@ class NoteDaoTest {
     @Test
     fun insertAll() = runBlocking(Dispatchers.IO) {
         val beforeInsert = dao.getAllNotes().size
-        dao.insertAll(testListOfNotes)
+        testListOfNotes.forEach { dao.insert(it) }
         val afterInsert = dao.getAllNotes().size
         Assert.assertNotEquals(beforeInsert, afterInsert)
     }
@@ -90,7 +91,7 @@ class NoteDaoTest {
     @Test
     fun deleteAll() = runBlocking(Dispatchers.IO) {
         val beforeInsert = dao.getAllNotes().size
-        dao.insertAll(testListOfNotes)
+        testListOfNotes.forEach { dao.insert(it) }
         val afterInsert = dao.getAllNotes().size
         Assert.assertNotEquals(beforeInsert, afterInsert)
         dao.deleteAll()
@@ -100,7 +101,7 @@ class NoteDaoTest {
     @Test
     fun getAll() = runBlocking(Dispatchers.IO) {
         dao.deleteAll()
-        dao.insertAll(testListOfNotes)
+        testListOfNotes.forEach { dao.insert(it) }
         val mockedItems = dao.getAllNotes()
         val pagingSource = dao.getAll("")
         val loadResult = pagingSource.load(
@@ -122,7 +123,7 @@ class NoteDaoTest {
         get() = contains(testNote.copy(id = last().id))
 
     private val testNote: NoteEntity by lazy {
-        NoteEntity(0, "title", "content", System.currentTimeMillis())
+        NoteEntity(0, "title", "content", System.currentTimeMillis(), emptyList())
     }
 
     companion object {

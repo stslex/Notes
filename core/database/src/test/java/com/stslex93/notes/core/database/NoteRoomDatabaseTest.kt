@@ -3,6 +3,7 @@ package com.stslex93.notes.core.database
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import com.stslex93.notes.core.database.note.NoteDao
 import com.stslex93.notes.core.database.database.NoteRoomDatabase
 import org.junit.AfterClass
 import org.junit.Assert
@@ -27,7 +28,7 @@ class NoteRoomDatabaseTest {
 
     @Test
     fun t1GetDao() {
-        _dao = database.dao
+        _dao = database.noteDao
         Assert.assertNotNull(dao)
     }
 
