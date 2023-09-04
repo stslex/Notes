@@ -10,11 +10,7 @@ interface NoteRepository {
 
     fun getNote(id: Int): Flow<NoteDataModel>
 
-    fun getLastNote(): Flow<NoteDataModel>
-
     suspend fun deleteNotesById(ids: List<Int>)
 
     suspend fun insert(note: NoteDataModel)
-
-    suspend fun insertAll(notes: List<NoteDataModel>)
 }

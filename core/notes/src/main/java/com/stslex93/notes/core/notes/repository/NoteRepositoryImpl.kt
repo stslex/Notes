@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.stslex93.notes.core.database.NoteDao
+import com.stslex93.notes.core.database.note.NoteDao
 import com.stslex93.notes.core.notes.model.NoteDataModel
 import com.stslex93.notes.core.notes.model.toData
 import com.stslex93.notes.core.notes.model.toEntity
@@ -22,10 +22,6 @@ class NoteRepositoryImpl @Inject constructor(
 ) : NoteRepository {
 
     override fun getNote(id: Int): Flow<NoteDataModel> = dao.getNote(id = id)
-        .map { it.toData() }
-        .flowOn(Dispatchers.IO)
-
-    override fun getLastNote(): Flow<NoteDataModel> = dao.getLastNote()
         .map { it.toData() }
         .flowOn(Dispatchers.IO)
 
@@ -55,12 +51,6 @@ class NoteRepositoryImpl @Inject constructor(
     override suspend fun insert(note: NoteDataModel) {
         withContext(Dispatchers.IO) {
             dao.insert(note = note.toEntity())
-        }
-    }
-
-    override suspend fun insertAll(notes: List<NoteDataModel>) {
-        withContext(Dispatchers.IO) {
-            dao.insertAll(notes.map { it.toEntity() })
         }
     }
 
