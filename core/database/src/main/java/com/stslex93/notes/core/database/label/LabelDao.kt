@@ -14,7 +14,7 @@ interface LabelDao {
     fun getLabel(uuid: String): LabelEntity
 
     @Query("SELECT * FROM label_table WHERE uuid in (:uuids)")
-    fun getLabels(uuids: Set<String>): Set<LabelEntity>
+    fun getLabels(uuids: Set<String>): List<LabelEntity>
 
     @Query("SELECT * FROM label_table WHERE uuid in (:uuids)")
     fun getMatchLabels(uuids: List<String>): Flow<List<LabelEntity>>

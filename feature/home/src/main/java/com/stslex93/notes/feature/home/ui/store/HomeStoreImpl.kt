@@ -64,7 +64,13 @@ class HomeStoreImpl @Inject constructor(
             is Action.QueryInput -> onQueryInput(action)
             is Action.OnNoteFloatingButtonClick -> onNoteCreateClick()
             is Action.ClearSelection -> clearSelection()
+            is Action.OnLabelEditClick -> onLabelEditClick()
         }
+    }
+
+    private fun onLabelEditClick() {
+        val selectedIds = state.value.selectedNotes
+        sendEvent(Event.Navigation.EditLabel(selectedIds))
     }
 
     private fun clearSelection() {

@@ -43,9 +43,7 @@ class LabelRepositoryImpl @Inject constructor(
     override suspend fun getAllLabels(
         uuids: Set<String>
     ): Set<LabelDataModel> = withContext(Dispatchers.IO) {
-        dao.getLabels(uuids)
-            .map { it.toData() }
-            .toSet()
+        dao.getLabels(uuids).map { it.toData() }.toSet()
     }
 
     override fun searchLabels(
