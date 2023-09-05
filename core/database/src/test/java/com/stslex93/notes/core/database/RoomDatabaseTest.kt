@@ -3,7 +3,6 @@ package com.stslex93.notes.core.database
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.stslex93.notes.core.database.note.NoteDao
 import com.stslex93.notes.core.database.database.NoteRoomDatabase
 import org.junit.AfterClass
 import org.junit.Assert
@@ -12,11 +11,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class NoteRoomDatabaseTest {
-
-    private var _dao: NoteDao? = null
-    private val dao: NoteDao
-        get() = checkNotNull(_dao)
+class RoomDatabaseTest {
 
     init {
         val context: Context = ApplicationProvider.getApplicationContext()
@@ -27,9 +22,15 @@ class NoteRoomDatabaseTest {
     }
 
     @Test
-    fun t1GetDao() {
-        _dao = database.noteDao
-        Assert.assertNotNull(dao)
+    fun noteDao() {
+        val noteDao = database.noteDao
+        Assert.assertNotNull(noteDao)
+    }
+
+    @Test
+    fun labelDao() {
+        val labelDao = database.labelDao
+        Assert.assertNotNull(labelDao)
     }
 
     companion object {

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.AfterClass
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -31,28 +32,56 @@ class NoteDaoTest {
         dao = database.noteDao
     }
 
+    @Before
+    fun beforeTest() = runBlocking(Dispatchers.IO) {
+        dao.deleteAll()
+    }
+
     @Test
-    fun insertSingleNote() = runBlocking(Dispatchers.IO) {
-        val notesSize = dao.getAllNotes().size
-        dao.insert(testNote)
-        val notes = dao.getAllNotes()
-        val notesSizeAssert = notesSize.plus(1)
-        Assert.assertEquals(notesSizeAssert, notes.size)
-        Assert.assertTrue(notes.containsCurrentItem)
+    fun getAll() = runBlocking(Dispatchers.IO) {
+        dao.deleteAll()
+        testListOfNotes.forEach { note ->
+            dao.insert(note)
+        }
+        val mockedItems = dao.getAllNotes()
+        val pagingSource = dao.getAll("")
+        val loadResult = pagingSource.load(
+            PagingSource.LoadParams.Refresh(
+                key = null,
+                loadSize = mockedItems.size,
+                placeholdersEnabled = false
+            )
+        )
+        val actual = (loadResult as? PagingSource.LoadResult.Page)?.data
+        Assert.assertEquals(actual, mockedItems)
     }
 
     @Test
     fun getAllNotes() = runBlocking(Dispatchers.IO) {
+        dao.deleteAll()
+        dao.insert(testNote)
         val notes = dao.getAllNotes()
-        Assert.assertNotNull(notes)
+        Assert.assertTrue(notes.isNotEmpty())
+    }
+
+    @Test
+    fun getNoteFlow() = runBlocking(Dispatchers.IO) {
+        val expectedNote = testNote.copy(
+            id = testNote.hashCode()
+        )
+        dao.insert(expectedNote)
+        val compareNote = dao.getNoteFlow(expectedNote.id).first()
+        Assert.assertEquals(expectedNote, compareNote)
     }
 
     @Test
     fun getNote() = runBlocking(Dispatchers.IO) {
-        dao.insert(testNote)
-        val checkingNote = dao.getAllNotes().first()
-        val compareNote = dao.getNoteFlow(checkingNote.id).first()
-        Assert.assertEquals(checkingNote, compareNote)
+        val expectedNote = testNote.copy(
+            id = testNote.hashCode()
+        )
+        dao.insert(expectedNote)
+        val compareNote = dao.getNote(expectedNote.id)
+        Assert.assertEquals(expectedNote, compareNote)
     }
 
     @Test
@@ -64,6 +93,16 @@ class NoteDaoTest {
         }
         val compareListOfIds = dao.getNotesById(listOfIds).first().map { it.id.toString() }
         Assert.assertEquals(listOfIds, compareListOfIds)
+    }
+
+    @Test
+    fun insertSingleNote() = runBlocking(Dispatchers.IO) {
+        val notesSize = dao.getAllNotes().size
+        dao.insert(testNote)
+        val notes = dao.getAllNotes()
+        val notesSizeAssert = notesSize.plus(1)
+        Assert.assertEquals(notesSizeAssert, notes.size)
+        Assert.assertTrue(notes.containsCurrentItem)
     }
 
     @Test
@@ -98,23 +137,6 @@ class NoteDaoTest {
         Assert.assertTrue(dao.getAllNotes().isEmpty())
     }
 
-    @Test
-    fun getAll() = runBlocking(Dispatchers.IO) {
-        dao.deleteAll()
-        testListOfNotes.forEach { dao.insert(it) }
-        val mockedItems = dao.getAllNotes()
-        val pagingSource = dao.getAll("")
-        val loadResult = pagingSource.load(
-            PagingSource.LoadParams.Refresh(
-                key = null,
-                loadSize = mockedItems.size,
-                placeholdersEnabled = false
-            )
-        )
-        val actual = (loadResult as? PagingSource.LoadResult.Page)?.data
-        Assert.assertEquals(actual, mockedItems)
-    }
-
     private val testListOfNotes: List<NoteEntity> by lazy {
         listOf(testNote, testNote, testNote, testNote)
     }
@@ -123,7 +145,7 @@ class NoteDaoTest {
         get() = contains(testNote.copy(id = last().id))
 
     private val testNote: NoteEntity by lazy {
-        NoteEntity(0, "title", "content", System.currentTimeMillis(), emptyList())
+        NoteEntity(0, "title", "content", System.currentTimeMillis(), emptySet())
     }
 
     companion object {
