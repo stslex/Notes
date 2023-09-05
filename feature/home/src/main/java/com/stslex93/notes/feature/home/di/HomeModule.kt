@@ -6,6 +6,8 @@ import com.stslex93.notes.core.ui.base.ViewModelFactory
 import com.stslex93.notes.core.ui.di.ViewModelKey
 import com.stslex93.notes.feature.home.domain.interactor.HomeInteractor
 import com.stslex93.notes.feature.home.domain.interactor.HomeInteractorImpl
+import com.stslex93.notes.feature.home.navigation.HomeRouter
+import com.stslex93.notes.feature.home.navigation.HomeRouterImpl
 import com.stslex93.notes.feature.home.ui.HomeViewModel
 import com.stslex93.notes.feature.home.ui.store.HomeStore
 import com.stslex93.notes.feature.home.ui.store.HomeStoreImpl
@@ -29,5 +31,10 @@ interface HomeModule {
     fun bindsInteractor(impl: HomeInteractorImpl): HomeInteractor
 
     @Binds
+    @HomeScope
     fun bindsStore(impl: HomeStoreImpl): HomeStore
+
+    @Binds
+    @HomeScope
+    fun bindRouter(impl: HomeRouterImpl): HomeRouter
 }

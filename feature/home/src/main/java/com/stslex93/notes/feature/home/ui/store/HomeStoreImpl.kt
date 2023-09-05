@@ -92,12 +92,7 @@ class HomeStoreImpl @Inject constructor(
                 }
             }
         } else {
-            sendEvent(
-                Event.Navigation.EditNote(
-                    noteId = -1,
-                    isEdit = true
-                )
-            )
+            sendEvent(Event.Navigation.CreateNote)
         }
     }
 
@@ -118,10 +113,7 @@ class HomeStoreImpl @Inject constructor(
             updateSelectedNotes(action.id)
         } else {
             sendEvent(
-                Event.Navigation.EditNote(
-                    noteId = action.id,
-                    isEdit = false
-                )
+                Event.Navigation.EditNote(action.id)
             )
         }
     }

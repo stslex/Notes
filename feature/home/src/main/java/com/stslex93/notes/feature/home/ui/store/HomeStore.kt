@@ -54,9 +54,11 @@ interface HomeStore : Store<State, Event, Action> {
         sealed interface Navigation : Event {
 
             @Stable
+            data object CreateNote : Navigation
+
+            @Stable
             data class EditNote(
                 val noteId: Int,
-                val isEdit: Boolean
             ) : Navigation
 
             @Stable
