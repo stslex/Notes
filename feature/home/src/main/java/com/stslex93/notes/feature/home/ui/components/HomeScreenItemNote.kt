@@ -146,7 +146,6 @@ fun HomeScreenItemNotePreview() {
             Label(
                 uuid = "uuid$it",
                 title = "label$it ".repeat(it.coerceAtLeast(1)),
-                color = MaterialTheme.colorScheme.inverseOnSurface
             )
         }.toSet().toImmutableSet()
         Box(

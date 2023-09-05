@@ -6,13 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface LabelRepository {
 
-    val allLabels: Flow<PagingData<LabelDataModel>>
-
     suspend fun addLabel(label: LabelDataModel)
 
     suspend fun removeLabel(uuid: String)
-
-    suspend fun getLabel(uuid: String): LabelDataModel
 
     suspend fun getAllLabels(uuids: Set<String>): Set<LabelDataModel>
 

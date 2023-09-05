@@ -14,5 +14,4 @@ fun NoteDataModel.toDomain(labels: Set<LabelDomain>) = NoteDomain(
 fun LabelDataModel.toDomain(): LabelDomain = LabelDomain(
     uuid = uuid,
     title = title,
-    colorRgb = colorRgb
 )

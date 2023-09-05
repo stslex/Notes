@@ -8,7 +8,9 @@ interface NoteRepository {
 
     fun searchNotes(query: String): Flow<PagingData<NoteDataModel>>
 
-    fun getNote(id: Int): Flow<NoteDataModel>
+    fun getNoteFlow(id: Int): Flow<NoteDataModel>
+
+    suspend fun getNote(id: Int): NoteDataModel
 
     suspend fun deleteNotesById(ids: List<Int>)
 

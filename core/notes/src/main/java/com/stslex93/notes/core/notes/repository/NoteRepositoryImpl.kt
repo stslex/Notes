@@ -21,9 +21,15 @@ class NoteRepositoryImpl @Inject constructor(
     private val dao: NoteDao,
 ) : NoteRepository {
 
-    override fun getNote(id: Int): Flow<NoteDataModel> = dao.getNote(id = id)
+    override fun getNoteFlow(id: Int): Flow<NoteDataModel> = dao.getNoteFlow(id = id)
         .map { it.toData() }
         .flowOn(Dispatchers.IO)
+
+    override suspend fun getNote(
+        id: Int
+    ): NoteDataModel = withContext(Dispatchers.IO) {
+        dao.getNote(id).toData()
+    }
 
     override fun searchNotes(
         query: String
