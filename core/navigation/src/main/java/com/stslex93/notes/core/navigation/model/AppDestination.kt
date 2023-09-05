@@ -3,6 +3,7 @@ package com.stslex93.notes.core.navigation.model
 enum class AppDestination(vararg val argsNames: String) {
     HOME,
     NOTE_EDIT("noteId", "isEdit"),
+    LABEL_EDIT("noteIds"),
     UNDEFINED;
 
     val route: String

@@ -7,12 +7,13 @@ fun NoteDataModel.toEntity() = NoteEntity(
     title = title,
     content = content,
     timestamp = timestamp,
-    labels = emptyList()
+    labels = labelUuids
 )
 
 fun NoteEntity.toData() = NoteDataModel(
     id = id,
     title = title,
     content = content,
-    timestamp = timestamp
+    timestamp = timestamp,
+    labelUuids = labels
 )

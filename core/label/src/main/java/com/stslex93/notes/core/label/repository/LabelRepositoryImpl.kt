@@ -8,8 +8,6 @@ import com.stslex93.notes.core.label.model.LabelDataModel
 import com.stslex93.notes.core.label.repository.LabelPagerExt.getPagingLabels
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,13 +34,17 @@ class LabelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getLabel(
+    override suspend fun getLabel(
         uuid: String
-    ): Flow<LabelDataModel> = dao.getLabel(uuid)
-        .map { label ->
-            label.toData()
-        }
-        .flowOn(Dispatchers.IO)
+    ): LabelDataModel = withContext(Dispatchers.IO) {
+        dao.getLabel(uuid).toData()
+    }
+
+    override suspend fun getAllLabels(
+        uuids: Set<String>
+    ): Set<LabelDataModel> = withContext(Dispatchers.IO) {
+        dao.getLabels(uuids).map { it.toData() }.toSet()
+    }
 
     override fun searchLabels(
         query: String

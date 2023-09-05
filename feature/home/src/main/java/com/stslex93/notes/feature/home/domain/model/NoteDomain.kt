@@ -5,4 +5,5 @@ data class NoteDomain(
     val title: String,
     val content: String,
     val timestamp: Long,
+    val labels: Set<LabelDomain>
 )

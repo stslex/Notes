@@ -28,6 +28,13 @@ sealed class NavigationScreen : Screen {
         override val appArgs: AppArguments = AppArguments.NoteEdit(noteId, isEdit)
     }
 
+    data class EditLabelScreen(
+        private val noteIds: Set<Int>
+    ) : NavigationScreen() {
+        override val screen = AppDestination.LABEL_EDIT
+        override val appArgs = AppArguments.LabelEdit(noteIds)
+    }
+
     data object PopBackStack : NavigationScreen() {
 
         override val screen: AppDestination = AppDestination.UNDEFINED

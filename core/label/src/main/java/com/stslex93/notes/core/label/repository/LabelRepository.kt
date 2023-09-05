@@ -12,7 +12,9 @@ interface LabelRepository {
 
     suspend fun removeLabel(uuid: String)
 
-    fun getLabel(uuid: String): Flow<LabelDataModel>
+    suspend fun getLabel(uuid: String): LabelDataModel
+
+    suspend fun getAllLabels(uuids: Set<String>): Set<LabelDataModel>
 
     fun searchLabels(query: String): Flow<PagingData<LabelDataModel>>
 }

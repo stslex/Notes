@@ -7,15 +7,15 @@ class Converters {
 
     @TypeConverter
     fun jsonListString(
-        value: List<String>?
-    ): String = Gson().toJson(value ?: emptyList<String>())
+        value: Set<String>?
+    ): String = Gson().toJson(value ?: emptySet<String>())
 
     @TypeConverter
     fun jsonToListString(
         value: String
-    ): List<String> = if (value.isBlank()) {
-        emptyList()
+    ): Set<String> = if (value.isBlank()) {
+        emptySet()
     } else {
-        Gson().fromJson(value, Array<String>::class.java).toList()
+        Gson().fromJson(value, Array<String>::class.java).toSet()
     }
 }
