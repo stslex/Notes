@@ -3,7 +3,6 @@ package com.stslex93.notes.feature.home.ui.components
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -58,7 +57,6 @@ fun HomeScreenNotesPreview() {
             Label(
                 uuid = "uuid$it",
                 title = "label$it ".repeat(it.coerceAtLeast(1)),
-                color = MaterialTheme.colorScheme.inverseOnSurface
             )
         }.toSet().toImmutableSet()
         val notes = Array(10) {

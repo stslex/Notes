@@ -23,6 +23,7 @@ class EditStoreImpl @Inject constructor(
             uuid = 0,
             title = "",
             content = "",
+            labelUuids = emptySet(),
             timestamp = System.currentTimeMillis()
         )
     )

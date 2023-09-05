@@ -30,6 +30,6 @@ sealed class AppArguments {
 
     companion object {
         private const val ARGUMENTS_SEPARATOR = "/"
-        private const val LIST_SEPARATOR = "="
+        const val LIST_SEPARATOR = "="
     }
 }

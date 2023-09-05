@@ -51,7 +51,7 @@ class NoteDaoTest {
     fun getNote() = runBlocking(Dispatchers.IO) {
         dao.insert(testNote)
         val checkingNote = dao.getAllNotes().first()
-        val compareNote = dao.getNote(checkingNote.id).first()
+        val compareNote = dao.getNoteFlow(checkingNote.id).first()
         Assert.assertEquals(checkingNote, compareNote)
     }
 

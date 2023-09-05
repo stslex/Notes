@@ -7,5 +7,6 @@ data class Note(
     val uuid: Int,
     val title: String,
     val content: String,
-    val timestamp: Long
+    val timestamp: Long,
+    val labelUuids: Set<String>
 )

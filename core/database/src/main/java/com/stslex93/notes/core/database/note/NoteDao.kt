@@ -22,7 +22,10 @@ interface NoteDao {
     fun getAllNotes(): List<NoteEntity>
 
     @Query("SELECT * FROM note_table WHERE id=:id")
-    fun getNote(id: Int): Flow<NoteEntity>
+    fun getNoteFlow(id: Int): Flow<NoteEntity>
+
+    @Query("SELECT * FROM note_table WHERE id=:id")
+    suspend fun getNote(id: Int): NoteEntity
 
     @Query("SELECT * FROM note_table WHERE id IN (:ids)")
     fun getNotesById(ids: List<String>): Flow<List<NoteEntity>>

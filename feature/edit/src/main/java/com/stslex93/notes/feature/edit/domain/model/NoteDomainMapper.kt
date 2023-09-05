@@ -6,12 +6,14 @@ fun NoteDataModel.toDomain() = NoteDomainModel(
     id = id,
     title = title,
     content = content,
-    timestamp = timestamp
+    timestamp = timestamp,
+    labelUuids = labelUuids
 )
 
 fun NoteDomainModel.toData() = NoteDataModel(
     id = id,
     title = title,
     content = content,
-    timestamp = timestamp
+    timestamp = timestamp,
+    labelUuids = labelUuids
 )

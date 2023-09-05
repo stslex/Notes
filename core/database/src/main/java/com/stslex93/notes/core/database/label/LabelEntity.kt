@@ -11,8 +11,6 @@ data class LabelEntity(
     val uuid: String,
     @ColumnInfo(name = "title")
     val title: String,
-    @ColumnInfo(name = "color_rgb")
-    val colorRgb: Int,
     @ColumnInfo(name = "timestamp")
     val timestamp: String
 )

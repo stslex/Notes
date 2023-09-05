@@ -6,12 +6,14 @@ fun NoteDomainModel.toPresentation(): Note = Note(
     uuid = id,
     title = title,
     content = content,
-    timestamp = timestamp
+    timestamp = timestamp,
+    labelUuids = labelUuids
 )
 
 fun Note.toDomain(): NoteDomainModel = NoteDomainModel(
     id = uuid,
     title = title,
     content = content,
-    timestamp = timestamp
+    timestamp = timestamp,
+    labelUuids = labelUuids
 )

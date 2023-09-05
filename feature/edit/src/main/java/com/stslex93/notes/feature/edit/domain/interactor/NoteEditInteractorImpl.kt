@@ -12,7 +12,7 @@ class NoteEditInteractorImpl @Inject constructor(
 ) : NoteEditInteractor {
 
     override fun getNote(id: Int) = repository
-        .getNote(id).map {
+        .getNoteFlow(id).map {
             it.toDomain()
         }
 
