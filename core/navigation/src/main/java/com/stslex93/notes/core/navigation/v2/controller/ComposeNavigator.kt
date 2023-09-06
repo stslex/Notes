@@ -8,7 +8,16 @@ import androidx.navigation.Navigator
 
 @Navigator.Name("composable")
 class ComposeNavigator : Navigator<Destination>() {
+
     override fun createDestination(): Destination = Destination(this) { _, _ -> }
+
+    fun onTransitionComplete(entry: NavBackStackEntry) {
+        state.markTransitionComplete(entry)
+    }
+
+    internal companion object {
+        const val NAME = "composable"
+    }
 }
 
 @NavDestination.ClassType(Composable::class)

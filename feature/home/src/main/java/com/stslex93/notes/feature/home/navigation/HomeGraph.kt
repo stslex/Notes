@@ -10,7 +10,7 @@ import com.stslex93.notes.feature.home.ui.init.HomeScreeInit
 fun NavGraphBuilder.homeGraph(
     modifier: Modifier = Modifier,
 ) {
-    composable(HostScreen.HOME) {
+    composable(HostScreen.HOME.route) { _,  _ ->
         HomeScreeInit(
             modifier = modifier,
             viewModel = setupComponent()
