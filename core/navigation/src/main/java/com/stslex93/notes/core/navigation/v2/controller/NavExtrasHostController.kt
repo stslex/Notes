@@ -11,7 +11,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.Navigator
 import androidx.navigation.compose.DialogNavigator
-import com.stslex93.notes.core.navigation.v2.screen.AppNavScreen
+import com.stslex93.notes.core.navigation.v2.screen.Home
 import com.stslex93.notes.core.ui.base.NavigationScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -67,7 +67,7 @@ private fun createNavExtrasController(
 
 @Composable
 fun rememberNavExtrasController(
-    startDestination: NavigationScreen = AppNavScreen.Home,
+    startDestination: NavigationScreen = Home,
     vararg navigators: Navigator<out NavDestination>
 ): NavExtrasHostController {
     val context = LocalContext.current
