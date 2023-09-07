@@ -1,6 +1,5 @@
 package com.stslex93.notes.ui
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.stslex93.notes.core.navigation.v2.compose.NavExtrasHost
@@ -14,7 +13,6 @@ fun NavigationHost(
     navController: NavExtrasHostController,
     modifier: Modifier = Modifier,
 ) {
-    Text(text = "text")
     NavExtrasHost(
         navController = navController,
     ) {

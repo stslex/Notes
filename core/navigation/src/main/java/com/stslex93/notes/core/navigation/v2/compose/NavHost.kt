@@ -1,6 +1,7 @@
 package com.stslex93.notes.core.navigation.v2.compose
 
 import android.os.Bundle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable
@@ -36,7 +37,7 @@ fun NavExtrasHost(
     builder: NavGraphBuilder.() -> Unit
 ) {
     NavHost(
-        navController,
+        navController = navController,
         remember(route, navController.startDestination.route, builder) {
             navController.createGraph(navController.startDestination.route, route, builder)
         },
@@ -60,11 +61,14 @@ fun NavHost(
     // Setup the navController with proper owners
     navController.setLifecycleOwner(lifecycleOwner)
     navController.setViewModelStore(viewModelStoreOwner.viewModelStore)
+
     if (onBackPressedDispatcher != null) {
         navController.setOnBackPressedDispatcher(onBackPressedDispatcher)
     }
+
     // Ensure that the NavController only receives back events while
     // the NavHost is in composition
+
     DisposableEffect(navController) {
         navController.enableOnBackPressed(true)
         onDispose {
@@ -103,9 +107,9 @@ fun NavHost(
             modifier = modifier,
             label = "crossfadde"
         ) {
-            val lastEntry = visibleEntries.last { entry ->
+            val lastEntry = visibleEntries.lastOrNull { entry ->
                 it == entry.id
-            }
+            } ?: return@Crossfade
             // We are disposing on a Unit as we only want to dispose when the CrossFade completes
             DisposableEffect(Unit) {
                 if (initialCrossfade) {

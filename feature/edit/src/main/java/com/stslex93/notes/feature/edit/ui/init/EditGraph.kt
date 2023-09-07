@@ -11,43 +11,17 @@ import com.stslex93.notes.feature.edit.di.setupComponent
 fun NavGraphBuilder.editGraph(
     modifier: Modifier = Modifier,
 ) {
-    composable(HostScreen.NOTE_EDIT.route) { _, _ ->
-//        val arguments = noteEditArgs ?: NoteEditArgs(-1, false)
-//
-        val viewModel = setupComponent("")
-//
-//        LaunchedEffect(Unit) {
-//            viewModel.init(arguments)
-//        }
+    composable<NoteEditArgs>(HostScreen.NOTE_EDIT) { arguments ->
+
+        val viewModel = setupComponent(arguments.hashCode().toString())
+
+        LaunchedEffect(Unit) {
+            viewModel.init(arguments)
+        }
 
         InitEditScreen(
             modifier = modifier,
             viewModel = viewModel
         )
     }
-//    composable(
-//        route = AppDestination.NOTE_EDIT.navigationRoute,
-//        arguments = AppDestination.NOTE_EDIT.composableArguments
-//    ) { navBackStackEntry ->
-//
-//        val arguments = AppDestination.NOTE_EDIT
-//            .parseArguments(navBackStackEntry)
-//            .let { args ->
-//                AppArguments.NoteEdit(
-//                    noteId = args[0].toIntOrNull() ?: -1,
-//                    isEdit = args[1].toBooleanStrictOrNull() ?: false
-//                )
-//            }
-//
-//        val viewModel = setupComponent(arguments.hashCode().toString())
-//
-//        LaunchedEffect(Unit) {
-//            viewModel.init(arguments)
-//        }
-//
-//        InitEditScreen(
-//            modifier = modifier,
-//            viewModel = viewModel
-//        )
-//    }
 }
