@@ -22,7 +22,14 @@ sealed class AppArguments {
         override val arguments = listOf(noteId.toString(), isEdit.toString())
     }
 
+    data class LabelEdit(
+        val noteIds: Set<Int>
+    ) : AppArguments() {
+        override val arguments = listOf(noteIds.joinToString(LIST_SEPARATOR))
+    }
+
     companion object {
         private const val ARGUMENTS_SEPARATOR = "/"
+        const val LIST_SEPARATOR = "="
     }
 }

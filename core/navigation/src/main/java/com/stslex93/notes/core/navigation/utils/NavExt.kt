@@ -19,14 +19,4 @@ object NavExt {
                 arguments?.getString(name).orEmpty()
             }
         }
-
-    fun findByRoute(route: String?) = if (route == null) {
-        AppDestination.UNDEFINED
-    } else {
-        AppDestination
-            .entries
-            .firstOrNull { destination ->
-                destination.navigationRoute == route
-            }
-    }
 }

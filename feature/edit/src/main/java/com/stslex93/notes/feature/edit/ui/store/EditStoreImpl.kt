@@ -1,6 +1,7 @@
 package com.stslex93.notes.feature.edit.ui.store
 
 import com.stslex93.notes.core.ui.base.store.BaseStoreImpl
+import com.stslex93.notes.core.ui.emptyImmutableSet
 import com.stslex93.notes.feature.edit.domain.interactor.NoteEditInteractor
 import com.stslex93.notes.feature.edit.ui.model.Note
 import com.stslex93.notes.feature.edit.ui.model.toDomain
@@ -8,7 +9,9 @@ import com.stslex93.notes.feature.edit.ui.model.toPresentation
 import com.stslex93.notes.feature.edit.ui.store.EditStore.Action
 import com.stslex93.notes.feature.edit.ui.store.EditStore.Event
 import com.stslex93.notes.feature.edit.ui.store.EditStore.State
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -23,6 +26,7 @@ class EditStoreImpl @Inject constructor(
             uuid = 0,
             title = "",
             content = "",
+            labels = emptyImmutableSet(),
             timestamp = System.currentTimeMillis()
         )
     )
@@ -41,7 +45,7 @@ class EditStoreImpl @Inject constructor(
     private fun onActionSaveNote() {
         val note = state.value.note
         if (note.title.isBlank() && note.content.isBlank()) return
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             interactor.insert(
                 note.copy(
                     title = note.title.trimEnd(),
@@ -72,7 +76,7 @@ class EditStoreImpl @Inject constructor(
     }
 
     private fun initStore(action: Action.Init) {
-        if (action.isEdit || action.id <= -1) return
+        if (action.isEdit.not() || action.id <= -1) return
         interactor.getNote(action.id)
             .onEach { note ->
                 updateState { currentState ->
@@ -81,6 +85,7 @@ class EditStoreImpl @Inject constructor(
                     )
                 }
             }
+            .flowOn(Dispatchers.IO)
             .launchIn(scope)
     }
 }
