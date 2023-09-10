@@ -42,6 +42,9 @@ interface HomeStore : Store<State, Event, Action> {
 
         @Stable
         data object OnNoteFloatingButtonClick : Action
+
+        @Stable
+        data object OnLabelEditClick : Action
     }
 
     @Stable
@@ -51,9 +54,16 @@ interface HomeStore : Store<State, Event, Action> {
         sealed interface Navigation : Event {
 
             @Stable
+            data object CreateNote : Navigation
+
+            @Stable
             data class EditNote(
                 val noteId: Int,
-                val isEdit: Boolean
+            ) : Navigation
+
+            @Stable
+            data class EditLabel(
+                val noteIds: ImmutableSet<Int>
             ) : Navigation
         }
     }

@@ -5,4 +5,5 @@ data class NoteDataModel(
     val title: String,
     val content: String,
     val timestamp: Long,
+    val labelUuids: Set<String>
 )

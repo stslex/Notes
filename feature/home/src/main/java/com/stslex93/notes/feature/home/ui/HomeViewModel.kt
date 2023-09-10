@@ -1,31 +1,24 @@
 package com.stslex93.notes.feature.home.ui
 
-import com.stslex93.notes.core.navigation.model.NavigationScreen
 import com.stslex93.notes.core.ui.base.BaseViewModel
-import com.stslex93.notes.core.ui.di.Navigator
+import com.stslex93.notes.feature.home.navigation.HomeRouter
 import com.stslex93.notes.feature.home.ui.store.HomeStore
 import com.stslex93.notes.feature.home.ui.store.HomeStore.Action
 import com.stslex93.notes.feature.home.ui.store.HomeStore.Event
+import com.stslex93.notes.feature.home.ui.store.HomeStore.Event.Navigation
 import com.stslex93.notes.feature.home.ui.store.HomeStore.State
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     store: HomeStore,
-    private val navigator: Navigator
+    private val router: HomeRouter,
 ) : BaseViewModel<State, Event, Action>(store) {
 
-    fun processNavigation(event: Event.Navigation) {
+    fun processNavigation(event: Navigation) {
         when (event) {
-            is Event.Navigation.EditNote -> navToEditNote(event)
+            is Navigation.EditNote -> router.navToEditNote(event.noteId)
+            is Navigation.CreateNote -> router.navToCreateNote()
+            is Navigation.EditLabel -> router.navToEditLabel(event.noteIds)
         }
-    }
-
-    private fun navToEditNote(event: Event.Navigation.EditNote) {
-        navigator.invoke(
-            NavigationScreen.EditNoteScreen(
-                noteId = event.noteId,
-                isEdit = event.isEdit
-            )
-        )
     }
 }

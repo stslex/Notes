@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface HomeInteractor {
 
-    fun queryNotes(query: String): Flow<PagingData<NoteDomain>>
+    fun searchNotes(query: String): Flow<PagingData<NoteDomain>>
 
     suspend fun deleteNotes(noteIds: List<Int>)
 }

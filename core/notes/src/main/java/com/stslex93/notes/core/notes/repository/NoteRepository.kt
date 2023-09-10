@@ -8,13 +8,11 @@ interface NoteRepository {
 
     fun searchNotes(query: String): Flow<PagingData<NoteDataModel>>
 
-    fun getNote(id: Int): Flow<NoteDataModel>
+    fun getNoteFlow(id: Int): Flow<NoteDataModel>
 
-    fun getLastNote(): Flow<NoteDataModel>
+    suspend fun getNote(id: Int): NoteDataModel
 
     suspend fun deleteNotesById(ids: List<Int>)
 
     suspend fun insert(note: NoteDataModel)
-
-    suspend fun insertAll(notes: List<NoteDataModel>)
 }
