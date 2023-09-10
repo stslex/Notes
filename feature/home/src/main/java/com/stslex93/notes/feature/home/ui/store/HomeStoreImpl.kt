@@ -70,6 +70,7 @@ class HomeStoreImpl @Inject constructor(
 
     private fun onLabelEditClick() {
         val selectedIds = state.value.selectedNotes
+        clearSelection()
         sendEvent(Event.Navigation.EditLabel(selectedIds))
     }
 
