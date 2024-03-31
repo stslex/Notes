@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlinx.kover") version "0.5.0"
+    id("org.jetbrains.kotlinx.kover") version "0.7.6"
     alias(libs.plugins.application) apply false
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.library) apply false
