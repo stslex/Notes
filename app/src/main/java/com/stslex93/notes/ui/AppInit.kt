@@ -9,12 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.stslex93.notes.core.navigation.v2.controller.NavExtrasHostController
 
 @Composable
 fun AppInit(
-    navController: NavExtrasHostController,
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     val systemUiController = rememberSystemUiController()
@@ -34,7 +34,7 @@ fun AppInit(
             .background(MaterialTheme.colorScheme.background)
     ) {
         NavigationHost(
-            navController = navController,
+            navHostController = navController,
             modifier = modifier
         )
     }

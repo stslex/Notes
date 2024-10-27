@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.navigation.compose.rememberNavController
 import com.stslex93.notes.core.navigation.di.NavigationComponentBuilder
-import com.stslex93.notes.core.navigation.v2.controller.rememberNavExtrasController
 import com.stslex93.notes.core.ui.di.MainUiApi
 import com.stslex93.notes.core.ui.di.NavigationApi
 import com.stslex93.notes.core.ui.theme.AppTheme
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), MainUiApi {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            val navController = rememberNavExtrasController()
+            val navController = rememberNavController()
             _navigationApi = NavigationComponentBuilder
                 .build(navController)
                 .also { api ->

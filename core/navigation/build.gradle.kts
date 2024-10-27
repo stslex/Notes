@@ -1,7 +1,6 @@
 plugins {
     id("notes.android.library")
     id("notes.android.library.compose")
-    id("kotlin-parcelize")
 }
 
 dependencies {
