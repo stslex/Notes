@@ -1,6 +1,6 @@
 package com.stslex93.notes.core.navigation.di
 
-import com.stslex93.notes.core.navigation.v2.controller.NavExtrasHostController
+import androidx.navigation.NavHostController
 import com.stslex93.notes.core.ui.di.NavigationApi
 import dagger.BindsInstance
 import dagger.Component
@@ -14,7 +14,7 @@ interface NavigationComponent : NavigationApi {
     interface Builder {
 
         @BindsInstance
-        fun controller(navController: NavExtrasHostController): Builder
+        fun controller(navHostController: NavHostController): Builder
 
         fun build(): NavigationApi
     }

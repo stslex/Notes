@@ -1,14 +1,14 @@
 package com.stslex93.notes.core.navigation.di
 
-import com.stslex93.notes.core.navigation.v2.controller.NavExtrasHostController
+import androidx.navigation.NavHostController
 import com.stslex93.notes.core.ui.di.NavigationApi
 
 object NavigationComponentBuilder {
 
     fun build(
-        navController: NavExtrasHostController
+        navHostController: NavHostController
     ): NavigationApi = DaggerNavigationComponent
         .builder()
-        .controller(navController)
+        .controller(navHostController)
         .build()
 }

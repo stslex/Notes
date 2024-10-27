@@ -2,19 +2,22 @@ package com.stslex93.notes.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.stslex93.notes.core.navigation.v2.compose.NavExtrasHost
-import com.stslex93.notes.core.navigation.v2.controller.NavExtrasHostController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import com.stslex93.notes.core.navigation.model.AppDestination
 import com.stslex93.notes.feature.edit.ui.init.editGraph
 import com.stslex93.notes.feature.edit_label.navigation.graph.editLabelGraph
 import com.stslex93.notes.feature.home.navigation.homeGraph
 
 @Composable
 fun NavigationHost(
-    navController: NavExtrasHostController,
+    navHostController: NavHostController,
     modifier: Modifier = Modifier,
+    startDestination: AppDestination = AppDestination.HOME
 ) {
-    NavExtrasHost(
-        navController = navController,
+    NavHost(
+        navController = navHostController,
+        startDestination = startDestination.route
     ) {
         homeGraph(modifier)
         editGraph(modifier)
