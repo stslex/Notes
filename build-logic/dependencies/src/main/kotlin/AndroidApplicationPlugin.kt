@@ -1,3 +1,7 @@
+import AppExt.APP_PREFIX
+import AppExt.findVersionInt
+import AppExt.findVersionString
+import AppExt.libs
 import com.android.build.api.dsl.ApplicationExtension
 import com.stslex93.notes.configureKotlinAndroid
 import org.gradle.api.Plugin
@@ -20,13 +24,13 @@ class AndroidApplicationPlugin : Plugin<Project> {
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
 
-                namespace = "com.stslex93.notes"
+                namespace = APP_PREFIX
 
                 defaultConfig.apply {
-                    applicationId = "com.stslex93.notes"
-                    targetSdk = 34
-                    versionCode = AppVersion.VERSION_CODE
-                    versionName = AppVersion.VERSION_NAME
+                    applicationId = APP_PREFIX
+                    targetSdk = libs.findVersionInt("targetSdk")
+                    versionName = libs.findVersionString("versionName")
+                    versionCode = libs.findVersionInt("versionCode")
 
                     signingConfigs {
                         val keystoreProperties =

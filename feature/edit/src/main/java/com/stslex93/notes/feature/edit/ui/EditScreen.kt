@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -25,7 +23,6 @@ import com.stslex93.notes.core.ui.theme.AppDimens
 import com.stslex93.notes.core.ui.theme.AppTheme
 import com.stslex93.notes.feature.edit.R
 import com.stslex93.notes.feature.edit.ui.components.LabelsHeader
-import com.stslex93.notes.feature.edit.ui.components.LabelsRow
 import com.stslex93.notes.feature.edit.ui.model.Label
 import com.stslex93.notes.feature.edit.ui.model.Note
 import com.stslex93.notes.feature.edit.ui.store.EditStore
@@ -90,7 +87,7 @@ fun EditScreen(
                 onClick = onBackButtonClicked
             ) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "return"
                 )
             }

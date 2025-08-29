@@ -30,7 +30,7 @@ fun HomeScreenNotes(
 ) {
     LazyVerticalStaggeredGrid(
         modifier = modifier,
-        columns = StaggeredGridCells.Fixed(2)
+        columns = StaggeredGridCells.Fixed(2),
     ) {
         items(
             count = items.itemCount,
@@ -38,7 +38,7 @@ fun HomeScreenNotes(
         ) { index ->
             items[index]?.let { item ->
                 HomeScreenItemNote(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     isSelected = selectedItems.contains(item.id),
                     item = item,
                     onClick = onClick,

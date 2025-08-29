@@ -1,12 +1,15 @@
 *.iml
 .gradle
+.idea
+.kotlin
 /local.properties
-/.idea
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
 local.properties
-keystore.*
 play_config.*
+keystore.*
+Gemfile.lock
+build

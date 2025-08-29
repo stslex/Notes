@@ -12,17 +12,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * Configure Compose-specific options
  */
 internal fun Project.configureAndroidCompose(
-    commonExtension: CommonExtension<*, *, *, *, *>,
+    commonExtension: CommonExtension<*, *, *, *, *, *>,
 ) {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     commonExtension.apply {
 
         buildFeatures.compose = true
-        composeOptions.kotlinCompilerExtensionVersion = libs
-            .findVersion("composeCompiler")
-            .get()
-            .toString()
 
         dependencies {
             val composeBom = libs.findLibrary("androidx-compose-bom").get()
@@ -56,8 +52,8 @@ internal fun Project.configureAndroidCompose(
     }
 
     tasks.withType<KotlinCompile>().configureEach {
-        kotlinOptions {
-            freeCompilerArgs = freeCompilerArgs //+ buildComposeMetricsParameters()
+        compilerOptions {
+//            freeCompilerArgs.add(buildComposeMetricsParameters())
         }
     }
 }

@@ -5,9 +5,18 @@ plugins {
 group = "com.stslex93.notes.buildlogic"
 
 dependencies {
-    implementation(libs.android.gradlePlugin)
-    implementation(libs.kotlin.gradlePlugin)
-    implementation(libs.kotlin.serialization)
+    compileOnly(libs.android.gradlePlugin)
+    compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.kotlin.serialization)
+    compileOnly(libs.composeCompiler.gradlePlugin)
+    compileOnly(libs.android.tools.common)
+}
+
+tasks {
+    validatePlugins {
+        enableStricterValidation = true
+        failOnWarning = true
+    }
 }
 
 gradlePlugin {
