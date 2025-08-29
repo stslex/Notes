@@ -13,5 +13,3 @@ dependencies {
     implementation(project(":feature:edit"))
     implementation(project(":feature:edit-label"))
 }
-
-android.namespace = "com.stslex93.notes"

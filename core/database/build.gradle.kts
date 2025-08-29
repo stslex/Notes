@@ -15,4 +15,3 @@ ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
 }
 
-android.namespace = "com.stslex93.notes.core.database"

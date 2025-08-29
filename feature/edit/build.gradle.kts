@@ -3,8 +3,6 @@ plugins {
     id("notes.android.library.compose")
 }
 
-android.namespace = "com.stslex93.notes.feature.edit"
-
 dependencies {
     implementation(project(":core:core"))
     implementation(project(":core:ui"))
