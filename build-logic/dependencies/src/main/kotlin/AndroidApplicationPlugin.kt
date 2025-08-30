@@ -1,9 +1,11 @@
 import AppExt.APP_PREFIX
+import AppExt.findPluginId
 import AppExt.findVersionInt
 import AppExt.findVersionString
 import AppExt.libs
 import com.android.build.api.dsl.ApplicationExtension
 import com.stslex93.notes.configureKotlinAndroid
+import com.stslex93.notes.configureKover
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -13,17 +15,19 @@ import java.io.InputStreamReader
 import java.util.Properties
 
 class AndroidApplicationPlugin : Plugin<Project> {
+
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
-                apply("com.android.application")
-                apply("org.jetbrains.kotlin.android")
-                apply("com.google.devtools.ksp")
+            pluginManager.apply {
+                apply(libs.findPluginId("application"))
+                apply(libs.findPluginId("kotlin"))
+                apply(libs.findPluginId("ksp"))
+                apply(libs.findPluginId("kover"))
             }
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
-
+                configureKover()
                 namespace = APP_PREFIX
 
                 defaultConfig.apply {

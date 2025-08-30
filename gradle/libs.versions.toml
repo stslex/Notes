@@ -34,7 +34,7 @@ androidxJunit = "1.3.0"
 espresso = "3.7.0"
 robolectric = "4.16"
 androidxTest = "1.7.0"
-
+kover = "0.9.1"
 [libraries]
 android-desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
@@ -100,7 +100,7 @@ application = { id = "com.android.application", version.ref = "androidGradlePlug
 library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
+kover = {id = "org.jetbrains.kotlinx.kover", version.ref = "kover"}
 [bundles]
 lifecycle = [
     "lifecycle-compose",

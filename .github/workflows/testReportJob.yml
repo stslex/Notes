@@ -56,13 +56,13 @@ jobs:
 
       - name: Check report files
         run: |
-          ls /build/reports/kover/html/
+          ls app/build/reports/kover/html
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
-          path: /build/reports/kover/html/
+          path: app/build/reports/kover/html
 
   saveReport:
     name: SaveReport

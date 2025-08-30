@@ -1,6 +1,7 @@
 package com.stslex93.notes
 
 import AppExt.APP_PREFIX
+import AppExt.findPluginId
 import AppExt.findVersionInt
 import AppExt.libs
 import com.android.build.api.dsl.CommonExtension
