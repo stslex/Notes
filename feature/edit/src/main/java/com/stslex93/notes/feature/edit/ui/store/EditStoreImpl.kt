@@ -1,7 +1,6 @@
 package com.stslex93.notes.feature.edit.ui.store
 
 import com.stslex93.notes.core.ui.base.store.BaseStoreImpl
-import com.stslex93.notes.core.ui.emptyImmutableSet
 import com.stslex93.notes.feature.edit.domain.interactor.NoteEditInteractor
 import com.stslex93.notes.feature.edit.ui.model.Note
 import com.stslex93.notes.feature.edit.ui.model.toDomain
@@ -9,6 +8,7 @@ import com.stslex93.notes.feature.edit.ui.model.toPresentation
 import com.stslex93.notes.feature.edit.ui.store.EditStore.Action
 import com.stslex93.notes.feature.edit.ui.store.EditStore.Event
 import com.stslex93.notes.feature.edit.ui.store.EditStore.State
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOn
@@ -26,7 +26,7 @@ class EditStoreImpl @Inject constructor(
             uuid = 0,
             title = "",
             content = "",
-            labels = emptyImmutableSet(),
+            labels = persistentSetOf(),
             timestamp = System.currentTimeMillis()
         )
     )

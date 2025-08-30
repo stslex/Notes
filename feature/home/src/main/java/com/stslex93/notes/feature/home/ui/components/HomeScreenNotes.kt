@@ -11,11 +11,11 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
-import com.stslex93.notes.core.ui.emptyImmutableSet
 import com.stslex93.notes.core.ui.theme.AppTheme
 import com.stslex93.notes.feature.home.ui.model.Label
 import com.stslex93.notes.feature.home.ui.model.Note
 import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -58,7 +58,7 @@ fun HomeScreenNotesPreview() {
                 uuid = "uuid$it",
                 title = "label$it ".repeat(it.coerceAtLeast(1)),
             )
-        }.toSet().toImmutableSet()
+        }.toImmutableSet()
         val notes = Array(10) {
             Note(
                 id = it,
@@ -75,7 +75,7 @@ fun HomeScreenNotesPreview() {
 
         HomeScreenNotes(
             items = items,
-            selectedItems = emptyImmutableSet(),
+            selectedItems = persistentSetOf(),
             onClick = {},
             onLingClick = {}
         )

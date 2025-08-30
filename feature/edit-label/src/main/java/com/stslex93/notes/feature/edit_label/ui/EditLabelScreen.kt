@@ -31,12 +31,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
-import com.stslex93.notes.core.ui.emptyImmutableSet
 import com.stslex93.notes.core.ui.theme.AppDimens
 import com.stslex93.notes.core.ui.theme.AppTheme
 import com.stslex93.notes.feature.edit_label.ui.model.Label
 import com.stslex93.notes.feature.edit_label.ui.store.EditLabelStore.Action
 import com.stslex93.notes.feature.edit_label.ui.store.EditLabelStore.State
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -178,7 +178,7 @@ fun EditLabelScreenPreview() {
         val items = MutableStateFlow(PagingData.from(labels))
         EditLabelScreen(
             state = State(
-                notesIds = emptyImmutableSet(),
+                notesIds = persistentSetOf(),
                 query = "dfdfdfdfdf",
                 labels = { items }
             ),

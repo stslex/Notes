@@ -117,6 +117,28 @@ object AppExt {
     /**
      * Find the library by alias
      */
+    fun Project.testImplementation(vararg alias: String) {
+        dependencies {
+            alias.forEach {
+                add("testImplementation", libs.findLibrary(it).get())
+            }
+        }
+    }
+
+    /**
+     * Find the library by alias
+     */
+    fun Project.testRuntimeOnly(vararg alias: String) {
+        dependencies {
+            alias.forEach {
+                add("testRuntimeOnly", libs.findLibrary(it).get())
+            }
+        }
+    }
+
+    /**
+     * Find the library by alias
+     */
     fun Project.coreLibraryDesugaring(vararg alias: String) {
         dependencies {
             alias.forEach {

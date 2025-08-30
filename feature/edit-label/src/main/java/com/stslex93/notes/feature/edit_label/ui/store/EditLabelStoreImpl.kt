@@ -5,7 +5,6 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.stslex.aproselection.core.core.Logger
 import com.stslex93.notes.core.ui.base.store.BaseStoreImpl
-import com.stslex93.notes.core.ui.emptyImmutableSet
 import com.stslex93.notes.feature.edit_label.domain.interactor.EditLabelInteractor
 import com.stslex93.notes.feature.edit_label.domain.model.LabelDomain
 import com.stslex93.notes.feature.edit_label.ui.model.Label
@@ -13,6 +12,7 @@ import com.stslex93.notes.feature.edit_label.ui.model.toUi
 import com.stslex93.notes.feature.edit_label.ui.store.EditLabelStore.Action
 import com.stslex93.notes.feature.edit_label.ui.store.EditLabelStore.Event
 import com.stslex93.notes.feature.edit_label.ui.store.EditLabelStore.State
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,7 +33,7 @@ class EditLabelStoreImpl @Inject constructor(
 ) : EditLabelStore, BaseStoreImpl<State, Event, Action>() {
 
     override val initialState: State = State(
-        notesIds = emptyImmutableSet(),
+        notesIds = persistentSetOf(),
         query = "",
         labels = ::labels
     )

@@ -1,5 +1,6 @@
 plugins {
     id("notes.android.library")
+    alias(libs.plugins.robolectric.junit5)
 }
 
 dependencies {
@@ -8,7 +9,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     androidTestApi(libs.androidx.room.testing)
     implementation(libs.androidx.paging.runtime)
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.google.gson)
 }
 
 ksp {

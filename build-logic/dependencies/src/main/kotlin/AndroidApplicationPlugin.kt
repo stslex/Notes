@@ -28,6 +28,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
                 configureKover()
+
                 namespace = APP_PREFIX
 
                 defaultConfig.apply {

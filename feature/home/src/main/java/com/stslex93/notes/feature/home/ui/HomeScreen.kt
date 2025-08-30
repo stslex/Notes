@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.stslex93.notes.core.ui.emptyImmutableSet
 import com.stslex93.notes.core.ui.theme.PreviewTheme
 import com.stslex93.notes.feature.home.ui.components.HomeScreenFloatingButton
 import com.stslex93.notes.feature.home.ui.components.HomeScreenNotes
@@ -21,7 +20,7 @@ import com.stslex93.notes.feature.home.ui.components.HomeScreenToolbar
 import com.stslex93.notes.feature.home.ui.model.Note
 import com.stslex93.notes.feature.home.ui.store.HomeStore.Action
 import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
@@ -90,14 +89,14 @@ fun HomeScreenPreview() {
                         title = "title $index",
                         content = "content: $index",
                         timestamp = 0,
-                        labels = emptyImmutableSet()
+                        labels = persistentSetOf()
                     )
                 }.toList()
             )
         ).collectAsLazyPagingItems()
         HomeScreen(
             query = "",
-            selectedNotes = setOf<Int>(1).toImmutableSet(),
+            selectedNotes = persistentSetOf(1),
             notes = notes,
             sendAction = {}
         )

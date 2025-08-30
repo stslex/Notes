@@ -10,6 +10,7 @@ dependencies {
     compileOnly(libs.kotlin.serialization)
     compileOnly(libs.composeCompiler.gradlePlugin)
     compileOnly(libs.android.tools.common)
+    compileOnly(libs.kover.gradlePlugin)
 }
 
 tasks {
