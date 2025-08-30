@@ -52,7 +52,29 @@ object AppExt {
         dependencies {
             alias.forEach {
                 add(
-                    "debugImplementation",
+                    "implementation",
+                    platform(libs.findLibrary(it).get())
+                )
+            }
+        }
+    }
+
+    fun Project.testImplementationPlatform(vararg alias: String) {
+        dependencies {
+            alias.forEach {
+                add(
+                    "testImplementation",
+                    platform(libs.findLibrary(it).get())
+                )
+            }
+        }
+    }
+
+    fun Project.androidTestImplementationPlatform(vararg alias: String) {
+        dependencies {
+            alias.forEach {
+                add(
+                    "androidTestImplementation",
                     platform(libs.findLibrary(it).get())
                 )
             }
@@ -88,17 +110,6 @@ object AppExt {
         dependencies {
             alias.forEach {
                 add("androidTestImplementation", libs.findBundle(it).get())
-            }
-        }
-    }
-
-    fun Project.androidTestImplementationPlatform(vararg alias: String) {
-        dependencies {
-            alias.forEach {
-                add(
-                    "androidTestImplementation",
-                    dependencies.platform(libs.findLibrary(it).get())
-                )
             }
         }
     }

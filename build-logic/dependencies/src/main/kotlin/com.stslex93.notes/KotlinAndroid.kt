@@ -2,13 +2,14 @@ package com.stslex93.notes
 
 import AppExt.APP_PREFIX
 import AppExt.androidTestImplementationBundle
+import AppExt.androidTestImplementationPlatform
 import AppExt.coreLibraryDesugaring
 import AppExt.findVersionInt
 import AppExt.implementation
-import AppExt.implementationPlatform
 import AppExt.ksp
 import AppExt.libs
 import AppExt.testImplementationBundle
+import AppExt.testImplementationPlatform
 import AppExt.testRuntimeOnly
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.gradle.AppExtension
@@ -50,7 +51,8 @@ internal fun Project.configureKotlinAndroid(
     dependencies {
         coreLibraryDesugaring("android-desugarJdkLibs")
 
-        implementationPlatform("junit-bom")
+        testImplementationPlatform("junit-bom")
+        androidTestImplementationPlatform("junit-bom")
         testRuntimeOnly("junit-launcher")
         testImplementationBundle("test")
         androidTestImplementationBundle("android-test")
