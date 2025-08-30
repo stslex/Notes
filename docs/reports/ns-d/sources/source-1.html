@@ -1,0 +1,169 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > Extensions</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.core.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: Extensions (com.stslex93.notes.core.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">Extensions</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (29/29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.core.ui
+&nbsp;
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.LaunchedEffect
+&nbsp;import androidx.lifecycle.Lifecycle
+&nbsp;import androidx.lifecycle.compose.LocalLifecycleOwner
+&nbsp;import androidx.lifecycle.flowWithLifecycle
+&nbsp;import androidx.lifecycle.lifecycleScope
+&nbsp;import kotlinx.collections.immutable.ImmutableSet
+&nbsp;import kotlinx.collections.immutable.toImmutableSet
+&nbsp;import kotlinx.coroutines.flow.SharedFlow
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.onEach
+&nbsp;
+&nbsp;object Extensions {
+&nbsp;
+&nbsp;    @Composable
+&nbsp;    fun &lt;T&gt; SharedFlow&lt;T&gt;.CollectAsEvent(
+&nbsp;        minActionState: Lifecycle.State = Lifecycle.State.STARTED,
+&nbsp;        action: suspend (T) -&gt; Unit,
+&nbsp;    ) {
+&nbsp;        val lifecycleOwner = LocalLifecycleOwner.current
+&nbsp;        LaunchedEffect(Unit) {
+&nbsp;            this@CollectAsEvent
+&nbsp;                .flowWithLifecycle(
+&nbsp;                    lifecycle = lifecycleOwner.lifecycle,
+&nbsp;                    minActiveState = minActionState
+&nbsp;                )
+&nbsp;                .onEach(action)
+&nbsp;                .launchIn(lifecycleOwner.lifecycleScope)
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun &lt;T&gt; ImmutableSet&lt;T&gt;.removeItem(
+&nbsp;        item: T
+<b class="fc">&nbsp;    ): ImmutableSet&lt;T&gt; = this.toMutableSet()</b>
+<b class="fc">&nbsp;        .apply { remove(item) }</b>
+<b class="fc">&nbsp;        .toImmutableSet()</b>
+&nbsp;
+&nbsp;    fun &lt;T&gt; ImmutableSet&lt;T&gt;.addItem(
+&nbsp;        item: T
+<b class="fc">&nbsp;    ): ImmutableSet&lt;T&gt; = this.toMutableSet()</b>
+<b class="fc">&nbsp;        .apply {</b>
+<b class="fc">&nbsp;            add(item)</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        .toImmutableSet()</b>
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > HomeScreenToolbarKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.feature.home.ui.components</a>
+</div>
+
+<h1>Coverage Summary for Class: HomeScreenToolbarKt (com.stslex93.notes.feature.home.ui.components)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">HomeScreenToolbarKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.feature.home.ui.components
+&nbsp;
+&nbsp;import androidx.compose.animation.AnimatedContent
+&nbsp;import androidx.compose.animation.AnimatedVisibility
+&nbsp;import androidx.compose.animation.core.Spring
+&nbsp;import androidx.compose.animation.core.spring
+&nbsp;import androidx.compose.animation.scaleIn
+&nbsp;import androidx.compose.animation.scaleOut
+&nbsp;import androidx.compose.foundation.background
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.fillMaxSize
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.foundation.layout.wrapContentHeight
+&nbsp;import androidx.compose.material.icons.Icons
+&nbsp;import androidx.compose.material.icons.filled.Clear
+&nbsp;import androidx.compose.material3.ExperimentalMaterial3Api
+&nbsp;import androidx.compose.material3.Icon
+&nbsp;import androidx.compose.material3.IconButton
+&nbsp;import androidx.compose.material3.MaterialTheme
+&nbsp;import androidx.compose.material3.TextField
+&nbsp;import androidx.compose.material3.TopAppBar
+&nbsp;import androidx.compose.material3.TopAppBarDefaults
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.Alignment
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.draw.shadow
+&nbsp;import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+&nbsp;import androidx.compose.ui.platform.LocalHapticFeedback
+&nbsp;import androidx.compose.ui.res.painterResource
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import com.stslex93.notes.core.ui.theme.AppDimens
+&nbsp;import com.stslex93.notes.core.ui.theme.AppTheme
+&nbsp;import com.stslex93.notes.feature.home.R
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun HomeScreenToolbar(
+&nbsp;    isSelectingMode: Boolean,
+&nbsp;    query: String,
+&nbsp;    onClearClick: () -&gt; Unit,
+&nbsp;    onLabelCreateClick: () -&gt; Unit,
+&nbsp;    onTextChange: (String) -&gt; Unit,
+&nbsp;    modifier: Modifier = Modifier,
+&nbsp;) {
+&nbsp;    AnimatedContent(
+&nbsp;        modifier = modifier,
+&nbsp;        targetState = isSelectingMode,
+&nbsp;        label = &quot;animate toolbar&quot;
+&nbsp;    ) { isOptionsToolbar -&gt;
+&nbsp;        if (isOptionsToolbar) {
+&nbsp;            HomeScreenOptionsToolbar(
+&nbsp;                onLabelCreateClick = onLabelCreateClick
+&nbsp;            )
+&nbsp;        } else {
+&nbsp;            HomeScreenSearchToolbar(
+&nbsp;                query = query,
+&nbsp;                onClearClick = onClearClick,
+&nbsp;                onTextChange = onTextChange
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;}
+&nbsp;
+&nbsp;@OptIn(ExperimentalMaterial3Api::class)
+&nbsp;@Composable
+&nbsp;fun HomeScreenOptionsToolbar(
+&nbsp;    onLabelCreateClick: () -&gt; Unit,
+&nbsp;    modifier: Modifier = Modifier
+&nbsp;) {
+&nbsp;    TopAppBar(
+&nbsp;        modifier = modifier
+&nbsp;            .fillMaxWidth()
+&nbsp;            .shadow(AppDimens.Elevation.medium),
+&nbsp;        colors = TopAppBarDefaults.topAppBarColors(
+&nbsp;            containerColor = MaterialTheme.colorScheme.surface
+&nbsp;        ),
+&nbsp;        title = {},
+&nbsp;        actions = {
+&nbsp;            IconButton(
+&nbsp;                modifier = Modifier
+&nbsp;                    .align(Alignment.CenterVertically),
+&nbsp;                onClick = onLabelCreateClick
+&nbsp;            ) {
+&nbsp;                Icon(
+&nbsp;                    painter = painterResource(id = R.drawable.baseline_label_24),
+&nbsp;                    contentDescription = &quot;create label&quot;,
+&nbsp;                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+&nbsp;                )
+&nbsp;            }
+&nbsp;        }
+&nbsp;    )
+&nbsp;}
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun HomeScreenSearchToolbar(
+&nbsp;    query: String,
+&nbsp;    onClearClick: () -&gt; Unit,
+&nbsp;    onTextChange: (String) -&gt; Unit,
+&nbsp;    modifier: Modifier = Modifier,
+&nbsp;) {
+&nbsp;    val hapticFeedback = LocalHapticFeedback.current
+&nbsp;    TextField(
+&nbsp;        modifier = modifier
+&nbsp;            .fillMaxWidth()
+&nbsp;            .wrapContentHeight()
+&nbsp;            .padding(horizontal = AppDimens.Padding.small),
+&nbsp;        value = query,
+&nbsp;        onValueChange = onTextChange,
+&nbsp;        trailingIcon = {
+&nbsp;            AnimatedVisibility(
+&nbsp;                visible = query.isNotEmpty(), enter = scaleIn(
+&nbsp;                    spring(
+&nbsp;                        dampingRatio = Spring.DampingRatioHighBouncy,
+&nbsp;                        stiffness = Spring.StiffnessMedium
+&nbsp;                    )
+&nbsp;                ), exit = scaleOut(
+&nbsp;                    spring(
+&nbsp;                        dampingRatio = Spring.DampingRatioHighBouncy,
+&nbsp;                        stiffness = Spring.StiffnessMedium
+&nbsp;                    )
+&nbsp;                )
+&nbsp;            ) {
+&nbsp;                IconButton(
+&nbsp;                    onClick = {
+&nbsp;                        hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+&nbsp;                        onClearClick()
+&nbsp;                    }
+&nbsp;                ) {
+&nbsp;                    Icon(
+&nbsp;                        imageVector = Icons.Filled.Clear, contentDescription = null
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+&nbsp;        },
+&nbsp;    )
+&nbsp;}
+&nbsp;
+&nbsp;@Composable
+&nbsp;@Preview
+&nbsp;fun HomeScreenToolbarPreview() {
+&nbsp;    AppTheme {
+&nbsp;        Box(
+&nbsp;            modifier = Modifier
+&nbsp;                .fillMaxSize()
+&nbsp;                .background(MaterialTheme.colorScheme.background),
+&nbsp;        ) {
+&nbsp;            HomeScreenToolbar(
+&nbsp;                modifier = Modifier.align(Alignment.TopCenter),
+&nbsp;                isSelectingMode = true,
+&nbsp;                query = &quot;test&quot;,
+&nbsp;                onClearClick = { /*TODO*/ },
+&nbsp;                onTextChange = {},
+&nbsp;                onLabelCreateClick = {}
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>

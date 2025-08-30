@@ -1,0 +1,114 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > NoteDao</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.core.database.note</a>
+</div>
+
+<h1>Coverage Summary for Class: NoteDao (com.stslex93.notes.core.database.note)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">NoteDao</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.core.database.note
+&nbsp;
+&nbsp;import androidx.paging.PagingSource
+&nbsp;import androidx.room.Dao
+&nbsp;import androidx.room.Insert
+&nbsp;import androidx.room.OnConflictStrategy
+&nbsp;import androidx.room.Query
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;
+&nbsp;@Dao
+&nbsp;interface NoteDao {
+&nbsp;
+&nbsp;    @Query(
+&nbsp;        &quot;SELECT * FROM note_table &quot; +
+&nbsp;                &quot;WHERE title LIKE &#39;%&#39; || :query || &#39;%&#39; OR &quot; +
+&nbsp;                &quot;content LIKE &#39;%&#39; || :query || &#39;%&#39; &quot; +
+&nbsp;                &quot;ORDER BY timestamp DESC&quot;
+&nbsp;    )
+&nbsp;    fun getAll(query: String): PagingSource&lt;Int, NoteEntity&gt;
+&nbsp;
+&nbsp;    @Query(&quot;SELECT * FROM note_table&quot;)
+&nbsp;    fun getAllNotes(): List&lt;NoteEntity&gt;
+&nbsp;
+&nbsp;    @Query(&quot;SELECT * FROM note_table WHERE id=:id&quot;)
+&nbsp;    fun getNoteFlow(id: Int): Flow&lt;NoteEntity&gt;
+&nbsp;
+&nbsp;    @Query(&quot;SELECT * FROM note_table WHERE id=:id&quot;)
+&nbsp;    suspend fun getNote(id: Int): NoteEntity
+&nbsp;
+&nbsp;    @Query(&quot;SELECT * FROM note_table WHERE id IN (:ids)&quot;)
+&nbsp;    fun getNotesById(ids: List&lt;String&gt;): Flow&lt;List&lt;NoteEntity&gt;&gt;
+&nbsp;
+&nbsp;    @Query(&quot;DELETE FROM note_table WHERE id IN (:ids) &quot;)
+&nbsp;    suspend fun deleteNotesById(ids: List&lt;Int&gt;)
+&nbsp;
+&nbsp;    @Insert(onConflict = OnConflictStrategy.REPLACE)
+&nbsp;    suspend fun insert(note: NoteEntity)
+&nbsp;
+&nbsp;    @Query(&quot;DELETE FROM note_table&quot;)
+&nbsp;    suspend fun deleteAll()
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>
