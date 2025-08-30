@@ -11,7 +11,7 @@ import com.stslex93.notes.core.navigation.model.AppArguments
 import com.stslex93.notes.core.navigation.model.AppDestination
 import com.stslex93.notes.core.navigation.utils.NavExt.composableArguments
 import com.stslex93.notes.core.navigation.utils.NavExt.parseArguments
-import com.stslex93.notes.core.ui.CollectAsEvent
+import com.stslex93.notes.core.ui.Extensions.CollectAsEvent
 import com.stslex93.notes.feature.edit_label.di.initComponent
 import com.stslex93.notes.feature.edit_label.ui.EditLabelScreen
 import com.stslex93.notes.feature.edit_label.ui.store.EditLabelStore

@@ -1,3 +1,5 @@
+import AppExt.findPluginId
+import AppExt.libs
 import com.android.build.gradle.LibraryExtension
 import com.stslex93.notes.configureKotlinAndroid
 import org.gradle.api.Plugin
@@ -5,12 +7,15 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 class AndroidLibraryPlugin : Plugin<Project> {
+
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
-                apply("com.android.library")
-                apply("org.jetbrains.kotlin.android")
-                apply("com.google.devtools.ksp")
+            pluginManager.apply {
+                apply(libs.findPluginId("library"))
+                apply(libs.findPluginId("kotlin"))
+                apply(libs.findPluginId("ksp"))
+                apply(libs.findPluginId("kover"))
+                apply(libs.findPluginId("robolectric-junit5"))
             }
 
             extensions.configure<LibraryExtension> {

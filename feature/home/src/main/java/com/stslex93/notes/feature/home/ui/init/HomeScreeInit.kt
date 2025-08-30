@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.stslex93.notes.core.ui.CollectAsEvent
+import com.stslex93.notes.core.ui.Extensions.CollectAsEvent
 import com.stslex93.notes.feature.home.ui.HomeScreen
 import com.stslex93.notes.feature.home.ui.HomeViewModel
 import com.stslex93.notes.feature.home.ui.store.HomeStore

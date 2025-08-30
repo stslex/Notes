@@ -1,0 +1,532 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > NoteDao_Impl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.core.database.note</a>
+</div>
+
+<h1>Coverage Summary for Class: NoteDao_Impl (com.stslex93.notes.core.database.note)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">NoteDao_Impl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (10/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98.7%
+  </span>
+  <span class="absValue">
+    (150/152)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NoteDao_Impl$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (35/35)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NoteDao_Impl$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NoteDao_Impl$getAll$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (116/116)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (24/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.7%
+  </span>
+  <span class="absValue">
+    (12/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98.9%
+  </span>
+  <span class="absValue">
+    (187/189)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (152/152)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.core.database.note
+&nbsp;
+&nbsp;import androidx.paging.PagingSource
+&nbsp;import androidx.room.EntityInsertAdapter
+&nbsp;import androidx.room.RoomDatabase
+&nbsp;import androidx.room.RoomRawQuery
+&nbsp;import androidx.room.coroutines.createFlow
+&nbsp;import androidx.room.paging.LimitOffsetPagingSource
+&nbsp;import androidx.room.util.appendPlaceholders
+&nbsp;import androidx.room.util.getColumnIndexOrThrow
+&nbsp;import androidx.room.util.performBlocking
+&nbsp;import androidx.room.util.performSuspending
+&nbsp;import androidx.sqlite.SQLiteStatement
+&nbsp;import com.stslex93.notes.core.database.database.Converters
+&nbsp;import javax.`annotation`.processing.Generated
+&nbsp;import kotlin.Int
+&nbsp;import kotlin.Long
+&nbsp;import kotlin.String
+&nbsp;import kotlin.Suppress
+&nbsp;import kotlin.Unit
+&nbsp;import kotlin.collections.List
+&nbsp;import kotlin.collections.MutableList
+&nbsp;import kotlin.collections.Set
+&nbsp;import kotlin.collections.mutableListOf
+&nbsp;import kotlin.reflect.KClass
+&nbsp;import kotlin.text.StringBuilder
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;
+&nbsp;@Generated(value = [&quot;androidx.room.RoomProcessor&quot;])
+&nbsp;@Suppress(names = [&quot;UNCHECKED_CAST&quot;, &quot;DEPRECATION&quot;, &quot;REDUNDANT_PROJECTION&quot;, &quot;REMOVAL&quot;])
+<b class="fc">&nbsp;public class NoteDao_Impl(</b>
+&nbsp;  __db: RoomDatabase,
+&nbsp;) : NoteDao {
+&nbsp;  private val __db: RoomDatabase
+&nbsp;
+&nbsp;  private val __insertAdapterOfNoteEntity: EntityInsertAdapter&lt;NoteEntity&gt;
+&nbsp;
+<b class="fc">&nbsp;  private val __converters: Converters = Converters()</b>
+<b class="fc">&nbsp;  init {</b>
+<b class="fc">&nbsp;    this.__db = __db</b>
+<b class="fc">&nbsp;    this.__insertAdapterOfNoteEntity = object : EntityInsertAdapter&lt;NoteEntity&gt;() {</b>
+&nbsp;      protected override fun createQuery(): String =
+<b class="fc">&nbsp;          &quot;INSERT OR REPLACE INTO `note_table` (`id`,`title`,`content`,`timestamp`,`labels`) VALUES (nullif(?, 0),?,?,?,?)&quot;</b>
+&nbsp;
+&nbsp;      protected override fun bind(statement: SQLiteStatement, entity: NoteEntity) {
+<b class="fc">&nbsp;        statement.bindLong(1, entity.id.toLong())</b>
+<b class="fc">&nbsp;        statement.bindText(2, entity.title)</b>
+<b class="fc">&nbsp;        statement.bindText(3, entity.content)</b>
+<b class="fc">&nbsp;        statement.bindLong(4, entity.timestamp)</b>
+<b class="fc">&nbsp;        val _tmp: String = __converters.jsonListString(entity.labels)</b>
+<b class="fc">&nbsp;        statement.bindText(5, _tmp)</b>
+&nbsp;      }
+&nbsp;    }
+<b class="fc">&nbsp;  }</b>
+&nbsp;
+<b class="fc">&nbsp;  public override suspend fun insert(note: NoteEntity): Unit = performSuspending(__db, false, true)</b>
+&nbsp;      { _connection -&gt;
+<b class="fc">&nbsp;    __insertAdapterOfNoteEntity.insert(_connection, note)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public override fun getAll(query: String): PagingSource&lt;Int, NoteEntity&gt; {
+<b class="fc">&nbsp;    val _sql: String =</b>
+<b class="fc">&nbsp;        &quot;SELECT * FROM note_table WHERE title LIKE &#39;%&#39; || ? || &#39;%&#39; OR content LIKE &#39;%&#39; || ? || &#39;%&#39; ORDER BY timestamp DESC&quot;</b>
+<b class="fc">&nbsp;    val _rawQuery: RoomRawQuery = RoomRawQuery(_sql) { _stmt -&gt;</b>
+<b class="fc">&nbsp;      var _argIndex: Int = 1</b>
+<b class="fc">&nbsp;      _stmt.bindText(_argIndex, query)</b>
+<b class="fc">&nbsp;      _argIndex = 2</b>
+<b class="fc">&nbsp;      _stmt.bindText(_argIndex, query)</b>
+&nbsp;    }
+<b class="fc">&nbsp;    return object : LimitOffsetPagingSource&lt;NoteEntity&gt;(_rawQuery, __db, &quot;note_table&quot;) {</b>
+&nbsp;      protected override suspend fun convertRows(limitOffsetQuery: RoomRawQuery, itemCount: Int):
+<b class="fc">&nbsp;          List&lt;NoteEntity&gt; = performSuspending(__db, true, false) { _connection -&gt;</b>
+<b class="fc">&nbsp;        val _stmt: SQLiteStatement = _connection.prepare(limitOffsetQuery.sql)</b>
+<b class="fc">&nbsp;        limitOffsetQuery.getBindingFunction().invoke(_stmt)</b>
+&nbsp;        try {
+<b class="fc">&nbsp;          val _columnIndexOfId: Int = getColumnIndexOrThrow(_stmt, &quot;id&quot;)</b>
+<b class="fc">&nbsp;          val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, &quot;title&quot;)</b>
+<b class="fc">&nbsp;          val _columnIndexOfContent: Int = getColumnIndexOrThrow(_stmt, &quot;content&quot;)</b>
+<b class="fc">&nbsp;          val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, &quot;timestamp&quot;)</b>
+<b class="fc">&nbsp;          val _columnIndexOfLabels: Int = getColumnIndexOrThrow(_stmt, &quot;labels&quot;)</b>
+<b class="fc">&nbsp;          val _result: MutableList&lt;NoteEntity&gt; = mutableListOf()</b>
+<b class="fc">&nbsp;          while (_stmt.step()) {</b>
+<b class="fc">&nbsp;            val _item: NoteEntity</b>
+<b class="fc">&nbsp;            val _tmpId: Int</b>
+<b class="fc">&nbsp;            _tmpId = _stmt.getLong(_columnIndexOfId).toInt()</b>
+<b class="fc">&nbsp;            val _tmpTitle: String</b>
+<b class="fc">&nbsp;            _tmpTitle = _stmt.getText(_columnIndexOfTitle)</b>
+<b class="fc">&nbsp;            val _tmpContent: String</b>
+<b class="fc">&nbsp;            _tmpContent = _stmt.getText(_columnIndexOfContent)</b>
+<b class="fc">&nbsp;            val _tmpTimestamp: Long</b>
+<b class="fc">&nbsp;            _tmpTimestamp = _stmt.getLong(_columnIndexOfTimestamp)</b>
+<b class="fc">&nbsp;            val _tmpLabels: Set&lt;String&gt;</b>
+<b class="fc">&nbsp;            val _tmp: String</b>
+<b class="fc">&nbsp;            _tmp = _stmt.getText(_columnIndexOfLabels)</b>
+<b class="fc">&nbsp;            _tmpLabels = __converters.jsonToListString(_tmp)</b>
+<b class="fc">&nbsp;            _item = NoteEntity(_tmpId,_tmpTitle,_tmpContent,_tmpTimestamp,_tmpLabels)</b>
+<b class="fc">&nbsp;            _result.add(_item)</b>
+&nbsp;          }
+<b class="fc">&nbsp;          _result</b>
+&nbsp;        } finally {
+<b class="fc">&nbsp;          _stmt.close()</b>
+&nbsp;        }
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public override fun getAllNotes(): List&lt;NoteEntity&gt; {
+<b class="fc">&nbsp;    val _sql: String = &quot;SELECT * FROM note_table&quot;</b>
+<b class="fc">&nbsp;    return performBlocking(__db, true, false) { _connection -&gt;</b>
+<b class="fc">&nbsp;      val _stmt: SQLiteStatement = _connection.prepare(_sql)</b>
+&nbsp;      try {
+<b class="fc">&nbsp;        val _columnIndexOfId: Int = getColumnIndexOrThrow(_stmt, &quot;id&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, &quot;title&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfContent: Int = getColumnIndexOrThrow(_stmt, &quot;content&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, &quot;timestamp&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfLabels: Int = getColumnIndexOrThrow(_stmt, &quot;labels&quot;)</b>
+<b class="fc">&nbsp;        val _result: MutableList&lt;NoteEntity&gt; = mutableListOf()</b>
+<b class="fc">&nbsp;        while (_stmt.step()) {</b>
+<b class="fc">&nbsp;          val _item: NoteEntity</b>
+<b class="fc">&nbsp;          val _tmpId: Int</b>
+<b class="fc">&nbsp;          _tmpId = _stmt.getLong(_columnIndexOfId).toInt()</b>
+<b class="fc">&nbsp;          val _tmpTitle: String</b>
+<b class="fc">&nbsp;          _tmpTitle = _stmt.getText(_columnIndexOfTitle)</b>
+<b class="fc">&nbsp;          val _tmpContent: String</b>
+<b class="fc">&nbsp;          _tmpContent = _stmt.getText(_columnIndexOfContent)</b>
+<b class="fc">&nbsp;          val _tmpTimestamp: Long</b>
+<b class="fc">&nbsp;          _tmpTimestamp = _stmt.getLong(_columnIndexOfTimestamp)</b>
+<b class="fc">&nbsp;          val _tmpLabels: Set&lt;String&gt;</b>
+<b class="fc">&nbsp;          val _tmp: String</b>
+<b class="fc">&nbsp;          _tmp = _stmt.getText(_columnIndexOfLabels)</b>
+<b class="fc">&nbsp;          _tmpLabels = __converters.jsonToListString(_tmp)</b>
+<b class="fc">&nbsp;          _item = NoteEntity(_tmpId,_tmpTitle,_tmpContent,_tmpTimestamp,_tmpLabels)</b>
+<b class="fc">&nbsp;          _result.add(_item)</b>
+&nbsp;        }
+<b class="fc">&nbsp;        _result</b>
+&nbsp;      } finally {
+<b class="fc">&nbsp;        _stmt.close()</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public override fun getNoteFlow(id: Int): Flow&lt;NoteEntity&gt; {
+<b class="fc">&nbsp;    val _sql: String = &quot;SELECT * FROM note_table WHERE id=?&quot;</b>
+<b class="fc">&nbsp;    return createFlow(__db, false, arrayOf(&quot;note_table&quot;)) { _connection -&gt;</b>
+<b class="fc">&nbsp;      val _stmt: SQLiteStatement = _connection.prepare(_sql)</b>
+&nbsp;      try {
+<b class="fc">&nbsp;        var _argIndex: Int = 1</b>
+<b class="fc">&nbsp;        _stmt.bindLong(_argIndex, id.toLong())</b>
+<b class="fc">&nbsp;        val _columnIndexOfId: Int = getColumnIndexOrThrow(_stmt, &quot;id&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, &quot;title&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfContent: Int = getColumnIndexOrThrow(_stmt, &quot;content&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, &quot;timestamp&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfLabels: Int = getColumnIndexOrThrow(_stmt, &quot;labels&quot;)</b>
+<b class="fc">&nbsp;        val _result: NoteEntity</b>
+<b class="pc">&nbsp;        if (_stmt.step()) {</b>
+<b class="fc">&nbsp;          val _tmpId: Int</b>
+<b class="fc">&nbsp;          _tmpId = _stmt.getLong(_columnIndexOfId).toInt()</b>
+<b class="fc">&nbsp;          val _tmpTitle: String</b>
+<b class="fc">&nbsp;          _tmpTitle = _stmt.getText(_columnIndexOfTitle)</b>
+<b class="fc">&nbsp;          val _tmpContent: String</b>
+<b class="fc">&nbsp;          _tmpContent = _stmt.getText(_columnIndexOfContent)</b>
+<b class="fc">&nbsp;          val _tmpTimestamp: Long</b>
+<b class="fc">&nbsp;          _tmpTimestamp = _stmt.getLong(_columnIndexOfTimestamp)</b>
+<b class="fc">&nbsp;          val _tmpLabels: Set&lt;String&gt;</b>
+<b class="fc">&nbsp;          val _tmp: String</b>
+<b class="fc">&nbsp;          _tmp = _stmt.getText(_columnIndexOfLabels)</b>
+<b class="fc">&nbsp;          _tmpLabels = __converters.jsonToListString(_tmp)</b>
+<b class="fc">&nbsp;          _result = NoteEntity(_tmpId,_tmpTitle,_tmpContent,_tmpTimestamp,_tmpLabels)</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;          error(&quot;The query result was empty, but expected a single row to return a NON-NULL object of type &lt;com.stslex93.notes.core.database.note.NoteEntity&gt;.&quot;)</b>
+&nbsp;        }
+<b class="fc">&nbsp;        _result</b>
+&nbsp;      } finally {
+<b class="fc">&nbsp;        _stmt.close()</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public override suspend fun getNote(id: Int): NoteEntity {
+<b class="fc">&nbsp;    val _sql: String = &quot;SELECT * FROM note_table WHERE id=?&quot;</b>
+<b class="fc">&nbsp;    return performSuspending(__db, true, false) { _connection -&gt;</b>
+<b class="fc">&nbsp;      val _stmt: SQLiteStatement = _connection.prepare(_sql)</b>
+&nbsp;      try {
+<b class="fc">&nbsp;        var _argIndex: Int = 1</b>
+<b class="fc">&nbsp;        _stmt.bindLong(_argIndex, id.toLong())</b>
+<b class="fc">&nbsp;        val _columnIndexOfId: Int = getColumnIndexOrThrow(_stmt, &quot;id&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, &quot;title&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfContent: Int = getColumnIndexOrThrow(_stmt, &quot;content&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, &quot;timestamp&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfLabels: Int = getColumnIndexOrThrow(_stmt, &quot;labels&quot;)</b>
+<b class="fc">&nbsp;        val _result: NoteEntity</b>
+<b class="pc">&nbsp;        if (_stmt.step()) {</b>
+<b class="fc">&nbsp;          val _tmpId: Int</b>
+<b class="fc">&nbsp;          _tmpId = _stmt.getLong(_columnIndexOfId).toInt()</b>
+<b class="fc">&nbsp;          val _tmpTitle: String</b>
+<b class="fc">&nbsp;          _tmpTitle = _stmt.getText(_columnIndexOfTitle)</b>
+<b class="fc">&nbsp;          val _tmpContent: String</b>
+<b class="fc">&nbsp;          _tmpContent = _stmt.getText(_columnIndexOfContent)</b>
+<b class="fc">&nbsp;          val _tmpTimestamp: Long</b>
+<b class="fc">&nbsp;          _tmpTimestamp = _stmt.getLong(_columnIndexOfTimestamp)</b>
+<b class="fc">&nbsp;          val _tmpLabels: Set&lt;String&gt;</b>
+<b class="fc">&nbsp;          val _tmp: String</b>
+<b class="fc">&nbsp;          _tmp = _stmt.getText(_columnIndexOfLabels)</b>
+<b class="fc">&nbsp;          _tmpLabels = __converters.jsonToListString(_tmp)</b>
+<b class="fc">&nbsp;          _result = NoteEntity(_tmpId,_tmpTitle,_tmpContent,_tmpTimestamp,_tmpLabels)</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;          error(&quot;The query result was empty, but expected a single row to return a NON-NULL object of type &lt;com.stslex93.notes.core.database.note.NoteEntity&gt;.&quot;)</b>
+&nbsp;        }
+<b class="fc">&nbsp;        _result</b>
+&nbsp;      } finally {
+<b class="fc">&nbsp;        _stmt.close()</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public override fun getNotesById(ids: List&lt;String&gt;): Flow&lt;List&lt;NoteEntity&gt;&gt; {
+<b class="fc">&nbsp;    val _stringBuilder: StringBuilder = StringBuilder()</b>
+<b class="fc">&nbsp;    _stringBuilder.append(&quot;SELECT * FROM note_table WHERE id IN (&quot;)</b>
+<b class="fc">&nbsp;    val _inputSize: Int = ids.size</b>
+<b class="fc">&nbsp;    appendPlaceholders(_stringBuilder, _inputSize)</b>
+<b class="fc">&nbsp;    _stringBuilder.append(&quot;)&quot;)</b>
+<b class="fc">&nbsp;    val _sql: String = _stringBuilder.toString()</b>
+<b class="fc">&nbsp;    return createFlow(__db, false, arrayOf(&quot;note_table&quot;)) { _connection -&gt;</b>
+<b class="fc">&nbsp;      val _stmt: SQLiteStatement = _connection.prepare(_sql)</b>
+&nbsp;      try {
+<b class="fc">&nbsp;        var _argIndex: Int = 1</b>
+<b class="fc">&nbsp;        for (_item: String in ids) {</b>
+<b class="fc">&nbsp;          _stmt.bindText(_argIndex, _item)</b>
+<b class="fc">&nbsp;          _argIndex++</b>
+&nbsp;        }
+<b class="fc">&nbsp;        val _columnIndexOfId: Int = getColumnIndexOrThrow(_stmt, &quot;id&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, &quot;title&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfContent: Int = getColumnIndexOrThrow(_stmt, &quot;content&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, &quot;timestamp&quot;)</b>
+<b class="fc">&nbsp;        val _columnIndexOfLabels: Int = getColumnIndexOrThrow(_stmt, &quot;labels&quot;)</b>
+<b class="fc">&nbsp;        val _result: MutableList&lt;NoteEntity&gt; = mutableListOf()</b>
+<b class="fc">&nbsp;        while (_stmt.step()) {</b>
+<b class="fc">&nbsp;          val _item_1: NoteEntity</b>
+<b class="fc">&nbsp;          val _tmpId: Int</b>
+<b class="fc">&nbsp;          _tmpId = _stmt.getLong(_columnIndexOfId).toInt()</b>
+<b class="fc">&nbsp;          val _tmpTitle: String</b>
+<b class="fc">&nbsp;          _tmpTitle = _stmt.getText(_columnIndexOfTitle)</b>
+<b class="fc">&nbsp;          val _tmpContent: String</b>
+<b class="fc">&nbsp;          _tmpContent = _stmt.getText(_columnIndexOfContent)</b>
+<b class="fc">&nbsp;          val _tmpTimestamp: Long</b>
+<b class="fc">&nbsp;          _tmpTimestamp = _stmt.getLong(_columnIndexOfTimestamp)</b>
+<b class="fc">&nbsp;          val _tmpLabels: Set&lt;String&gt;</b>
+<b class="fc">&nbsp;          val _tmp: String</b>
+<b class="fc">&nbsp;          _tmp = _stmt.getText(_columnIndexOfLabels)</b>
+<b class="fc">&nbsp;          _tmpLabels = __converters.jsonToListString(_tmp)</b>
+<b class="fc">&nbsp;          _item_1 = NoteEntity(_tmpId,_tmpTitle,_tmpContent,_tmpTimestamp,_tmpLabels)</b>
+<b class="fc">&nbsp;          _result.add(_item_1)</b>
+&nbsp;        }
+<b class="fc">&nbsp;        _result</b>
+&nbsp;      } finally {
+<b class="fc">&nbsp;        _stmt.close()</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public override suspend fun deleteNotesById(ids: List&lt;Int&gt;) {
+<b class="fc">&nbsp;    val _stringBuilder: StringBuilder = StringBuilder()</b>
+<b class="fc">&nbsp;    _stringBuilder.append(&quot;DELETE FROM note_table WHERE id IN (&quot;)</b>
+<b class="fc">&nbsp;    val _inputSize: Int = ids.size</b>
+<b class="fc">&nbsp;    appendPlaceholders(_stringBuilder, _inputSize)</b>
+<b class="fc">&nbsp;    _stringBuilder.append(&quot;) &quot;)</b>
+<b class="fc">&nbsp;    val _sql: String = _stringBuilder.toString()</b>
+<b class="fc">&nbsp;    return performSuspending(__db, false, true) { _connection -&gt;</b>
+<b class="fc">&nbsp;      val _stmt: SQLiteStatement = _connection.prepare(_sql)</b>
+&nbsp;      try {
+<b class="fc">&nbsp;        var _argIndex: Int = 1</b>
+<b class="fc">&nbsp;        for (_item: Int in ids) {</b>
+<b class="fc">&nbsp;          _stmt.bindLong(_argIndex, _item.toLong())</b>
+<b class="fc">&nbsp;          _argIndex++</b>
+&nbsp;        }
+<b class="fc">&nbsp;        _stmt.step()</b>
+&nbsp;      } finally {
+&nbsp;        _stmt.close()
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public override suspend fun deleteAll() {
+<b class="fc">&nbsp;    val _sql: String = &quot;DELETE FROM note_table&quot;</b>
+<b class="fc">&nbsp;    return performSuspending(__db, false, true) { _connection -&gt;</b>
+<b class="fc">&nbsp;      val _stmt: SQLiteStatement = _connection.prepare(_sql)</b>
+&nbsp;      try {
+<b class="fc">&nbsp;        _stmt.step()</b>
+&nbsp;      } finally {
+&nbsp;        _stmt.close()
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public companion object {
+<b class="fc">&nbsp;    public fun getRequiredConverters(): List&lt;KClass&lt;*&gt;&gt; = emptyList()</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>

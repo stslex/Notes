@@ -3,16 +3,16 @@ package com.stslex93.notes.feature.home.ui.store
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
-import com.stslex93.notes.core.ui.addItem
+import com.stslex93.notes.core.ui.Extensions.addItem
+import com.stslex93.notes.core.ui.Extensions.removeItem
 import com.stslex93.notes.core.ui.base.store.BaseStoreImpl
-import com.stslex93.notes.core.ui.emptyImmutableSet
-import com.stslex93.notes.core.ui.removeItem
 import com.stslex93.notes.feature.home.domain.interactor.HomeInteractor
 import com.stslex93.notes.feature.home.ui.model.Note
 import com.stslex93.notes.feature.home.ui.model.toUI
 import com.stslex93.notes.feature.home.ui.store.HomeStore.Action
 import com.stslex93.notes.feature.home.ui.store.HomeStore.Event
 import com.stslex93.notes.feature.home.ui.store.HomeStore.State
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,7 +32,7 @@ class HomeStoreImpl @Inject constructor(
 
     override val initialState = State(
         query = "",
-        selectedNotes = emptyImmutableSet(),
+        selectedNotes = persistentSetOf(),
         notes = ::notes
     )
 
@@ -77,7 +77,7 @@ class HomeStoreImpl @Inject constructor(
     private fun clearSelection() {
         updateState { currentState ->
             currentState.copy(
-                selectedNotes = emptyImmutableSet(),
+                selectedNotes = persistentSetOf(),
                 query = ""
             )
         }
@@ -89,7 +89,7 @@ class HomeStoreImpl @Inject constructor(
             scope.launch(Dispatchers.IO) {
                 interactor.deleteNotes(items.toList())
                 updateState { currentState ->
-                    currentState.copy(selectedNotes = emptyImmutableSet())
+                    currentState.copy(selectedNotes = persistentSetOf())
                 }
             }
         } else {

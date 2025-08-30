@@ -8,7 +8,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     androidTestApi(libs.androidx.room.testing)
     implementation(libs.androidx.paging.runtime)
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.google.gson)
 }
 
 ksp {

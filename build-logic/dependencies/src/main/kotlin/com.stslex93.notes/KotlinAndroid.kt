@@ -1,15 +1,22 @@
 package com.stslex93.notes
 
 import AppExt.APP_PREFIX
+import AppExt.androidTestImplementationBundle
+import AppExt.androidTestImplementationPlatform
+import AppExt.coreLibraryDesugaring
 import AppExt.findVersionInt
+import AppExt.implementation
+import AppExt.ksp
 import AppExt.libs
+import AppExt.testImplementationBundle
+import AppExt.testImplementationPlatform
+import AppExt.testRuntimeOnly
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.gradle.AppExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -41,29 +48,31 @@ internal fun Project.configureKotlinAndroid(
 
     configureKotlin()
 
-    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-
     dependencies {
-        add("coreLibraryDesugaring", libs.findLibrary("android-desugarJdkLibs").get())
+        coreLibraryDesugaring("android-desugarJdkLibs")
 
-        val ktx = libs.findLibrary("androidx-core-ktx").get()
-        add("implementation", ktx)
-
-        val test = libs.findBundle("test").get()
-        add("testImplementation", test)
-
-        val androidTest = libs.findBundle("android-test").get()
-        add("androidTestImplementation", androidTest)
-
-        val immutableCollection = libs.findLibrary("kotlinx-collections-immutable").get()
-        add("implementation", immutableCollection)
-
-        val dagger = libs.findLibrary("dagger-core").get()
-        add("implementation", dagger)
-
-        val daggerCompiler = libs.findLibrary("dagger-compiler").get()
-        add("ksp", daggerCompiler)
+        testImplementationPlatform("junit-bom")
+        androidTestImplementationPlatform("junit-bom")
+        testRuntimeOnly("junit-launcher")
+        testImplementationBundle("test")
+        androidTestImplementationBundle("android-test")
+        implementation(
+            "kotlinx-collections-immutable",
+            "dagger-core",
+            "androidx-core-ktx"
+        )
+        ksp("dagger-compiler")
     }
+
+    tasks.withType<Test>().configureEach {
+        useJUnitPlatform()
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
+    }
+
+
+    testOptions { unitTests.isIncludeAndroidResources = true }
 }
 
 private fun Project.getNameSpace(

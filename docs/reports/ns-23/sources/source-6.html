@@ -1,0 +1,167 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > HomeScreenItemLabelsKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.feature.home.ui.components</a>
+</div>
+
+<h1>Coverage Summary for Class: HomeScreenItemLabelsKt (com.stslex93.notes.feature.home.ui.components)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">HomeScreenItemLabelsKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.feature.home.ui.components
+&nbsp;
+&nbsp;import androidx.compose.foundation.background
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.ExperimentalLayoutApi
+&nbsp;import androidx.compose.foundation.layout.FlowRow
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.foundation.layout.wrapContentSize
+&nbsp;import androidx.compose.foundation.shape.RoundedCornerShape
+&nbsp;import androidx.compose.material3.ElevatedCard
+&nbsp;import androidx.compose.material3.MaterialTheme
+&nbsp;import androidx.compose.material3.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.Alignment
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.text.style.TextAlign
+&nbsp;import androidx.compose.ui.text.style.TextOverflow
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import com.stslex93.notes.core.ui.theme.AppDimens
+&nbsp;import com.stslex93.notes.core.ui.theme.AppTheme
+&nbsp;import com.stslex93.notes.feature.home.ui.model.Label
+&nbsp;import kotlinx.collections.immutable.ImmutableSet
+&nbsp;import kotlinx.collections.immutable.toImmutableSet
+&nbsp;
+&nbsp;@OptIn(ExperimentalLayoutApi::class)
+&nbsp;@Composable
+&nbsp;fun HomeScreenItemLabels(
+&nbsp;    labels: ImmutableSet&lt;Label&gt;,
+&nbsp;    modifier: Modifier = Modifier
+&nbsp;) {
+&nbsp;    FlowRow(
+&nbsp;        modifier = modifier
+&nbsp;    ) {
+&nbsp;        labels.forEach { label -&gt;
+&nbsp;            ElevatedCard(
+&nbsp;                modifier = Modifier
+&nbsp;                    .padding(
+&nbsp;                        end = AppDimens.Padding.smallest,
+&nbsp;                        top = AppDimens.Padding.smallest
+&nbsp;                    )
+&nbsp;                    .wrapContentSize(),
+&nbsp;                shape = RoundedCornerShape(AppDimens.Corner.small),
+&nbsp;            ) {
+&nbsp;                Text(
+&nbsp;                    modifier = Modifier
+&nbsp;                        .padding(
+&nbsp;                            vertical = AppDimens.Padding.small,
+&nbsp;                            horizontal = AppDimens.Padding.medium
+&nbsp;                        )
+&nbsp;                        .align(Alignment.CenterHorizontally),
+&nbsp;                    text = label.title.take(16),
+&nbsp;                    color = MaterialTheme.colorScheme.onSurface,
+&nbsp;                    style = MaterialTheme.typography.bodySmall,
+&nbsp;                    maxLines = 1,
+&nbsp;                    overflow = TextOverflow.Ellipsis,
+&nbsp;                    textAlign = TextAlign.Center
+&nbsp;                )
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Composable
+&nbsp;@Preview
+&nbsp;fun HomeScreenItemLabelsPreview() {
+&nbsp;    AppTheme {
+&nbsp;        Box(
+&nbsp;            modifier = Modifier
+&nbsp;                .background(MaterialTheme.colorScheme.background)
+&nbsp;        ) {
+&nbsp;            val labels = Array(10) {
+&nbsp;                Label(
+&nbsp;                    uuid = &quot;uuid$it&quot;,
+&nbsp;                    title = &quot;label$it &quot;.repeat(it.coerceAtLeast(1)),
+&nbsp;                )
+&nbsp;            }.toSet().toImmutableSet()
+&nbsp;            HomeScreenItemLabels(
+&nbsp;                labels = labels
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>

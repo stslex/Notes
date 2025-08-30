@@ -1,0 +1,330 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > NoteRoomDatabase_Impl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.core.database.database</a>
+</div>
+
+<h1>Coverage Summary for Class: NoteRoomDatabase_Impl (com.stslex93.notes.core.database.database)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">NoteRoomDatabase_Impl</td>
+<td class="coverageStat">
+  <span class="percent">
+    90.9%
+  </span>
+  <span class="absValue">
+    (10/11)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    95.2%
+  </span>
+  <span class="absValue">
+    (20/21)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NoteRoomDatabase_Impl$createOpenDelegate$_openDelegate$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (4/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.3%
+  </span>
+  <span class="absValue">
+    (8/49)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    9.7%
+  </span>
+  <span class="absValue">
+    (21/216)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    73.7%
+  </span>
+  <span class="absValue">
+    (14/19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (28/70)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    9.7%
+  </span>
+  <span class="absValue">
+    (21/216)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.core.database.database
+&nbsp;
+&nbsp;import androidx.room.InvalidationTracker
+&nbsp;import androidx.room.RoomOpenDelegate
+&nbsp;import androidx.room.migration.AutoMigrationSpec
+&nbsp;import androidx.room.migration.Migration
+&nbsp;import androidx.room.util.TableInfo
+&nbsp;import androidx.room.util.TableInfo.Companion.read
+&nbsp;import androidx.room.util.dropFtsSyncTriggers
+&nbsp;import androidx.sqlite.SQLiteConnection
+&nbsp;import androidx.sqlite.execSQL
+&nbsp;import com.stslex93.notes.core.database.label.LabelDao
+&nbsp;import com.stslex93.notes.core.database.label.LabelDao_Impl
+&nbsp;import com.stslex93.notes.core.database.note.NoteDao
+&nbsp;import com.stslex93.notes.core.database.note.NoteDao_Impl
+&nbsp;import javax.`annotation`.processing.Generated
+&nbsp;import kotlin.Lazy
+&nbsp;import kotlin.String
+&nbsp;import kotlin.Suppress
+&nbsp;import kotlin.collections.List
+&nbsp;import kotlin.collections.Map
+&nbsp;import kotlin.collections.MutableList
+&nbsp;import kotlin.collections.MutableMap
+&nbsp;import kotlin.collections.MutableSet
+&nbsp;import kotlin.collections.Set
+&nbsp;import kotlin.collections.mutableListOf
+&nbsp;import kotlin.collections.mutableMapOf
+&nbsp;import kotlin.collections.mutableSetOf
+&nbsp;import kotlin.reflect.KClass
+&nbsp;
+&nbsp;@Generated(value = [&quot;androidx.room.RoomProcessor&quot;])
+&nbsp;@Suppress(names = [&quot;UNCHECKED_CAST&quot;, &quot;DEPRECATION&quot;, &quot;REDUNDANT_PROJECTION&quot;, &quot;REMOVAL&quot;])
+<b class="fc">&nbsp;public class NoteRoomDatabase_Impl : NoteRoomDatabase() {</b>
+<b class="fc">&nbsp;  private val _noteDao: Lazy&lt;NoteDao&gt; = lazy {</b>
+<b class="fc">&nbsp;    NoteDao_Impl(this)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public override val noteDao: NoteDao
+<b class="fc">&nbsp;    get() = _noteDao.value</b>
+&nbsp;
+<b class="fc">&nbsp;  private val _labelDao: Lazy&lt;LabelDao&gt; = lazy {</b>
+<b class="fc">&nbsp;    LabelDao_Impl(this)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public override val labelDao: LabelDao
+<b class="fc">&nbsp;    get() = _labelDao.value</b>
+&nbsp;
+&nbsp;  protected override fun createOpenDelegate(): RoomOpenDelegate {
+<b class="fc">&nbsp;    val _openDelegate: RoomOpenDelegate = object : RoomOpenDelegate(1,</b>
+<b class="fc">&nbsp;        &quot;b3bde1daf05e319c00abbbbdffb31382&quot;, &quot;1d2997d19ed2b80705fa11ce4974fdb4&quot;) {</b>
+&nbsp;      public override fun createAllTables(connection: SQLiteConnection) {
+<b class="fc">&nbsp;        connection.execSQL(&quot;CREATE TABLE IF NOT EXISTS `note_table` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `labels` TEXT NOT NULL)&quot;)</b>
+<b class="fc">&nbsp;        connection.execSQL(&quot;CREATE TABLE IF NOT EXISTS `label_table` (`uuid` TEXT NOT NULL, `title` TEXT NOT NULL, `timestamp` TEXT NOT NULL, PRIMARY KEY(`uuid`))&quot;)</b>
+<b class="fc">&nbsp;        connection.execSQL(&quot;CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)&quot;)</b>
+<b class="fc">&nbsp;        connection.execSQL(&quot;INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, &#39;b3bde1daf05e319c00abbbbdffb31382&#39;)&quot;)</b>
+&nbsp;      }
+&nbsp;
+&nbsp;      public override fun dropAllTables(connection: SQLiteConnection) {
+<b class="nc">&nbsp;        connection.execSQL(&quot;DROP TABLE IF EXISTS `note_table`&quot;)</b>
+<b class="nc">&nbsp;        connection.execSQL(&quot;DROP TABLE IF EXISTS `label_table`&quot;)</b>
+&nbsp;      }
+&nbsp;
+&nbsp;      public override fun onCreate(connection: SQLiteConnection) {
+<b class="fc">&nbsp;      }</b>
+&nbsp;
+&nbsp;      public override fun onOpen(connection: SQLiteConnection) {
+<b class="fc">&nbsp;        internalInitInvalidationTracker(connection)</b>
+&nbsp;      }
+&nbsp;
+&nbsp;      public override fun onPreMigrate(connection: SQLiteConnection) {
+<b class="nc">&nbsp;        dropFtsSyncTriggers(connection)</b>
+&nbsp;      }
+&nbsp;
+&nbsp;      public override fun onPostMigrate(connection: SQLiteConnection) {
+<b class="nc">&nbsp;      }</b>
+&nbsp;
+&nbsp;      public override fun onValidateSchema(connection: SQLiteConnection):
+&nbsp;          RoomOpenDelegate.ValidationResult {
+<b class="nc">&nbsp;        val _columnsNoteTable: MutableMap&lt;String, TableInfo.Column&gt; = mutableMapOf()</b>
+<b class="nc">&nbsp;        _columnsNoteTable.put(&quot;id&quot;, TableInfo.Column(&quot;id&quot;, &quot;INTEGER&quot;, true, 1, null,</b>
+<b class="nc">&nbsp;            TableInfo.CREATED_FROM_ENTITY))</b>
+<b class="nc">&nbsp;        _columnsNoteTable.put(&quot;title&quot;, TableInfo.Column(&quot;title&quot;, &quot;TEXT&quot;, true, 0, null,</b>
+<b class="nc">&nbsp;            TableInfo.CREATED_FROM_ENTITY))</b>
+<b class="nc">&nbsp;        _columnsNoteTable.put(&quot;content&quot;, TableInfo.Column(&quot;content&quot;, &quot;TEXT&quot;, true, 0, null,</b>
+<b class="nc">&nbsp;            TableInfo.CREATED_FROM_ENTITY))</b>
+<b class="nc">&nbsp;        _columnsNoteTable.put(&quot;timestamp&quot;, TableInfo.Column(&quot;timestamp&quot;, &quot;INTEGER&quot;, true, 0, null,</b>
+<b class="nc">&nbsp;            TableInfo.CREATED_FROM_ENTITY))</b>
+<b class="nc">&nbsp;        _columnsNoteTable.put(&quot;labels&quot;, TableInfo.Column(&quot;labels&quot;, &quot;TEXT&quot;, true, 0, null,</b>
+<b class="nc">&nbsp;            TableInfo.CREATED_FROM_ENTITY))</b>
+<b class="nc">&nbsp;        val _foreignKeysNoteTable: MutableSet&lt;TableInfo.ForeignKey&gt; = mutableSetOf()</b>
+<b class="nc">&nbsp;        val _indicesNoteTable: MutableSet&lt;TableInfo.Index&gt; = mutableSetOf()</b>
+<b class="nc">&nbsp;        val _infoNoteTable: TableInfo = TableInfo(&quot;note_table&quot;, _columnsNoteTable,</b>
+<b class="nc">&nbsp;            _foreignKeysNoteTable, _indicesNoteTable)</b>
+<b class="nc">&nbsp;        val _existingNoteTable: TableInfo = read(connection, &quot;note_table&quot;)</b>
+<b class="nc">&nbsp;        if (!_infoNoteTable.equals(_existingNoteTable)) {</b>
+<b class="nc">&nbsp;          return RoomOpenDelegate.ValidationResult(false, &quot;&quot;&quot;</b>
+&nbsp;              |note_table(com.stslex93.notes.core.database.note.NoteEntity).
+&nbsp;              | Expected:
+<b class="nc">&nbsp;              |&quot;&quot;&quot;.trimMargin() + _infoNoteTable + &quot;&quot;&quot;</b>
+&nbsp;              |
+&nbsp;              | Found:
+<b class="nc">&nbsp;              |&quot;&quot;&quot;.trimMargin() + _existingNoteTable)</b>
+&nbsp;        }
+<b class="nc">&nbsp;        val _columnsLabelTable: MutableMap&lt;String, TableInfo.Column&gt; = mutableMapOf()</b>
+<b class="nc">&nbsp;        _columnsLabelTable.put(&quot;uuid&quot;, TableInfo.Column(&quot;uuid&quot;, &quot;TEXT&quot;, true, 1, null,</b>
+<b class="nc">&nbsp;            TableInfo.CREATED_FROM_ENTITY))</b>
+<b class="nc">&nbsp;        _columnsLabelTable.put(&quot;title&quot;, TableInfo.Column(&quot;title&quot;, &quot;TEXT&quot;, true, 0, null,</b>
+<b class="nc">&nbsp;            TableInfo.CREATED_FROM_ENTITY))</b>
+<b class="nc">&nbsp;        _columnsLabelTable.put(&quot;timestamp&quot;, TableInfo.Column(&quot;timestamp&quot;, &quot;TEXT&quot;, true, 0, null,</b>
+<b class="nc">&nbsp;            TableInfo.CREATED_FROM_ENTITY))</b>
+<b class="nc">&nbsp;        val _foreignKeysLabelTable: MutableSet&lt;TableInfo.ForeignKey&gt; = mutableSetOf()</b>
+<b class="nc">&nbsp;        val _indicesLabelTable: MutableSet&lt;TableInfo.Index&gt; = mutableSetOf()</b>
+<b class="nc">&nbsp;        val _infoLabelTable: TableInfo = TableInfo(&quot;label_table&quot;, _columnsLabelTable,</b>
+<b class="nc">&nbsp;            _foreignKeysLabelTable, _indicesLabelTable)</b>
+<b class="nc">&nbsp;        val _existingLabelTable: TableInfo = read(connection, &quot;label_table&quot;)</b>
+<b class="nc">&nbsp;        if (!_infoLabelTable.equals(_existingLabelTable)) {</b>
+<b class="nc">&nbsp;          return RoomOpenDelegate.ValidationResult(false, &quot;&quot;&quot;</b>
+&nbsp;              |label_table(com.stslex93.notes.core.database.label.LabelEntity).
+&nbsp;              | Expected:
+<b class="nc">&nbsp;              |&quot;&quot;&quot;.trimMargin() + _infoLabelTable + &quot;&quot;&quot;</b>
+&nbsp;              |
+&nbsp;              | Found:
+<b class="nc">&nbsp;              |&quot;&quot;&quot;.trimMargin() + _existingLabelTable)</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return RoomOpenDelegate.ValidationResult(true, null)</b>
+&nbsp;      }
+&nbsp;    }
+<b class="fc">&nbsp;    return _openDelegate</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  protected override fun createInvalidationTracker(): InvalidationTracker {
+<b class="fc">&nbsp;    val _shadowTablesMap: MutableMap&lt;String, String&gt; = mutableMapOf()</b>
+<b class="fc">&nbsp;    val _viewTables: MutableMap&lt;String, Set&lt;String&gt;&gt; = mutableMapOf()</b>
+<b class="fc">&nbsp;    return InvalidationTracker(this, _shadowTablesMap, _viewTables, &quot;note_table&quot;, &quot;label_table&quot;)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public override fun clearAllTables() {
+<b class="nc">&nbsp;    super.performClear(false, &quot;note_table&quot;, &quot;label_table&quot;)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  protected override fun getRequiredTypeConverterClasses(): Map&lt;KClass&lt;*&gt;, List&lt;KClass&lt;*&gt;&gt;&gt; {
+<b class="fc">&nbsp;    val _typeConvertersMap: MutableMap&lt;KClass&lt;*&gt;, List&lt;KClass&lt;*&gt;&gt;&gt; = mutableMapOf()</b>
+<b class="fc">&nbsp;    _typeConvertersMap.put(NoteDao::class, NoteDao_Impl.getRequiredConverters())</b>
+<b class="fc">&nbsp;    _typeConvertersMap.put(LabelDao::class, LabelDao_Impl.getRequiredConverters())</b>
+<b class="fc">&nbsp;    return _typeConvertersMap</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public override fun getRequiredAutoMigrationSpecClasses(): Set&lt;KClass&lt;out AutoMigrationSpec&gt;&gt; {
+<b class="fc">&nbsp;    val _autoMigrationSpecsSet: MutableSet&lt;KClass&lt;out AutoMigrationSpec&gt;&gt; = mutableSetOf()</b>
+<b class="fc">&nbsp;    return _autoMigrationSpecsSet</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public override
+&nbsp;      fun createAutoMigrations(autoMigrationSpecs: Map&lt;KClass&lt;out AutoMigrationSpec&gt;, AutoMigrationSpec&gt;):
+&nbsp;      List&lt;Migration&gt; {
+<b class="fc">&nbsp;    val _autoMigrations: MutableList&lt;Migration&gt; = mutableListOf()</b>
+<b class="fc">&nbsp;    return _autoMigrations</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>

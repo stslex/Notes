@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > NoteRoomDatabase</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.core.database.database</a>
+</div>
+
+<h1>Coverage Summary for Class: NoteRoomDatabase (com.stslex93.notes.core.database.database)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">NoteRoomDatabase</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NoteRoomDatabase$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (2/8)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.core.database.database
+&nbsp;
+&nbsp;import android.content.Context
+&nbsp;import androidx.room.Database
+&nbsp;import androidx.room.Room
+&nbsp;import androidx.room.RoomDatabase
+&nbsp;import androidx.room.TypeConverters
+&nbsp;import com.stslex93.notes.core.database.label.LabelDao
+&nbsp;import com.stslex93.notes.core.database.label.LabelEntity
+&nbsp;import com.stslex93.notes.core.database.note.NoteDao
+&nbsp;import com.stslex93.notes.core.database.note.NoteEntity
+&nbsp;
+&nbsp;@Database(
+&nbsp;    entities = [
+&nbsp;        NoteEntity::class,
+&nbsp;        LabelEntity::class
+&nbsp;    ],
+&nbsp;    version = 1,
+&nbsp;    exportSchema = false,
+&nbsp;)
+&nbsp;@TypeConverters(Converters::class)
+<b class="fc">&nbsp;abstract class NoteRoomDatabase : RoomDatabase() {</b>
+&nbsp;
+&nbsp;    abstract val noteDao: NoteDao
+&nbsp;    abstract val labelDao: LabelDao
+&nbsp;
+&nbsp;    companion object {
+&nbsp;        private const val DB_NAME = &quot;db.note&quot;
+&nbsp;
+&nbsp;        fun build(
+&nbsp;            context: Context
+&nbsp;        ) = Room
+<b class="nc">&nbsp;            .databaseBuilder(</b>
+<b class="nc">&nbsp;                context,</b>
+<b class="nc">&nbsp;                NoteRoomDatabase::class.java,</b>
+<b class="nc">&nbsp;                DB_NAME</b>
+&nbsp;            )
+<b class="nc">&nbsp;            .build()</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>

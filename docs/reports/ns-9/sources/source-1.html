@@ -1,0 +1,166 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > NavigatorImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.core.navigation.navigator</a>
+</div>
+
+<h1>Coverage Summary for Class: NavigatorImpl (com.stslex93.notes.core.navigation.navigator)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">NavigatorImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/71)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.core.navigation.navigator
+&nbsp;
+&nbsp;import androidx.navigation.NavHostController
+&nbsp;import com.stslex.aproselection.core.core.Logger
+&nbsp;import com.stslex93.notes.core.navigation.model.NavigationScreen
+&nbsp;import com.stslex93.notes.core.ui.di.Navigator
+&nbsp;import com.stslex93.notes.core.ui.di.Screen
+&nbsp;import javax.inject.Inject
+&nbsp;
+<b class="nc">&nbsp;class NavigatorImpl @Inject constructor(</b>
+<b class="nc">&nbsp;    private val navController: NavHostController</b>
+&nbsp;) : Navigator {
+&nbsp;
+&nbsp;    override fun invoke(screen: Screen) {
+<b class="nc">&nbsp;        when (screen) {</b>
+<b class="nc">&nbsp;            is NavigationScreen.PopBackStack -&gt; navController.popBackStack()</b>
+<b class="nc">&nbsp;            is NavigationScreen -&gt; navigateScreen(screen)</b>
+&nbsp;            else -&gt; {
+<b class="nc">&nbsp;                Logger.debug(&quot;unresolve navigation route&quot;, this::class.simpleName)</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun navigateScreen(screen: NavigationScreen) {
+<b class="nc">&nbsp;        val currentRoute = navController.currentDestination?.route ?: return</b>
+<b class="nc">&nbsp;        if (currentRoute == screen.screen.navigationRoute) return</b>
+&nbsp;
+<b class="nc">&nbsp;        navController.navigate(screen.screenRoute) {</b>
+<b class="nc">&nbsp;            if (screen.isSingleTop.not()) return@navigate</b>
+&nbsp;
+<b class="nc">&nbsp;            popUpTo(currentRoute) {</b>
+<b class="nc">&nbsp;                inclusive = true</b>
+<b class="nc">&nbsp;                saveState = true</b>
+&nbsp;            }
+<b class="nc">&nbsp;            launchSingleTop = true</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>

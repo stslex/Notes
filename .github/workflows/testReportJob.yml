@@ -36,9 +36,12 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            ~/gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'gradle/wrapper/gradle-wrapper.properties', 'gradle/libs.versions.toml') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-.
+            ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'gradle/wrapper/gradle-wrapper.properties', 'gradle/libs.versions.toml') }}
+            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-
 
       - name: Configure Keystore
         env:
@@ -56,13 +59,13 @@ jobs:
 
       - name: Check report files
         run: |
-          ls /build/reports/kover/html/
+          ls app/build/reports/kover/html
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
-          path: /build/reports/kover/html/
+          path: app/build/reports/kover/html
 
   saveReport:
     name: SaveReport
@@ -79,7 +82,7 @@ jobs:
           mkdir docs/reports
 
       - name: Download report
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: code-coverage-report
           path: docs/reports

@@ -52,7 +52,29 @@ object AppExt {
         dependencies {
             alias.forEach {
                 add(
-                    "debugImplementation",
+                    "implementation",
+                    platform(libs.findLibrary(it).get())
+                )
+            }
+        }
+    }
+
+    fun Project.testImplementationPlatform(vararg alias: String) {
+        dependencies {
+            alias.forEach {
+                add(
+                    "testImplementation",
+                    platform(libs.findLibrary(it).get())
+                )
+            }
+        }
+    }
+
+    fun Project.androidTestImplementationPlatform(vararg alias: String) {
+        dependencies {
+            alias.forEach {
+                add(
+                    "androidTestImplementation",
                     platform(libs.findLibrary(it).get())
                 )
             }
@@ -92,17 +114,6 @@ object AppExt {
         }
     }
 
-    fun Project.androidTestImplementationPlatform(vararg alias: String) {
-        dependencies {
-            alias.forEach {
-                add(
-                    "androidTestImplementation",
-                    dependencies.platform(libs.findLibrary(it).get())
-                )
-            }
-        }
-    }
-
     /**
      * Find the library by alias
      */
@@ -110,6 +121,28 @@ object AppExt {
         dependencies {
             alias.forEach {
                 add("testImplementation", libs.findBundle(it).get())
+            }
+        }
+    }
+
+    /**
+     * Find the library by alias
+     */
+    fun Project.testImplementation(vararg alias: String) {
+        dependencies {
+            alias.forEach {
+                add("testImplementation", libs.findLibrary(it).get())
+            }
+        }
+    }
+
+    /**
+     * Find the library by alias
+     */
+    fun Project.testRuntimeOnly(vararg alias: String) {
+        dependencies {
+            alias.forEach {
+                add("testRuntimeOnly", libs.findLibrary(it).get())
             }
         }
     }

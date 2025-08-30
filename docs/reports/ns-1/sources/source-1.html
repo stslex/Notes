@@ -4,23 +4,25 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > BuildConfig</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > Logger</title>
   <style type="text/css">
     @import "../../css/coverage.css";
-    @import "../../css/highlight-idea.css";
+    @import "../../css/idea.min.css";
   </style>
-  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
 </head>
 
 <body>
 <div class="content">
 <div class="breadCrumbs">
-Current scope:     <a href="../../index.html">all classes</a>
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.stslex93.notes</a>
+    <a href="../index.html">com.stslex.aproselection.core.core</a>
 </div>
 
-<h1>Coverage Summary for Class: BuildConfig (com.stslex93.notes)</h1>
+<h1>Coverage Summary for Class: Logger (com.stslex.aproselection.core.core)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -47,7 +49,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">BuildConfig</td>
+  <td class="name">Logger</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -61,16 +63,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/2)
-  </span>
-</td>
-    <td class="coverageStat"/>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/2)
+    (0/4)
   </span>
 </td>
 <td class="coverageStat">
@@ -78,7 +71,23 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/5)
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/38)
   </span>
 </td>
 </tr>
@@ -88,7 +97,39 @@ Current scope:     <a href="../../index.html">all classes</a>
 <br/>
 <br/>
 
-  <div class="sourceCode">Source code is not available<br /></div>
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex.aproselection.core.core
+&nbsp;
+&nbsp;import android.util.Log
+&nbsp;
+&nbsp;object Logger {
+&nbsp;
+&nbsp;    private const val DEFAULT_TAG = &quot;NOTES&quot;
+&nbsp;
+&nbsp;    fun exception(
+&nbsp;        throwable: Throwable,
+<b class="nc">&nbsp;        tag: String? = null,</b>
+<b class="nc">&nbsp;        message: String? = null</b>
+&nbsp;    ) {
+<b class="nc">&nbsp;        val currentTag = &quot;$DEFAULT_TAG:${tag.orEmpty()}&quot;</b>
+<b class="nc">&nbsp;        Log.e(</b>
+<b class="nc">&nbsp;            currentTag,</b>
+<b class="nc">&nbsp;            message ?: throwable.message.orEmpty(),</b>
+<b class="nc">&nbsp;            throwable,</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    fun debug(
+&nbsp;        message: String,
+<b class="nc">&nbsp;        tag: String? = null,</b>
+&nbsp;    ) {
+<b class="nc">&nbsp;        val currentTag = &quot;$DEFAULT_TAG:${tag.orEmpty()}&quot;</b>
+<b class="nc">&nbsp;        Log.d(currentTag, message)</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
 </div>
 
 <script type="text/javascript">
@@ -102,18 +143,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     @*/
 
     if (!msie || msie && msie9) {
-        var codeBlock = document.getElementById('sourceCode');
-
-        if (codeBlock) {
-            hljs.highlightBlock(codeBlock);
-        }
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
     }
 })();
 </script>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-08-23 19:51</div>
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
 </div>
 </body>
 </html>

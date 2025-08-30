@@ -1,44 +1,39 @@
 package com.stslex93.notes.core.database
 
-import android.content.Context
 import androidx.paging.PagingSource
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import com.stslex93.notes.core.database.database.NoteRoomDatabase
+import com.ibm.icu.impl.Assert.fail
 import com.stslex93.notes.core.database.note.NoteDao
 import com.stslex93.notes.core.database.note.NoteEntity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
-import org.junit.AfterClass
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.robolectric.annotation.Config
+import tech.apter.junit.jupiter.robolectric.RobolectricExtension
 
+@ExtendWith(RobolectricExtension::class)
+@Config(application = BaseDatabaseTest.TestApplication::class)
+internal class NoteDaoTest : BaseDatabaseTest() {
 
-@RunWith(RobolectricTestRunner::class)
-class NoteDaoTest {
+    private val dao: NoteDao get() = database.noteDao
 
-    private val dao: NoteDao
-
-    init {
-        val context: Context = ApplicationProvider.getApplicationContext()
-        database = Room.databaseBuilder(
-            context, NoteRoomDatabase::class.java,
-            DATABASE_NAME
-        ).build()
-        dao = database.noteDao
+    @BeforeEach
+    override fun initDb() {
+        super.initDb()
     }
 
-    @Before
-    fun beforeTest() = runBlocking(Dispatchers.IO) {
-        dao.deleteAll()
+    @AfterEach
+    override fun clearDb() {
+        super.clearDb()
     }
 
     @Test
-    fun getAll() = runBlocking(Dispatchers.IO) {
+    fun getAll() = runTest {
         dao.deleteAll()
         testListOfNotes.forEach { note ->
             dao.insert(note)
@@ -53,88 +48,88 @@ class NoteDaoTest {
             )
         )
         val actual = (loadResult as? PagingSource.LoadResult.Page)?.data
-        Assert.assertEquals(actual, mockedItems)
+        assertEquals(actual, mockedItems)
     }
 
     @Test
-    fun getAllNotes() = runBlocking(Dispatchers.IO) {
+    fun getAllNotes() = runTest {
         dao.deleteAll()
         dao.insert(testNote)
         val notes = dao.getAllNotes()
-        Assert.assertTrue(notes.isNotEmpty())
+        assertTrue(notes.isNotEmpty())
     }
 
     @Test
-    fun getNoteFlow() = runBlocking(Dispatchers.IO) {
+    fun getNoteFlow() = runTest {
         val expectedNote = testNote.copy(
             id = testNote.hashCode()
         )
         dao.insert(expectedNote)
         val compareNote = dao.getNoteFlow(expectedNote.id).first()
-        Assert.assertEquals(expectedNote, compareNote)
+        assertEquals(expectedNote, compareNote)
     }
 
     @Test
-    fun getNote() = runBlocking(Dispatchers.IO) {
+    fun getNote() = runTest {
         val expectedNote = testNote.copy(
             id = testNote.hashCode()
         )
         dao.insert(expectedNote)
         val compareNote = dao.getNote(expectedNote.id)
-        Assert.assertEquals(expectedNote, compareNote)
+        assertEquals(expectedNote, compareNote)
     }
 
     @Test
-    fun getNotesById() = runBlocking(Dispatchers.IO) {
+    fun getNotesById() = runTest {
         testListOfNotes.forEach { dao.insert(it) }
         val listOfIds = dao.getAllNotes().map { it.id.toString() }
         if (listOfIds.isEmpty()) {
-            Assert.fail()
+            fail("List of ids is empty")
         }
         val compareListOfIds = dao.getNotesById(listOfIds).first().map { it.id.toString() }
-        Assert.assertEquals(listOfIds, compareListOfIds)
+        assertEquals(listOfIds, compareListOfIds)
     }
 
     @Test
-    fun insertSingleNote() = runBlocking(Dispatchers.IO) {
+    fun insertSingleNote() = runTest {
         val notesSize = dao.getAllNotes().size
         dao.insert(testNote)
         val notes = dao.getAllNotes()
         val notesSizeAssert = notesSize.plus(1)
-        Assert.assertEquals(notesSizeAssert, notes.size)
-        Assert.assertTrue(notes.containsCurrentItem)
+        assertEquals(notesSizeAssert, notes.size)
+        assertTrue(notes.containsCurrentItem)
     }
 
     @Test
-    fun deleteNotesById() = runBlocking(Dispatchers.IO) {
+    fun deleteNotesById() = runTest {
         testListOfNotes.forEach { dao.insert(it) }
         val listOfIds = dao.getAllNotes().map { it.id }
         if (listOfIds.isEmpty()) {
-            Assert.fail()
+            fail("List of ids is empty")
         }
         testListOfNotes.forEach { dao.insert(it) }
         dao.deleteNotesById(listOfIds)
         val allNotes = dao.getAllNotes()
         val isNotContains = allNotes.isEmpty() || allNotes.any { listOfIds.contains(it.id).not() }
-        Assert.assertTrue("Notes contains deleted ids", isNotContains)
+        assertTrue(isNotContains) { "Notes contains deleted ids" }
     }
 
     @Test
-    fun insertAll() = runBlocking(Dispatchers.IO) {
+    fun insertAll() = runTest {
         val beforeInsert = dao.getAllNotes().size
         testListOfNotes.forEach { dao.insert(it) }
         val afterInsert = dao.getAllNotes().size
-        Assert.assertNotEquals(beforeInsert, afterInsert)
+        assertNotEquals(beforeInsert, afterInsert)
     }
 
     @Test
-    fun deleteAll() = runBlocking(Dispatchers.IO) {
+    fun deleteAll() = runTest {
         val beforeInsert = dao.getAllNotes().size
         testListOfNotes.forEach { dao.insert(it) }
         val afterInsert = dao.getAllNotes().size
-        Assert.assertNotEquals(beforeInsert, afterInsert)
+        assertNotEquals(beforeInsert, afterInsert)
         dao.deleteAll()
-        Assert.assertTrue(dao.getAllNotes().isEmpty())
+        assertTrue(dao.getAllNotes().isEmpty())
     }
 
     private val testListOfNotes: List<NoteEntity> by lazy {
@@ -148,14 +143,4 @@ class NoteDaoTest {
         NoteEntity(0, "title", "content", System.currentTimeMillis(), emptySet())
     }
 
-    companion object {
-        private const val DATABASE_NAME: String = "note_database"
-        private lateinit var database: NoteRoomDatabase
-
-        @AfterClass
-        @JvmStatic
-        fun afterTestsEnd() {
-            database.close()
-        }
-    }
 }

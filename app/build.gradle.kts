@@ -4,12 +4,19 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:core"))
-    implementation(project(":core:ui"))
-    implementation(project(":core:database"))
-    implementation(project(":core:notes"))
-    implementation(project(":core:navigation"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:edit"))
-    implementation(project(":feature:edit-label"))
+    implementWithCover(":core:core")
+    implementWithCover(":core:database")
+    implementWithCover(":core:label")
+    implementWithCover(":core:navigation")
+    implementWithCover(":core:notes")
+    implementWithCover(":core:ui")
+    implementWithCover(":feature:edit")
+    implementWithCover(":feature:edit-label")
+    implementWithCover(":feature:home")
+}
+
+fun DependencyHandler.implementWithCover(name: String) {
+    val project = project(name)
+    implementation(project)
+    kover(project)
 }

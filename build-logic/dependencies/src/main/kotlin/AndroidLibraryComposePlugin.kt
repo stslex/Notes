@@ -7,11 +7,14 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
 
 class AndroidLibraryComposePlugin : Plugin<Project> {
+
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("com.android.library")
-            pluginManager.apply(libs.findPluginId("kotlin"))
-            pluginManager.apply(libs.findPluginId("composeCompiler"))
+            pluginManager.apply {
+                apply(libs.findPluginId("library"))
+                apply(libs.findPluginId("kotlin"))
+                apply(libs.findPluginId("composeCompiler"))
+            }
             val extension = extensions.getByType<LibraryExtension>()
             configureAndroidCompose(extension)
         }

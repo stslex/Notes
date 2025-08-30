@@ -1,0 +1,298 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > EditStoreImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.feature.edit.ui.store</a>
+</div>
+
+<h1>Coverage Summary for Class: EditStoreImpl (com.stslex93.notes.feature.edit.ui.store)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">EditStoreImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/157)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">EditStoreImpl$initStore$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">EditStoreImpl$onActionSaveNote$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/33)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/39)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/199)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.feature.edit.ui.store
+&nbsp;
+&nbsp;import com.stslex93.notes.core.ui.base.store.BaseStoreImpl
+&nbsp;import com.stslex93.notes.feature.edit.domain.interactor.NoteEditInteractor
+&nbsp;import com.stslex93.notes.feature.edit.ui.model.Note
+&nbsp;import com.stslex93.notes.feature.edit.ui.model.toDomain
+&nbsp;import com.stslex93.notes.feature.edit.ui.model.toPresentation
+&nbsp;import com.stslex93.notes.feature.edit.ui.store.EditStore.Action
+&nbsp;import com.stslex93.notes.feature.edit.ui.store.EditStore.Event
+&nbsp;import com.stslex93.notes.feature.edit.ui.store.EditStore.State
+&nbsp;import kotlinx.collections.immutable.persistentSetOf
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.flow.MutableStateFlow
+&nbsp;import kotlinx.coroutines.flow.flowOn
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.onEach
+&nbsp;import kotlinx.coroutines.launch
+&nbsp;import javax.inject.Inject
+&nbsp;
+&nbsp;class EditStoreImpl @Inject constructor(
+<b class="nc">&nbsp;    private val interactor: NoteEditInteractor</b>
+<b class="nc">&nbsp;) : EditStore, BaseStoreImpl&lt;State, Event, Action&gt;() {</b>
+&nbsp;
+<b class="nc">&nbsp;    override val initialState: State = State(</b>
+<b class="nc">&nbsp;        note = Note(</b>
+<b class="nc">&nbsp;            uuid = 0,</b>
+<b class="nc">&nbsp;            title = &quot;&quot;,</b>
+<b class="nc">&nbsp;            content = &quot;&quot;,</b>
+<b class="nc">&nbsp;            labels = persistentSetOf(),</b>
+<b class="nc">&nbsp;            timestamp = System.currentTimeMillis()</b>
+&nbsp;        )
+&nbsp;    )
+&nbsp;
+<b class="nc">&nbsp;    override val state: MutableStateFlow&lt;State&gt; = MutableStateFlow(initialState)</b>
+&nbsp;
+&nbsp;    override fun processAction(action: Action) {
+<b class="nc">&nbsp;        when (action) {</b>
+<b class="nc">&nbsp;            is Action.Init -&gt; initStore(action)</b>
+<b class="nc">&nbsp;            is Action.InputContent -&gt; onActionInputContent(action)</b>
+<b class="nc">&nbsp;            is Action.InputTitle -&gt; onActionInputTitle(action)</b>
+<b class="nc">&nbsp;            is Action.SaveNote -&gt; onActionSaveNote()</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun onActionSaveNote() {
+<b class="nc">&nbsp;        val note = state.value.note</b>
+<b class="nc">&nbsp;        if (note.title.isBlank() &amp;&amp; note.content.isBlank()) return</b>
+<b class="nc">&nbsp;        scope.launch(Dispatchers.IO) {</b>
+<b class="nc">&nbsp;            interactor.insert(</b>
+<b class="nc">&nbsp;                note.copy(</b>
+<b class="nc">&nbsp;                    title = note.title.trimEnd(),</b>
+<b class="nc">&nbsp;                    content = note.content.trimEnd()</b>
+<b class="nc">&nbsp;                ).toDomain()</b>
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun onActionInputTitle(action: Action.InputTitle) {
+<b class="nc">&nbsp;        updateState { currentState -&gt;</b>
+<b class="nc">&nbsp;            currentState.copy(</b>
+<b class="nc">&nbsp;                note = currentState.note.copy(</b>
+<b class="nc">&nbsp;                    title = action.title</b>
+&nbsp;                )
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun onActionInputContent(action: Action.InputContent) {
+<b class="nc">&nbsp;        updateState { currentState -&gt;</b>
+<b class="nc">&nbsp;            currentState.copy(</b>
+<b class="nc">&nbsp;                note = currentState.note.copy(</b>
+<b class="nc">&nbsp;                    content = action.content</b>
+&nbsp;                )
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun initStore(action: Action.Init) {
+<b class="nc">&nbsp;        if (action.isEdit.not() || action.id &lt;= -1) return</b>
+<b class="nc">&nbsp;        interactor.getNote(action.id)</b>
+<b class="nc">&nbsp;            .onEach { note -&gt;</b>
+<b class="nc">&nbsp;                updateState { currentState -&gt;</b>
+<b class="nc">&nbsp;                    currentState.copy(</b>
+<b class="nc">&nbsp;                        note = note.toPresentation()</b>
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            .flowOn(Dispatchers.IO)</b>
+<b class="nc">&nbsp;            .launchIn(scope)</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>

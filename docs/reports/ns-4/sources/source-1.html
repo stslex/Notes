@@ -1,0 +1,376 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > LabelDao_Impl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.core.database.label</a>
+</div>
+
+<h1>Coverage Summary for Class: LabelDao_Impl (com.stslex93.notes.core.database.label)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">LabelDao_Impl</td>
+<td class="coverageStat">
+  <span class="percent">
+    11.1%
+  </span>
+  <span class="absValue">
+    (1/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    10.4%
+  </span>
+  <span class="absValue">
+    (5/48)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LabelDao_Impl$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (1/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    11.1%
+  </span>
+  <span class="absValue">
+    (2/18)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LabelDao_Impl$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LabelDao_Impl$search$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/84)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    18.8%
+  </span>
+  <span class="absValue">
+    (3/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    9.5%
+  </span>
+  <span class="absValue">
+    (7/74)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    2.9%
+  </span>
+  <span class="absValue">
+    (3/103)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.core.database.label
+&nbsp;
+&nbsp;import androidx.paging.PagingSource
+&nbsp;import androidx.room.EntityInsertAdapter
+&nbsp;import androidx.room.RoomDatabase
+&nbsp;import androidx.room.RoomRawQuery
+&nbsp;import androidx.room.paging.LimitOffsetPagingSource
+&nbsp;import androidx.room.util.appendPlaceholders
+&nbsp;import androidx.room.util.getColumnIndexOrThrow
+&nbsp;import androidx.room.util.performBlocking
+&nbsp;import androidx.room.util.performSuspending
+&nbsp;import androidx.sqlite.SQLiteStatement
+&nbsp;import javax.`annotation`.processing.Generated
+&nbsp;import kotlin.Int
+&nbsp;import kotlin.String
+&nbsp;import kotlin.Suppress
+&nbsp;import kotlin.Unit
+&nbsp;import kotlin.collections.List
+&nbsp;import kotlin.collections.MutableList
+&nbsp;import kotlin.collections.Set
+&nbsp;import kotlin.collections.mutableListOf
+&nbsp;import kotlin.reflect.KClass
+&nbsp;import kotlin.text.StringBuilder
+&nbsp;
+&nbsp;@Generated(value = [&quot;androidx.room.RoomProcessor&quot;])
+&nbsp;@Suppress(names = [&quot;UNCHECKED_CAST&quot;, &quot;DEPRECATION&quot;, &quot;REDUNDANT_PROJECTION&quot;, &quot;REMOVAL&quot;])
+<b class="fc">&nbsp;public class LabelDao_Impl(</b>
+&nbsp;  __db: RoomDatabase,
+&nbsp;) : LabelDao {
+&nbsp;  private val __db: RoomDatabase
+&nbsp;
+&nbsp;  private val __insertAdapterOfLabelEntity: EntityInsertAdapter&lt;LabelEntity&gt;
+<b class="fc">&nbsp;  init {</b>
+<b class="fc">&nbsp;    this.__db = __db</b>
+<b class="fc">&nbsp;    this.__insertAdapterOfLabelEntity = object : EntityInsertAdapter&lt;LabelEntity&gt;() {</b>
+&nbsp;      protected override fun createQuery(): String =
+<b class="nc">&nbsp;          &quot;INSERT OR REPLACE INTO `label_table` (`uuid`,`title`,`timestamp`) VALUES (?,?,?)&quot;</b>
+&nbsp;
+&nbsp;      protected override fun bind(statement: SQLiteStatement, entity: LabelEntity) {
+<b class="nc">&nbsp;        statement.bindText(1, entity.uuid)</b>
+<b class="nc">&nbsp;        statement.bindText(2, entity.title)</b>
+<b class="nc">&nbsp;        statement.bindText(3, entity.timestamp)</b>
+&nbsp;      }
+&nbsp;    }
+<b class="fc">&nbsp;  }</b>
+&nbsp;
+<b class="nc">&nbsp;  public override suspend fun addLabel(label: LabelEntity): Unit = performSuspending(__db, false,</b>
+<b class="nc">&nbsp;      true) { _connection -&gt;</b>
+<b class="nc">&nbsp;    __insertAdapterOfLabelEntity.insert(_connection, label)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public override fun getLabels(uuids: Set&lt;String&gt;): List&lt;LabelEntity&gt; {
+<b class="nc">&nbsp;    val _stringBuilder: StringBuilder = StringBuilder()</b>
+<b class="nc">&nbsp;    _stringBuilder.append(&quot;SELECT * FROM label_table WHERE uuid in (&quot;)</b>
+<b class="nc">&nbsp;    val _inputSize: Int = uuids.size</b>
+<b class="nc">&nbsp;    appendPlaceholders(_stringBuilder, _inputSize)</b>
+<b class="nc">&nbsp;    _stringBuilder.append(&quot;)&quot;)</b>
+<b class="nc">&nbsp;    val _sql: String = _stringBuilder.toString()</b>
+<b class="nc">&nbsp;    return performBlocking(__db, true, false) { _connection -&gt;</b>
+<b class="nc">&nbsp;      val _stmt: SQLiteStatement = _connection.prepare(_sql)</b>
+&nbsp;      try {
+<b class="nc">&nbsp;        var _argIndex: Int = 1</b>
+<b class="nc">&nbsp;        for (_item: String in uuids) {</b>
+<b class="nc">&nbsp;          _stmt.bindText(_argIndex, _item)</b>
+<b class="nc">&nbsp;          _argIndex++</b>
+&nbsp;        }
+<b class="nc">&nbsp;        val _columnIndexOfUuid: Int = getColumnIndexOrThrow(_stmt, &quot;uuid&quot;)</b>
+<b class="nc">&nbsp;        val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, &quot;title&quot;)</b>
+<b class="nc">&nbsp;        val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, &quot;timestamp&quot;)</b>
+<b class="nc">&nbsp;        val _result: MutableList&lt;LabelEntity&gt; = mutableListOf()</b>
+<b class="nc">&nbsp;        while (_stmt.step()) {</b>
+<b class="nc">&nbsp;          val _item_1: LabelEntity</b>
+<b class="nc">&nbsp;          val _tmpUuid: String</b>
+<b class="nc">&nbsp;          _tmpUuid = _stmt.getText(_columnIndexOfUuid)</b>
+<b class="nc">&nbsp;          val _tmpTitle: String</b>
+<b class="nc">&nbsp;          _tmpTitle = _stmt.getText(_columnIndexOfTitle)</b>
+<b class="nc">&nbsp;          val _tmpTimestamp: String</b>
+<b class="nc">&nbsp;          _tmpTimestamp = _stmt.getText(_columnIndexOfTimestamp)</b>
+<b class="nc">&nbsp;          _item_1 = LabelEntity(_tmpUuid,_tmpTitle,_tmpTimestamp)</b>
+<b class="nc">&nbsp;          _result.add(_item_1)</b>
+&nbsp;        }
+<b class="nc">&nbsp;        _result</b>
+&nbsp;      } finally {
+<b class="nc">&nbsp;        _stmt.close()</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public override fun search(query: String): PagingSource&lt;Int, LabelEntity&gt; {
+<b class="nc">&nbsp;    val _sql: String =</b>
+<b class="nc">&nbsp;        &quot;SELECT * FROM label_table WHERE title LIKE &#39;%&#39; || ? || &#39;%&#39;ORDER BY timestamp DESC&quot;</b>
+<b class="nc">&nbsp;    val _rawQuery: RoomRawQuery = RoomRawQuery(_sql) { _stmt -&gt;</b>
+<b class="nc">&nbsp;      var _argIndex: Int = 1</b>
+<b class="nc">&nbsp;      _stmt.bindText(_argIndex, query)</b>
+&nbsp;    }
+<b class="nc">&nbsp;    return object : LimitOffsetPagingSource&lt;LabelEntity&gt;(_rawQuery, __db, &quot;label_table&quot;) {</b>
+&nbsp;      protected override suspend fun convertRows(limitOffsetQuery: RoomRawQuery, itemCount: Int):
+<b class="nc">&nbsp;          List&lt;LabelEntity&gt; = performSuspending(__db, true, false) { _connection -&gt;</b>
+<b class="nc">&nbsp;        val _stmt: SQLiteStatement = _connection.prepare(limitOffsetQuery.sql)</b>
+<b class="nc">&nbsp;        limitOffsetQuery.getBindingFunction().invoke(_stmt)</b>
+&nbsp;        try {
+<b class="nc">&nbsp;          val _columnIndexOfUuid: Int = getColumnIndexOrThrow(_stmt, &quot;uuid&quot;)</b>
+<b class="nc">&nbsp;          val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, &quot;title&quot;)</b>
+<b class="nc">&nbsp;          val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, &quot;timestamp&quot;)</b>
+<b class="nc">&nbsp;          val _result: MutableList&lt;LabelEntity&gt; = mutableListOf()</b>
+<b class="nc">&nbsp;          while (_stmt.step()) {</b>
+<b class="nc">&nbsp;            val _item: LabelEntity</b>
+<b class="nc">&nbsp;            val _tmpUuid: String</b>
+<b class="nc">&nbsp;            _tmpUuid = _stmt.getText(_columnIndexOfUuid)</b>
+<b class="nc">&nbsp;            val _tmpTitle: String</b>
+<b class="nc">&nbsp;            _tmpTitle = _stmt.getText(_columnIndexOfTitle)</b>
+<b class="nc">&nbsp;            val _tmpTimestamp: String</b>
+<b class="nc">&nbsp;            _tmpTimestamp = _stmt.getText(_columnIndexOfTimestamp)</b>
+<b class="nc">&nbsp;            _item = LabelEntity(_tmpUuid,_tmpTitle,_tmpTimestamp)</b>
+<b class="nc">&nbsp;            _result.add(_item)</b>
+&nbsp;          }
+<b class="nc">&nbsp;          _result</b>
+&nbsp;        } finally {
+<b class="nc">&nbsp;          _stmt.close()</b>
+&nbsp;        }
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public override suspend fun removeLabel(uuid: String) {
+<b class="nc">&nbsp;    val _sql: String = &quot;DELETE from label_table WHERE uuid = ?&quot;</b>
+<b class="nc">&nbsp;    return performSuspending(__db, false, true) { _connection -&gt;</b>
+<b class="nc">&nbsp;      val _stmt: SQLiteStatement = _connection.prepare(_sql)</b>
+&nbsp;      try {
+<b class="nc">&nbsp;        var _argIndex: Int = 1</b>
+<b class="nc">&nbsp;        _stmt.bindText(_argIndex, uuid)</b>
+<b class="nc">&nbsp;        _stmt.step()</b>
+&nbsp;      } finally {
+&nbsp;        _stmt.close()
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public companion object {
+<b class="fc">&nbsp;    public fun getRequiredConverters(): List&lt;KClass&lt;*&gt;&gt; = emptyList()</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>

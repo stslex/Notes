@@ -1,0 +1,207 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > EditScreenKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stslex93.notes.feature.edit.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: EditScreenKt (com.stslex93.notes.feature.edit.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">EditScreenKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.stslex93.notes.feature.edit.ui
+&nbsp;
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.fillMaxSize
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.foundation.layout.systemBarsPadding
+&nbsp;import androidx.compose.foundation.layout.wrapContentHeight
+&nbsp;import androidx.compose.material.icons.Icons
+&nbsp;import androidx.compose.material.icons.automirrored.filled.ArrowBack
+&nbsp;import androidx.compose.material3.FloatingActionButton
+&nbsp;import androidx.compose.material3.Icon
+&nbsp;import androidx.compose.material3.MaterialTheme
+&nbsp;import androidx.compose.material3.Text
+&nbsp;import androidx.compose.material3.TextField
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.Alignment
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import com.stslex93.notes.core.ui.theme.AppDimens
+&nbsp;import com.stslex93.notes.core.ui.theme.AppTheme
+&nbsp;import com.stslex93.notes.feature.edit.R
+&nbsp;import com.stslex93.notes.feature.edit.ui.components.LabelsHeader
+&nbsp;import com.stslex93.notes.feature.edit.ui.model.Label
+&nbsp;import com.stslex93.notes.feature.edit.ui.model.Note
+&nbsp;import com.stslex93.notes.feature.edit.ui.store.EditStore
+&nbsp;import kotlinx.collections.immutable.toImmutableSet
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun EditScreen(
+&nbsp;    state: EditStore.State,
+&nbsp;    onInputTitle: (String) -&gt; Unit,
+&nbsp;    onInputContent: (String) -&gt; Unit,
+&nbsp;    onBackButtonClicked: () -&gt; Unit,
+&nbsp;    modifier: Modifier = Modifier
+&nbsp;) {
+&nbsp;    Column(
+&nbsp;        modifier = modifier
+&nbsp;            .fillMaxSize()
+&nbsp;            .systemBarsPadding()
+&nbsp;    ) {
+&nbsp;        TextField(
+&nbsp;            modifier = Modifier
+&nbsp;                .wrapContentHeight()
+&nbsp;                .fillMaxWidth()
+&nbsp;                .padding(horizontal = AppDimens.Padding.normal),
+&nbsp;            value = state.note.title,
+&nbsp;            onValueChange = onInputTitle,
+&nbsp;            singleLine = true,
+&nbsp;            label = {
+&nbsp;                Text(text = stringResource(id = R.string.title_hint))
+&nbsp;            }
+&nbsp;        )
+&nbsp;
+&nbsp;        TextField(
+&nbsp;            modifier = Modifier
+&nbsp;                .weight(1f)
+&nbsp;                .fillMaxWidth()
+&nbsp;                .padding(AppDimens.Padding.normal),
+&nbsp;            value = state.note.content,
+&nbsp;            onValueChange = onInputContent,
+&nbsp;            label = {
+&nbsp;                Text(text = stringResource(id = R.string.content_hint))
+&nbsp;            }
+&nbsp;        )
+&nbsp;
+&nbsp;        LabelsHeader(state.note.labels)
+&nbsp;
+&nbsp;        Box(
+&nbsp;            modifier = Modifier
+&nbsp;                .fillMaxWidth()
+&nbsp;                .wrapContentHeight()
+&nbsp;        ) {
+&nbsp;            Text(
+&nbsp;                modifier = Modifier.align(Alignment.Center),
+&nbsp;                text = stringResource(id = R.string.label_edit) + &quot;:${state.timeString}&quot;,
+&nbsp;                style = MaterialTheme.typography.bodyMedium,
+&nbsp;                color = MaterialTheme.colorScheme.onBackground,
+&nbsp;            )
+&nbsp;
+&nbsp;            FloatingActionButton(
+&nbsp;                modifier = Modifier
+&nbsp;                    .align(Alignment.CenterEnd)
+&nbsp;                    .padding(AppDimens.Padding.normal),
+&nbsp;                onClick = onBackButtonClicked
+&nbsp;            ) {
+&nbsp;                Icon(
+&nbsp;                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+&nbsp;                    contentDescription = &quot;return&quot;
+&nbsp;                )
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Composable
+&nbsp;@Preview
+&nbsp;fun EditScreenPreview() {
+&nbsp;    AppTheme {
+&nbsp;        val labels = Array(10) { index -&gt;
+&nbsp;            Label(
+&nbsp;                uuid = &quot;uuid $index&quot;,
+&nbsp;                title = &quot;labelNum$index&quot;
+&nbsp;            )
+&nbsp;        }.toList().toImmutableSet()
+&nbsp;        EditScreen(
+&nbsp;            state = EditStore.State(
+&nbsp;                note = Note(
+&nbsp;                    uuid = 0,
+&nbsp;                    title = &quot;title&quot;,
+&nbsp;                    content = &quot;content&quot;,
+&nbsp;                    timestamp = System.currentTimeMillis(),
+&nbsp;                    labels = labels
+&nbsp;                )
+&nbsp;            ),
+&nbsp;            onInputTitle = {},
+&nbsp;            onInputContent = {},
+&nbsp;            onBackButtonClicked = { /*TODO*/ })
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-30 15:20</div>
+</div>
+</body>
+</html>
