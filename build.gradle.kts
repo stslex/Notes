@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.kover)
+    alias(libs.plugins.robolectric.junit5) apply false
 }
 
 buildscript {
@@ -21,5 +22,5 @@ buildscript {
 }
 
 tasks.register(name = "type", type = Delete::class) {
-    delete(rootProject.buildDir)
+    delete(layout.buildDirectory)
 }

@@ -1,6 +1,5 @@
 plugins {
     id("notes.android.library")
-    alias(libs.plugins.robolectric.junit5)
 }
 
 dependencies {

@@ -15,6 +15,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
                 apply(libs.findPluginId("kotlin"))
                 apply(libs.findPluginId("ksp"))
                 apply(libs.findPluginId("kover"))
+                apply(libs.findPluginId("robolectric-junit5"))
             }
 
             extensions.configure<LibraryExtension> {
